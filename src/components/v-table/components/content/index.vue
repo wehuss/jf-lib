@@ -251,6 +251,7 @@ const tableHeight = ref()
 const resize = () => {
   tableHeight.value = getTableHeight()
 }
+
 defineExpose({ getTableHeight })
 
 onMounted(() => {
