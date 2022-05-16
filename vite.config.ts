@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
-
+import vueJsx from '@vitejs/plugin-vue-jsx'
+console.log('vueJsx',vueJsx);
 const path = require('path')
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(),dts()],
+  plugins: [vue(), vueJsx(),dts()],
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/components/index.ts'),
