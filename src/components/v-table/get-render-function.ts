@@ -1,7 +1,7 @@
 import { h, getCurrentInstance } from 'vue'
-import { toPascalCase } from '@/utils/utils'
+import { toPascalCase } from '../../utils/utils'
 import { FormRender } from './typings'
-import { BaseObj } from '@/types/global'
+import { BaseObj } from '../../types/global'
 
 export default (render: FormRender, renderParams?: BaseObj | undefined) => {
   if (typeof render === 'function') {
