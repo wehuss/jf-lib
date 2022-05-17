@@ -38,7 +38,7 @@ import {
 import { BaseObj } from '../../../../../types/global'
 import { TableColumnData } from '@arco-design/web-vue';
 
-interface ColumnData {
+export interface ColumnData {
   record: BaseObj
   column: TableColumnData
   rowIndex: number
