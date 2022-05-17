@@ -1,12 +1,12 @@
 {
   "name": "@wehuss/jf-lib",
   "private": false,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "./dist/jf-lib.es.js",
-  "typings": "./dist/src/components/index.d.ts",
+  "typings": "./dist/components/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
     "preview": "vite preview"
   },
   "dependencies": {
