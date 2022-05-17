@@ -17,7 +17,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { getCurrentInstance, inject, defineComponent, openBlock, createElementBlock, normalizeClass, renderSlot, computed, normalizeStyle, createElementVNode, ref, watch, onMounted, onBeforeUnmount, onUpdated, onUnmounted, resolveComponent, createBlock, createCommentVNode, createVNode, withCtx, TransitionGroup, isVNode, reactive, render, toRefs, provide, h, watchEffect, unref, Fragment, renderList, resolveDynamicComponent, createTextVNode, isRef, toDisplayString, mergeProps } from "vue";
+import { ref, reactive, inject, computed, getCurrentInstance, cloneVNode, defineComponent, watch, onMounted, onUnmounted, openBlock, createElementBlock, normalizeClass, renderSlot, normalizeStyle, createElementVNode, resolveComponent, createBlock, createCommentVNode, toRef, toRefs, createVNode, mergeProps, createTextVNode, nextTick, provide, Fragment, createSlots, withCtx, withModifiers, onUpdated, onBeforeUnmount, Teleport, Transition, withDirectives, vShow, toDisplayString, resolveDynamicComponent, TransitionGroup, watchEffect, isVNode, render, renderList, h, unref, isRef } from "vue";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var lodash = { exports: {} };
 /**
@@ -383,17 +383,17 @@ var lodash = { exports: {} };
       return func.apply(thisArg, args);
     }
     function arrayAggregator(array, setter, iteratee, accumulator) {
-      var index = -1, length = array == null ? 0 : array.length;
-      while (++index < length) {
-        var value = array[index];
+      var index2 = -1, length = array == null ? 0 : array.length;
+      while (++index2 < length) {
+        var value = array[index2];
         setter(accumulator, value, iteratee(value), array);
       }
       return accumulator;
     }
     function arrayEach(array, iteratee) {
-      var index = -1, length = array == null ? 0 : array.length;
-      while (++index < length) {
-        if (iteratee(array[index], index, array) === false) {
+      var index2 = -1, length = array == null ? 0 : array.length;
+      while (++index2 < length) {
+        if (iteratee(array[index2], index2, array) === false) {
           break;
         }
       }
@@ -409,19 +409,19 @@ var lodash = { exports: {} };
       return array;
     }
     function arrayEvery(array, predicate) {
-      var index = -1, length = array == null ? 0 : array.length;
-      while (++index < length) {
-        if (!predicate(array[index], index, array)) {
+      var index2 = -1, length = array == null ? 0 : array.length;
+      while (++index2 < length) {
+        if (!predicate(array[index2], index2, array)) {
           return false;
         }
       }
       return true;
     }
     function arrayFilter(array, predicate) {
-      var index = -1, length = array == null ? 0 : array.length, resIndex = 0, result = [];
-      while (++index < length) {
-        var value = array[index];
-        if (predicate(value, index, array)) {
+      var index2 = -1, length = array == null ? 0 : array.length, resIndex = 0, result = [];
+      while (++index2 < length) {
+        var value = array[index2];
+        if (predicate(value, index2, array)) {
           result[resIndex++] = value;
         }
       }
@@ -432,35 +432,35 @@ var lodash = { exports: {} };
       return !!length && baseIndexOf(array, value, 0) > -1;
     }
     function arrayIncludesWith(array, value, comparator) {
-      var index = -1, length = array == null ? 0 : array.length;
-      while (++index < length) {
-        if (comparator(value, array[index])) {
+      var index2 = -1, length = array == null ? 0 : array.length;
+      while (++index2 < length) {
+        if (comparator(value, array[index2])) {
           return true;
         }
       }
       return false;
     }
     function arrayMap(array, iteratee) {
-      var index = -1, length = array == null ? 0 : array.length, result = Array(length);
-      while (++index < length) {
-        result[index] = iteratee(array[index], index, array);
+      var index2 = -1, length = array == null ? 0 : array.length, result = Array(length);
+      while (++index2 < length) {
+        result[index2] = iteratee(array[index2], index2, array);
       }
       return result;
     }
     function arrayPush(array, values) {
-      var index = -1, length = values.length, offset = array.length;
-      while (++index < length) {
-        array[offset + index] = values[index];
+      var index2 = -1, length = values.length, offset = array.length;
+      while (++index2 < length) {
+        array[offset + index2] = values[index2];
       }
       return array;
     }
     function arrayReduce(array, iteratee, accumulator, initAccum) {
-      var index = -1, length = array == null ? 0 : array.length;
+      var index2 = -1, length = array == null ? 0 : array.length;
       if (initAccum && length) {
-        accumulator = array[++index];
+        accumulator = array[++index2];
       }
-      while (++index < length) {
-        accumulator = iteratee(accumulator, array[index], index, array);
+      while (++index2 < length) {
+        accumulator = iteratee(accumulator, array[index2], index2, array);
       }
       return accumulator;
     }
@@ -475,9 +475,9 @@ var lodash = { exports: {} };
       return accumulator;
     }
     function arraySome(array, predicate) {
-      var index = -1, length = array == null ? 0 : array.length;
-      while (++index < length) {
-        if (predicate(array[index], index, array)) {
+      var index2 = -1, length = array == null ? 0 : array.length;
+      while (++index2 < length) {
+        if (predicate(array[index2], index2, array)) {
           return true;
         }
       }
@@ -501,10 +501,10 @@ var lodash = { exports: {} };
       return result;
     }
     function baseFindIndex(array, predicate, fromIndex, fromRight) {
-      var length = array.length, index = fromIndex + (fromRight ? 1 : -1);
-      while (fromRight ? index-- : ++index < length) {
-        if (predicate(array[index], index, array)) {
-          return index;
+      var length = array.length, index2 = fromIndex + (fromRight ? 1 : -1);
+      while (fromRight ? index2-- : ++index2 < length) {
+        if (predicate(array[index2], index2, array)) {
+          return index2;
         }
       }
       return -1;
@@ -513,10 +513,10 @@ var lodash = { exports: {} };
       return value === value ? strictIndexOf(array, value, fromIndex) : baseFindIndex(array, baseIsNaN, fromIndex);
     }
     function baseIndexOfWith(array, value, fromIndex, comparator) {
-      var index = fromIndex - 1, length = array.length;
-      while (++index < length) {
-        if (comparator(array[index], value)) {
-          return index;
+      var index2 = fromIndex - 1, length = array.length;
+      while (++index2 < length) {
+        if (comparator(array[index2], value)) {
+          return index2;
         }
       }
       return -1;
@@ -539,8 +539,8 @@ var lodash = { exports: {} };
       };
     }
     function baseReduce(collection, iteratee, accumulator, initAccum, eachFunc) {
-      eachFunc(collection, function(value, index, collection2) {
-        accumulator = initAccum ? (initAccum = false, value) : iteratee(accumulator, value, index, collection2);
+      eachFunc(collection, function(value, index2, collection2) {
+        accumulator = initAccum ? (initAccum = false, value) : iteratee(accumulator, value, index2, collection2);
       });
       return accumulator;
     }
@@ -553,9 +553,9 @@ var lodash = { exports: {} };
       return array;
     }
     function baseSum(array, iteratee) {
-      var result, index = -1, length = array.length;
-      while (++index < length) {
-        var current = iteratee(array[index]);
+      var result, index2 = -1, length = array.length;
+      while (++index2 < length) {
+        var current = iteratee(array[index2]);
         if (current !== undefined$1) {
           result = result === undefined$1 ? current : result + current;
         }
@@ -563,9 +563,9 @@ var lodash = { exports: {} };
       return result;
     }
     function baseTimes(n, iteratee) {
-      var index = -1, result = Array(n);
-      while (++index < n) {
-        result[index] = iteratee(index);
+      var index2 = -1, result = Array(n);
+      while (++index2 < n) {
+        result[index2] = iteratee(index2);
       }
       return result;
     }
@@ -591,16 +591,16 @@ var lodash = { exports: {} };
       return cache.has(key);
     }
     function charsStartIndex(strSymbols, chrSymbols) {
-      var index = -1, length = strSymbols.length;
-      while (++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {
+      var index2 = -1, length = strSymbols.length;
+      while (++index2 < length && baseIndexOf(chrSymbols, strSymbols[index2], 0) > -1) {
       }
-      return index;
+      return index2;
     }
     function charsEndIndex(strSymbols, chrSymbols) {
-      var index = strSymbols.length;
-      while (index-- && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {
+      var index2 = strSymbols.length;
+      while (index2-- && baseIndexOf(chrSymbols, strSymbols[index2], 0) > -1) {
       }
-      return index;
+      return index2;
     }
     function countHolders(array, placeholder) {
       var length = array.length, result = 0;
@@ -633,9 +633,9 @@ var lodash = { exports: {} };
       return result;
     }
     function mapToArray(map) {
-      var index = -1, result = Array(map.size);
+      var index2 = -1, result = Array(map.size);
       map.forEach(function(value, key) {
-        result[++index] = [key, value];
+        result[++index2] = [key, value];
       });
       return result;
     }
@@ -645,47 +645,47 @@ var lodash = { exports: {} };
       };
     }
     function replaceHolders(array, placeholder) {
-      var index = -1, length = array.length, resIndex = 0, result = [];
-      while (++index < length) {
-        var value = array[index];
+      var index2 = -1, length = array.length, resIndex = 0, result = [];
+      while (++index2 < length) {
+        var value = array[index2];
         if (value === placeholder || value === PLACEHOLDER) {
-          array[index] = PLACEHOLDER;
-          result[resIndex++] = index;
+          array[index2] = PLACEHOLDER;
+          result[resIndex++] = index2;
         }
       }
       return result;
     }
     function setToArray(set) {
-      var index = -1, result = Array(set.size);
+      var index2 = -1, result = Array(set.size);
       set.forEach(function(value) {
-        result[++index] = value;
+        result[++index2] = value;
       });
       return result;
     }
     function setToPairs(set) {
-      var index = -1, result = Array(set.size);
+      var index2 = -1, result = Array(set.size);
       set.forEach(function(value) {
-        result[++index] = [value, value];
+        result[++index2] = [value, value];
       });
       return result;
     }
     function strictIndexOf(array, value, fromIndex) {
-      var index = fromIndex - 1, length = array.length;
-      while (++index < length) {
-        if (array[index] === value) {
-          return index;
+      var index2 = fromIndex - 1, length = array.length;
+      while (++index2 < length) {
+        if (array[index2] === value) {
+          return index2;
         }
       }
       return -1;
     }
     function strictLastIndexOf(array, value, fromIndex) {
-      var index = fromIndex + 1;
-      while (index--) {
-        if (array[index] === value) {
-          return index;
+      var index2 = fromIndex + 1;
+      while (index2--) {
+        if (array[index2] === value) {
+          return index2;
         }
       }
-      return index;
+      return index2;
     }
     function stringSize(string) {
       return hasUnicode(string) ? unicodeSize(string) : asciiSize(string);
@@ -694,10 +694,10 @@ var lodash = { exports: {} };
       return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string);
     }
     function trimmedEndIndex(string) {
-      var index = string.length;
-      while (index-- && reWhitespace.test(string.charAt(index))) {
+      var index2 = string.length;
+      while (index2-- && reWhitespace.test(string.charAt(index2))) {
       }
-      return index;
+      return index2;
     }
     var unescapeHtmlChar = basePropertyOf(htmlUnescapes);
     function unicodeSize(string) {
@@ -740,10 +740,10 @@ var lodash = { exports: {} };
       }();
       var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout, ctxNow = Date2 && Date2.now !== root.Date.now && Date2.now, ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
       var nativeCeil = Math2.ceil, nativeFloor = Math2.floor, nativeGetSymbols = Object2.getOwnPropertySymbols, nativeIsBuffer = Buffer2 ? Buffer2.isBuffer : undefined$1, nativeIsFinite = context.isFinite, nativeJoin = arrayProto.join, nativeKeys = overArg(Object2.keys, Object2), nativeMax = Math2.max, nativeMin = Math2.min, nativeNow = Date2.now, nativeParseInt = context.parseInt, nativeRandom = Math2.random, nativeReverse = arrayProto.reverse;
-      var DataView = getNative(context, "DataView"), Map2 = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
-      var metaMap = WeakMap && new WeakMap();
+      var DataView = getNative(context, "DataView"), Map2 = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap2 = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
+      var metaMap = WeakMap2 && new WeakMap2();
       var realNames = {};
-      var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap);
+      var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap2);
       var symbolProto = Symbol2 ? Symbol2.prototype : undefined$1, symbolValueOf = symbolProto ? symbolProto.valueOf : undefined$1, symbolToString = symbolProto ? symbolProto.toString : undefined$1;
       function lodash2(value) {
         if (isObjectLike(value) && !isArray2(value) && !(value instanceof LazyWrapper)) {
@@ -825,15 +825,15 @@ var lodash = { exports: {} };
         return result2;
       }
       function lazyValue() {
-        var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray2(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
+        var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray2(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index2 = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
         if (!isArr || !isRight && arrLength == length && takeCount == length) {
           return baseWrapperValue(array, this.__actions__);
         }
         var result2 = [];
         outer:
           while (length-- && resIndex < takeCount) {
-            index += dir;
-            var iterIndex = -1, value = array[index];
+            index2 += dir;
+            var iterIndex = -1, value = array[index2];
             while (++iterIndex < iterLength) {
               var data = iteratees[iterIndex], iteratee2 = data.iteratee, type = data.type, computed2 = iteratee2(value);
               if (type == LAZY_MAP_FLAG) {
@@ -853,10 +853,10 @@ var lodash = { exports: {} };
       LazyWrapper.prototype = baseCreate(baseLodash.prototype);
       LazyWrapper.prototype.constructor = LazyWrapper;
       function Hash(entries) {
-        var index = -1, length = entries == null ? 0 : entries.length;
+        var index2 = -1, length = entries == null ? 0 : entries.length;
         this.clear();
-        while (++index < length) {
-          var entry = entries[index];
+        while (++index2 < length) {
+          var entry = entries[index2];
           this.set(entry[0], entry[1]);
         }
       }
@@ -893,10 +893,10 @@ var lodash = { exports: {} };
       Hash.prototype.has = hashHas;
       Hash.prototype.set = hashSet;
       function ListCache(entries) {
-        var index = -1, length = entries == null ? 0 : entries.length;
+        var index2 = -1, length = entries == null ? 0 : entries.length;
         this.clear();
-        while (++index < length) {
-          var entry = entries[index];
+        while (++index2 < length) {
+          var entry = entries[index2];
           this.set(entry[0], entry[1]);
         }
       }
@@ -905,33 +905,33 @@ var lodash = { exports: {} };
         this.size = 0;
       }
       function listCacheDelete(key) {
-        var data = this.__data__, index = assocIndexOf(data, key);
-        if (index < 0) {
+        var data = this.__data__, index2 = assocIndexOf(data, key);
+        if (index2 < 0) {
           return false;
         }
         var lastIndex = data.length - 1;
-        if (index == lastIndex) {
+        if (index2 == lastIndex) {
           data.pop();
         } else {
-          splice.call(data, index, 1);
+          splice.call(data, index2, 1);
         }
         --this.size;
         return true;
       }
       function listCacheGet(key) {
-        var data = this.__data__, index = assocIndexOf(data, key);
-        return index < 0 ? undefined$1 : data[index][1];
+        var data = this.__data__, index2 = assocIndexOf(data, key);
+        return index2 < 0 ? undefined$1 : data[index2][1];
       }
       function listCacheHas(key) {
         return assocIndexOf(this.__data__, key) > -1;
       }
       function listCacheSet(key, value) {
-        var data = this.__data__, index = assocIndexOf(data, key);
-        if (index < 0) {
+        var data = this.__data__, index2 = assocIndexOf(data, key);
+        if (index2 < 0) {
           ++this.size;
           data.push([key, value]);
         } else {
-          data[index][1] = value;
+          data[index2][1] = value;
         }
         return this;
       }
@@ -941,10 +941,10 @@ var lodash = { exports: {} };
       ListCache.prototype.has = listCacheHas;
       ListCache.prototype.set = listCacheSet;
       function MapCache(entries) {
-        var index = -1, length = entries == null ? 0 : entries.length;
+        var index2 = -1, length = entries == null ? 0 : entries.length;
         this.clear();
-        while (++index < length) {
-          var entry = entries[index];
+        while (++index2 < length) {
+          var entry = entries[index2];
           this.set(entry[0], entry[1]);
         }
       }
@@ -979,10 +979,10 @@ var lodash = { exports: {} };
       MapCache.prototype.has = mapCacheHas;
       MapCache.prototype.set = mapCacheSet;
       function SetCache(values2) {
-        var index = -1, length = values2 == null ? 0 : values2.length;
+        var index2 = -1, length = values2 == null ? 0 : values2.length;
         this.__data__ = new MapCache();
-        while (++index < length) {
-          this.add(values2[index]);
+        while (++index2 < length) {
+          this.add(values2[index2]);
         }
       }
       function setCacheAdd(value) {
@@ -1097,9 +1097,9 @@ var lodash = { exports: {} };
         }
       }
       function baseAt(object, paths) {
-        var index = -1, length = paths.length, result2 = Array2(length), skip = object == null;
-        while (++index < length) {
-          result2[index] = skip ? undefined$1 : get(object, paths[index]);
+        var index2 = -1, length = paths.length, result2 = Array2(length), skip = object == null;
+        while (++index2 < length) {
+          result2[index2] = skip ? undefined$1 : get(object, paths[index2]);
         }
         return result2;
       }
@@ -1203,7 +1203,7 @@ var lodash = { exports: {} };
         }, wait);
       }
       function baseDifference(array, values2, iteratee2, comparator) {
-        var index = -1, includes2 = arrayIncludes, isCommon = true, length = array.length, result2 = [], valuesLength = values2.length;
+        var index2 = -1, includes2 = arrayIncludes, isCommon = true, length = array.length, result2 = [], valuesLength = values2.length;
         if (!length) {
           return result2;
         }
@@ -1219,8 +1219,8 @@ var lodash = { exports: {} };
           values2 = new SetCache(values2);
         }
         outer:
-          while (++index < length) {
-            var value = array[index], computed2 = iteratee2 == null ? value : iteratee2(value);
+          while (++index2 < length) {
+            var value = array[index2], computed2 = iteratee2 == null ? value : iteratee2(value);
             value = comparator || value !== 0 ? value : 0;
             if (isCommon && computed2 === computed2) {
               var valuesIndex = valuesLength;
@@ -1240,16 +1240,16 @@ var lodash = { exports: {} };
       var baseEachRight = createBaseEach(baseForOwnRight, true);
       function baseEvery(collection, predicate) {
         var result2 = true;
-        baseEach(collection, function(value, index, collection2) {
-          result2 = !!predicate(value, index, collection2);
+        baseEach(collection, function(value, index2, collection2) {
+          result2 = !!predicate(value, index2, collection2);
           return result2;
         });
         return result2;
       }
       function baseExtremum(array, iteratee2, comparator) {
-        var index = -1, length = array.length;
-        while (++index < length) {
-          var value = array[index], current = iteratee2(value);
+        var index2 = -1, length = array.length;
+        while (++index2 < length) {
+          var value = array[index2], current = iteratee2(value);
           if (current != null && (computed2 === undefined$1 ? current === current && !isSymbol(current) : comparator(current, computed2))) {
             var computed2 = current, result2 = value;
           }
@@ -1274,19 +1274,19 @@ var lodash = { exports: {} };
       }
       function baseFilter(collection, predicate) {
         var result2 = [];
-        baseEach(collection, function(value, index, collection2) {
-          if (predicate(value, index, collection2)) {
+        baseEach(collection, function(value, index2, collection2) {
+          if (predicate(value, index2, collection2)) {
             result2.push(value);
           }
         });
         return result2;
       }
       function baseFlatten(array, depth, predicate, isStrict, result2) {
-        var index = -1, length = array.length;
+        var index2 = -1, length = array.length;
         predicate || (predicate = isFlattenable);
         result2 || (result2 = []);
-        while (++index < length) {
-          var value = array[index];
+        while (++index2 < length) {
+          var value = array[index2];
           if (depth > 0 && predicate(value)) {
             if (depth > 1) {
               baseFlatten(value, depth - 1, predicate, isStrict, result2);
@@ -1314,11 +1314,11 @@ var lodash = { exports: {} };
       }
       function baseGet(object, path) {
         path = castPath(path, object);
-        var index = 0, length = path.length;
-        while (object != null && index < length) {
-          object = object[toKey(path[index++])];
+        var index2 = 0, length = path.length;
+        while (object != null && index2 < length) {
+          object = object[toKey(path[index2++])];
         }
-        return index && index == length ? object : undefined$1;
+        return index2 && index2 == length ? object : undefined$1;
       }
       function baseGetAllKeys(object, keysFunc, symbolsFunc) {
         var result2 = keysFunc(object);
@@ -1353,10 +1353,10 @@ var lodash = { exports: {} };
           caches[othIndex] = !comparator && (iteratee2 || length >= 120 && array.length >= 120) ? new SetCache(othIndex && array) : undefined$1;
         }
         array = arrays[0];
-        var index = -1, seen = caches[0];
+        var index2 = -1, seen = caches[0];
         outer:
-          while (++index < length && result2.length < maxLength) {
-            var value = array[index], computed2 = iteratee2 ? iteratee2(value) : value;
+          while (++index2 < length && result2.length < maxLength) {
+            var value = array[index2], computed2 = iteratee2 ? iteratee2(value) : value;
             value = comparator || value !== 0 ? value : 0;
             if (!(seen ? cacheHas(seen, computed2) : includes2(result2, computed2, comparator))) {
               othIndex = othLength;
@@ -1438,19 +1438,19 @@ var lodash = { exports: {} };
         return isObjectLike(value) && getTag(value) == mapTag;
       }
       function baseIsMatch(object, source, matchData, customizer) {
-        var index = matchData.length, length = index, noCustomizer = !customizer;
+        var index2 = matchData.length, length = index2, noCustomizer = !customizer;
         if (object == null) {
           return !length;
         }
         object = Object2(object);
-        while (index--) {
-          var data = matchData[index];
+        while (index2--) {
+          var data = matchData[index2];
           if (noCustomizer && data[2] ? data[1] !== object[data[0]] : !(data[0] in object)) {
             return false;
           }
         }
-        while (++index < length) {
-          data = matchData[index];
+        while (++index2 < length) {
+          data = matchData[index2];
           var key = data[0], objValue = object[key], srcValue = data[1];
           if (noCustomizer && data[2]) {
             if (objValue === undefined$1 && !(key in object)) {
@@ -1524,9 +1524,9 @@ var lodash = { exports: {} };
         return value < other;
       }
       function baseMap(collection, iteratee2) {
-        var index = -1, result2 = isArrayLike(collection) ? Array2(collection.length) : [];
+        var index2 = -1, result2 = isArrayLike(collection) ? Array2(collection.length) : [];
         baseEach(collection, function(value, key, collection2) {
-          result2[++index] = iteratee2(value, key, collection2);
+          result2[++index2] = iteratee2(value, key, collection2);
         });
         return result2;
       }
@@ -1629,13 +1629,13 @@ var lodash = { exports: {} };
         } else {
           iteratees = [identity];
         }
-        var index = -1;
+        var index2 = -1;
         iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
         var result2 = baseMap(collection, function(value, key, collection2) {
           var criteria = arrayMap(iteratees, function(iteratee2) {
             return iteratee2(value);
           });
-          return { "criteria": criteria, "index": ++index, "value": value };
+          return { "criteria": criteria, "index": ++index2, "value": value };
         });
         return baseSortBy(result2, function(object, other) {
           return compareMultiple(object, other, orders);
@@ -1647,9 +1647,9 @@ var lodash = { exports: {} };
         });
       }
       function basePickBy(object, paths, predicate) {
-        var index = -1, length = paths.length, result2 = {};
-        while (++index < length) {
-          var path = paths[index], value = baseGet(object, path);
+        var index2 = -1, length = paths.length, result2 = {};
+        while (++index2 < length) {
+          var path = paths[index2], value = baseGet(object, path);
           if (predicate(value, path)) {
             baseSet(result2, castPath(path, object), value);
           }
@@ -1662,15 +1662,15 @@ var lodash = { exports: {} };
         };
       }
       function basePullAll(array, values2, iteratee2, comparator) {
-        var indexOf2 = comparator ? baseIndexOfWith : baseIndexOf, index = -1, length = values2.length, seen = array;
+        var indexOf2 = comparator ? baseIndexOfWith : baseIndexOf, index2 = -1, length = values2.length, seen = array;
         if (array === values2) {
           values2 = copyArray(values2);
         }
         if (iteratee2) {
           seen = arrayMap(array, baseUnary(iteratee2));
         }
-        while (++index < length) {
-          var fromIndex = 0, value = values2[index], computed2 = iteratee2 ? iteratee2(value) : value;
+        while (++index2 < length) {
+          var fromIndex = 0, value = values2[index2], computed2 = iteratee2 ? iteratee2(value) : value;
           while ((fromIndex = indexOf2(seen, computed2, fromIndex, comparator)) > -1) {
             if (seen !== array) {
               splice.call(seen, fromIndex, 1);
@@ -1683,13 +1683,13 @@ var lodash = { exports: {} };
       function basePullAt(array, indexes) {
         var length = array ? indexes.length : 0, lastIndex = length - 1;
         while (length--) {
-          var index = indexes[length];
-          if (length == lastIndex || index !== previous) {
-            var previous = index;
-            if (isIndex(index)) {
-              splice.call(array, index, 1);
+          var index2 = indexes[length];
+          if (length == lastIndex || index2 !== previous) {
+            var previous = index2;
+            if (isIndex(index2)) {
+              splice.call(array, index2, 1);
             } else {
-              baseUnset(array, index);
+              baseUnset(array, index2);
             }
           }
         }
@@ -1699,9 +1699,9 @@ var lodash = { exports: {} };
         return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
       }
       function baseRange(start, end, step, fromRight) {
-        var index = -1, length = nativeMax(nativeCeil((end - start) / (step || 1)), 0), result2 = Array2(length);
+        var index2 = -1, length = nativeMax(nativeCeil((end - start) / (step || 1)), 0), result2 = Array2(length);
         while (length--) {
-          result2[fromRight ? length : ++index] = start;
+          result2[fromRight ? length : ++index2] = start;
           start += step;
         }
         return result2;
@@ -1737,17 +1737,17 @@ var lodash = { exports: {} };
           return object;
         }
         path = castPath(path, object);
-        var index = -1, length = path.length, lastIndex = length - 1, nested = object;
-        while (nested != null && ++index < length) {
-          var key = toKey(path[index]), newValue = value;
+        var index2 = -1, length = path.length, lastIndex = length - 1, nested = object;
+        while (nested != null && ++index2 < length) {
+          var key = toKey(path[index2]), newValue = value;
           if (key === "__proto__" || key === "constructor" || key === "prototype") {
             return object;
           }
-          if (index != lastIndex) {
+          if (index2 != lastIndex) {
             var objValue = nested[key];
             newValue = customizer ? customizer(objValue, key, nested) : undefined$1;
             if (newValue === undefined$1) {
-              newValue = isObject2(objValue) ? objValue : isIndex(path[index + 1]) ? [] : {};
+              newValue = isObject2(objValue) ? objValue : isIndex(path[index2 + 1]) ? [] : {};
             }
           }
           assignValue(nested, key, newValue);
@@ -1771,7 +1771,7 @@ var lodash = { exports: {} };
         return shuffleSelf(values(collection));
       }
       function baseSlice(array, start, end) {
-        var index = -1, length = array.length;
+        var index2 = -1, length = array.length;
         if (start < 0) {
           start = -start > length ? 0 : length + start;
         }
@@ -1782,15 +1782,15 @@ var lodash = { exports: {} };
         length = start > end ? 0 : end - start >>> 0;
         start >>>= 0;
         var result2 = Array2(length);
-        while (++index < length) {
-          result2[index] = array[index + start];
+        while (++index2 < length) {
+          result2[index2] = array[index2 + start];
         }
         return result2;
       }
       function baseSome(collection, predicate) {
         var result2;
-        baseEach(collection, function(value, index, collection2) {
-          result2 = predicate(value, index, collection2);
+        baseEach(collection, function(value, index2, collection2) {
+          result2 = predicate(value, index2, collection2);
           return !result2;
         });
         return !!result2;
@@ -1841,10 +1841,10 @@ var lodash = { exports: {} };
         return nativeMin(high, MAX_ARRAY_INDEX);
       }
       function baseSortedUniq(array, iteratee2) {
-        var index = -1, length = array.length, resIndex = 0, result2 = [];
-        while (++index < length) {
-          var value = array[index], computed2 = iteratee2 ? iteratee2(value) : value;
-          if (!index || !eq(computed2, seen)) {
+        var index2 = -1, length = array.length, resIndex = 0, result2 = [];
+        while (++index2 < length) {
+          var value = array[index2], computed2 = iteratee2 ? iteratee2(value) : value;
+          if (!index2 || !eq(computed2, seen)) {
             var seen = computed2;
             result2[resIndex++] = value === 0 ? 0 : value;
           }
@@ -1874,7 +1874,7 @@ var lodash = { exports: {} };
         return result2 == "0" && 1 / value == -INFINITY ? "-0" : result2;
       }
       function baseUniq(array, iteratee2, comparator) {
-        var index = -1, includes2 = arrayIncludes, length = array.length, isCommon = true, result2 = [], seen = result2;
+        var index2 = -1, includes2 = arrayIncludes, length = array.length, isCommon = true, result2 = [], seen = result2;
         if (comparator) {
           isCommon = false;
           includes2 = arrayIncludesWith;
@@ -1890,8 +1890,8 @@ var lodash = { exports: {} };
           seen = iteratee2 ? [] : result2;
         }
         outer:
-          while (++index < length) {
-            var value = array[index], computed2 = iteratee2 ? iteratee2(value) : value;
+          while (++index2 < length) {
+            var value = array[index2], computed2 = iteratee2 ? iteratee2(value) : value;
             value = comparator || value !== 0 ? value : 0;
             if (isCommon && computed2 === computed2) {
               var seenIndex = seen.length;
@@ -1922,10 +1922,10 @@ var lodash = { exports: {} };
         return baseSet(object, path, updater(baseGet(object, path)), customizer);
       }
       function baseWhile(array, predicate, isDrop, fromRight) {
-        var length = array.length, index = fromRight ? length : -1;
-        while ((fromRight ? index-- : ++index < length) && predicate(array[index], index, array)) {
+        var length = array.length, index2 = fromRight ? length : -1;
+        while ((fromRight ? index2-- : ++index2 < length) && predicate(array[index2], index2, array)) {
         }
-        return isDrop ? baseSlice(array, fromRight ? 0 : index, fromRight ? index + 1 : length) : baseSlice(array, fromRight ? index + 1 : 0, fromRight ? length : index);
+        return isDrop ? baseSlice(array, fromRight ? 0 : index2, fromRight ? index2 + 1 : length) : baseSlice(array, fromRight ? index2 + 1 : 0, fromRight ? length : index2);
       }
       function baseWrapperValue(value, actions) {
         var result2 = value;
@@ -1941,22 +1941,22 @@ var lodash = { exports: {} };
         if (length < 2) {
           return length ? baseUniq(arrays[0]) : [];
         }
-        var index = -1, result2 = Array2(length);
-        while (++index < length) {
-          var array = arrays[index], othIndex = -1;
+        var index2 = -1, result2 = Array2(length);
+        while (++index2 < length) {
+          var array = arrays[index2], othIndex = -1;
           while (++othIndex < length) {
-            if (othIndex != index) {
-              result2[index] = baseDifference(result2[index] || array, arrays[othIndex], iteratee2, comparator);
+            if (othIndex != index2) {
+              result2[index2] = baseDifference(result2[index2] || array, arrays[othIndex], iteratee2, comparator);
             }
           }
         }
         return baseUniq(baseFlatten(result2, 1), iteratee2, comparator);
       }
       function baseZipObject(props, values2, assignFunc) {
-        var index = -1, length = props.length, valsLength = values2.length, result2 = {};
-        while (++index < length) {
-          var value = index < valsLength ? values2[index] : undefined$1;
-          assignFunc(result2, props[index], value);
+        var index2 = -1, length = props.length, valsLength = values2.length, result2 = {};
+        while (++index2 < length) {
+          var value = index2 < valsLength ? values2[index2] : undefined$1;
+          assignFunc(result2, props[index2], value);
         }
         return result2;
       }
@@ -2024,14 +2024,14 @@ var lodash = { exports: {} };
         return 0;
       }
       function compareMultiple(object, other, orders) {
-        var index = -1, objCriteria = object.criteria, othCriteria = other.criteria, length = objCriteria.length, ordersLength = orders.length;
-        while (++index < length) {
-          var result2 = compareAscending(objCriteria[index], othCriteria[index]);
+        var index2 = -1, objCriteria = object.criteria, othCriteria = other.criteria, length = objCriteria.length, ordersLength = orders.length;
+        while (++index2 < length) {
+          var result2 = compareAscending(objCriteria[index2], othCriteria[index2]);
           if (result2) {
-            if (index >= ordersLength) {
+            if (index2 >= ordersLength) {
               return result2;
             }
-            var order = orders[index];
+            var order = orders[index2];
             return result2 * (order == "desc" ? -1 : 1);
           }
         }
@@ -2069,19 +2069,19 @@ var lodash = { exports: {} };
         return result2;
       }
       function copyArray(source, array) {
-        var index = -1, length = source.length;
+        var index2 = -1, length = source.length;
         array || (array = Array2(length));
-        while (++index < length) {
-          array[index] = source[index];
+        while (++index2 < length) {
+          array[index2] = source[index2];
         }
         return array;
       }
       function copyObject(source, props, object, customizer) {
         var isNew = !object;
         object || (object = {});
-        var index = -1, length = props.length;
-        while (++index < length) {
-          var key = props[index];
+        var index2 = -1, length = props.length;
+        while (++index2 < length) {
+          var key = props[index2];
           var newValue = customizer ? customizer(object[key], source[key], key, object, source) : undefined$1;
           if (newValue === undefined$1) {
             newValue = source[key];
@@ -2108,17 +2108,17 @@ var lodash = { exports: {} };
       }
       function createAssigner(assigner) {
         return baseRest(function(object, sources) {
-          var index = -1, length = sources.length, customizer = length > 1 ? sources[length - 1] : undefined$1, guard = length > 2 ? sources[2] : undefined$1;
+          var index2 = -1, length = sources.length, customizer = length > 1 ? sources[length - 1] : undefined$1, guard = length > 2 ? sources[2] : undefined$1;
           customizer = assigner.length > 3 && typeof customizer == "function" ? (length--, customizer) : undefined$1;
           if (guard && isIterateeCall(sources[0], sources[1], guard)) {
             customizer = length < 3 ? undefined$1 : customizer;
             length = 1;
           }
           object = Object2(object);
-          while (++index < length) {
-            var source = sources[index];
+          while (++index2 < length) {
+            var source = sources[index2];
             if (source) {
-              assigner(object, source, index, customizer);
+              assigner(object, source, index2, customizer);
             }
           }
           return object;
@@ -2132,9 +2132,9 @@ var lodash = { exports: {} };
           if (!isArrayLike(collection)) {
             return eachFunc(collection, iteratee2);
           }
-          var length = collection.length, index = fromRight ? length : -1, iterable = Object2(collection);
-          while (fromRight ? index-- : ++index < length) {
-            if (iteratee2(iterable[index], index, iterable) === false) {
+          var length = collection.length, index2 = fromRight ? length : -1, iterable = Object2(collection);
+          while (fromRight ? index2-- : ++index2 < length) {
+            if (iteratee2(iterable[index2], index2, iterable) === false) {
               break;
             }
           }
@@ -2143,9 +2143,9 @@ var lodash = { exports: {} };
       }
       function createBaseFor(fromRight) {
         return function(object, iteratee2, keysFunc) {
-          var index = -1, iterable = Object2(object), props = keysFunc(object), length = props.length;
+          var index2 = -1, iterable = Object2(object), props = keysFunc(object), length = props.length;
           while (length--) {
-            var key = props[fromRight ? length : ++index];
+            var key = props[fromRight ? length : ++index2];
             if (iteratee2(iterable[key], key, iterable) === false) {
               break;
             }
@@ -2203,9 +2203,9 @@ var lodash = { exports: {} };
       function createCurry(func, bitmask, arity) {
         var Ctor = createCtor(func);
         function wrapper() {
-          var length = arguments.length, args = Array2(length), index = length, placeholder = getHolder(wrapper);
-          while (index--) {
-            args[index] = arguments[index];
+          var length = arguments.length, args = Array2(length), index2 = length, placeholder = getHolder(wrapper);
+          while (index2--) {
+            args[index2] = arguments[index2];
           }
           var holders = length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder ? [] : replaceHolders(args, placeholder);
           length -= holders.length;
@@ -2227,18 +2227,18 @@ var lodash = { exports: {} };
               return iteratee2(iterable[key], key, iterable);
             };
           }
-          var index = findIndexFunc(collection, predicate, fromIndex);
-          return index > -1 ? iterable[iteratee2 ? collection[index] : index] : undefined$1;
+          var index2 = findIndexFunc(collection, predicate, fromIndex);
+          return index2 > -1 ? iterable[iteratee2 ? collection[index2] : index2] : undefined$1;
         };
       }
       function createFlow(fromRight) {
         return flatRest(function(funcs) {
-          var length = funcs.length, index = length, prereq = LodashWrapper.prototype.thru;
+          var length = funcs.length, index2 = length, prereq = LodashWrapper.prototype.thru;
           if (fromRight) {
             funcs.reverse();
           }
-          while (index--) {
-            var func = funcs[index];
+          while (index2--) {
+            var func = funcs[index2];
             if (typeof func != "function") {
               throw new TypeError2(FUNC_ERROR_TEXT);
             }
@@ -2246,9 +2246,9 @@ var lodash = { exports: {} };
               var wrapper = new LodashWrapper([], true);
             }
           }
-          index = wrapper ? index : length;
-          while (++index < length) {
-            func = funcs[index];
+          index2 = wrapper ? index2 : length;
+          while (++index2 < length) {
+            func = funcs[index2];
             var funcName = getFuncName(func), data = funcName == "wrapper" ? getData(func) : undefined$1;
             if (data && isLaziable(data[0]) && data[1] == (WRAP_ARY_FLAG | WRAP_CURRY_FLAG | WRAP_PARTIAL_FLAG | WRAP_REARG_FLAG) && !data[4].length && data[9] == 1) {
               wrapper = wrapper[getFuncName(data[0])].apply(wrapper, data[3]);
@@ -2261,9 +2261,9 @@ var lodash = { exports: {} };
             if (wrapper && args.length == 1 && isArray2(value)) {
               return wrapper.plant(value).value();
             }
-            var index2 = 0, result2 = length ? funcs[index2].apply(this, args) : value;
-            while (++index2 < length) {
-              result2 = funcs[index2].call(this, result2);
+            var index3 = 0, result2 = length ? funcs[index3].apply(this, args) : value;
+            while (++index3 < length) {
+              result2 = funcs[index3].call(this, result2);
             }
             return result2;
           };
@@ -2272,9 +2272,9 @@ var lodash = { exports: {} };
       function createHybrid(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary2, arity) {
         var isAry = bitmask & WRAP_ARY_FLAG, isBind = bitmask & WRAP_BIND_FLAG, isBindKey = bitmask & WRAP_BIND_KEY_FLAG, isCurried = bitmask & (WRAP_CURRY_FLAG | WRAP_CURRY_RIGHT_FLAG), isFlip = bitmask & WRAP_FLIP_FLAG, Ctor = isBindKey ? undefined$1 : createCtor(func);
         function wrapper() {
-          var length = arguments.length, args = Array2(length), index = length;
-          while (index--) {
-            args[index] = arguments[index];
+          var length = arguments.length, args = Array2(length), index2 = length;
+          while (index2--) {
+            args[index2] = arguments[index2];
           }
           if (isCurried) {
             var placeholder = getHolder(wrapper), holdersCount = countHolders(args, placeholder);
@@ -2531,13 +2531,13 @@ var lodash = { exports: {} };
         if (arrStacked && othStacked) {
           return arrStacked == other && othStacked == array;
         }
-        var index = -1, result2 = true, seen = bitmask & COMPARE_UNORDERED_FLAG ? new SetCache() : undefined$1;
+        var index2 = -1, result2 = true, seen = bitmask & COMPARE_UNORDERED_FLAG ? new SetCache() : undefined$1;
         stack.set(array, other);
         stack.set(other, array);
-        while (++index < arrLength) {
-          var arrValue = array[index], othValue = other[index];
+        while (++index2 < arrLength) {
+          var arrValue = array[index2], othValue = other[index2];
           if (customizer) {
-            var compared = isPartial ? customizer(othValue, arrValue, index, other, array, stack) : customizer(arrValue, othValue, index, array, other, stack);
+            var compared = isPartial ? customizer(othValue, arrValue, index2, other, array, stack) : customizer(arrValue, othValue, index2, array, other, stack);
           }
           if (compared !== undefined$1) {
             if (compared) {
@@ -2615,9 +2615,9 @@ var lodash = { exports: {} };
         if (objLength != othLength && !isPartial) {
           return false;
         }
-        var index = objLength;
-        while (index--) {
-          var key = objProps[index];
+        var index2 = objLength;
+        while (index2--) {
+          var key = objProps[index2];
           if (!(isPartial ? key in other : hasOwnProperty.call(other, key))) {
             return false;
           }
@@ -2631,8 +2631,8 @@ var lodash = { exports: {} };
         stack.set(object, other);
         stack.set(other, object);
         var skipCtor = isPartial;
-        while (++index < objLength) {
-          key = objProps[index];
+        while (++index2 < objLength) {
+          key = objProps[index2];
           var objValue = object[key], othValue = other[key];
           if (customizer) {
             var compared = isPartial ? customizer(othValue, objValue, key, other, object, stack) : customizer(objValue, othValue, key, object, other, stack);
@@ -2735,7 +2735,7 @@ var lodash = { exports: {} };
         return result2;
       };
       var getTag = baseGetTag;
-      if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
+      if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap2 && getTag(new WeakMap2()) != weakMapTag) {
         getTag = function(value) {
           var result2 = baseGetTag(value), Ctor = result2 == objectTag ? value.constructor : undefined$1, ctorString = Ctor ? toSource(Ctor) : "";
           if (ctorString) {
@@ -2756,9 +2756,9 @@ var lodash = { exports: {} };
         };
       }
       function getView(start, end, transforms) {
-        var index = -1, length = transforms.length;
-        while (++index < length) {
-          var data = transforms[index], size2 = data.size;
+        var index2 = -1, length = transforms.length;
+        while (++index2 < length) {
+          var data = transforms[index2], size2 = data.size;
           switch (data.type) {
             case "drop":
               start += size2;
@@ -2782,15 +2782,15 @@ var lodash = { exports: {} };
       }
       function hasPath(object, path, hasFunc) {
         path = castPath(path, object);
-        var index = -1, length = path.length, result2 = false;
-        while (++index < length) {
-          var key = toKey(path[index]);
+        var index2 = -1, length = path.length, result2 = false;
+        while (++index2 < length) {
+          var key = toKey(path[index2]);
           if (!(result2 = object != null && hasFunc(object, key))) {
             break;
           }
           object = object[key];
         }
-        if (result2 || ++index != length) {
+        if (result2 || ++index2 != length) {
           return result2;
         }
         length = object == null ? 0 : object.length;
@@ -2858,13 +2858,13 @@ var lodash = { exports: {} };
         length = length == null ? MAX_SAFE_INTEGER : length;
         return !!length && (type == "number" || type != "symbol" && reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
       }
-      function isIterateeCall(value, index, object) {
+      function isIterateeCall(value, index2, object) {
         if (!isObject2(object)) {
           return false;
         }
-        var type = typeof index;
-        if (type == "number" ? isArrayLike(object) && isIndex(index, object.length) : type == "string" && index in object) {
-          return eq(object[index], value);
+        var type = typeof index2;
+        if (type == "number" ? isArrayLike(object) && isIndex(index2, object.length) : type == "string" && index2 in object) {
+          return eq(object[index2], value);
         }
         return false;
       }
@@ -2973,14 +2973,14 @@ var lodash = { exports: {} };
       function overRest(func, start, transform2) {
         start = nativeMax(start === undefined$1 ? func.length - 1 : start, 0);
         return function() {
-          var args = arguments, index = -1, length = nativeMax(args.length - start, 0), array = Array2(length);
-          while (++index < length) {
-            array[index] = args[start + index];
+          var args = arguments, index2 = -1, length = nativeMax(args.length - start, 0), array = Array2(length);
+          while (++index2 < length) {
+            array[index2] = args[start + index2];
           }
-          index = -1;
+          index2 = -1;
           var otherArgs = Array2(start + 1);
-          while (++index < start) {
-            otherArgs[index] = args[index];
+          while (++index2 < start) {
+            otherArgs[index2] = args[index2];
           }
           otherArgs[start] = transform2(array);
           return apply(func, this, otherArgs);
@@ -2992,8 +2992,8 @@ var lodash = { exports: {} };
       function reorder(array, indexes) {
         var arrLength = array.length, length = nativeMin(indexes.length, arrLength), oldArray = copyArray(array);
         while (length--) {
-          var index = indexes[length];
-          array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined$1;
+          var index2 = indexes[length];
+          array[length] = isIndex(index2, arrLength) ? oldArray[index2] : undefined$1;
         }
         return array;
       }
@@ -3031,12 +3031,12 @@ var lodash = { exports: {} };
         };
       }
       function shuffleSelf(array, size2) {
-        var index = -1, length = array.length, lastIndex = length - 1;
+        var index2 = -1, length = array.length, lastIndex = length - 1;
         size2 = size2 === undefined$1 ? length : size2;
-        while (++index < size2) {
-          var rand = baseRandom(index, lastIndex), value = array[rand];
-          array[rand] = array[index];
-          array[index] = value;
+        while (++index2 < size2) {
+          var rand = baseRandom(index2, lastIndex), value = array[rand];
+          array[rand] = array[index2];
+          array[index2] = value;
         }
         array.length = size2;
         return array;
@@ -3100,16 +3100,16 @@ var lodash = { exports: {} };
         if (!length || size2 < 1) {
           return [];
         }
-        var index = 0, resIndex = 0, result2 = Array2(nativeCeil(length / size2));
-        while (index < length) {
-          result2[resIndex++] = baseSlice(array, index, index += size2);
+        var index2 = 0, resIndex = 0, result2 = Array2(nativeCeil(length / size2));
+        while (index2 < length) {
+          result2[resIndex++] = baseSlice(array, index2, index2 += size2);
         }
         return result2;
       }
       function compact(array) {
-        var index = -1, length = array == null ? 0 : array.length, resIndex = 0, result2 = [];
-        while (++index < length) {
-          var value = array[index];
+        var index2 = -1, length = array == null ? 0 : array.length, resIndex = 0, result2 = [];
+        while (++index2 < length) {
+          var value = array[index2];
           if (value) {
             result2[resIndex++] = value;
           }
@@ -3121,9 +3121,9 @@ var lodash = { exports: {} };
         if (!length) {
           return [];
         }
-        var args = Array2(length - 1), array = arguments[0], index = length;
-        while (index--) {
-          args[index - 1] = arguments[index];
+        var args = Array2(length - 1), array = arguments[0], index2 = length;
+        while (index2--) {
+          args[index2 - 1] = arguments[index2];
         }
         return arrayPush(isArray2(array) ? copyArray(array) : [array], baseFlatten(args, 1));
       }
@@ -3183,23 +3183,23 @@ var lodash = { exports: {} };
         if (!length) {
           return -1;
         }
-        var index = fromIndex == null ? 0 : toInteger(fromIndex);
-        if (index < 0) {
-          index = nativeMax(length + index, 0);
+        var index2 = fromIndex == null ? 0 : toInteger(fromIndex);
+        if (index2 < 0) {
+          index2 = nativeMax(length + index2, 0);
         }
-        return baseFindIndex(array, getIteratee(predicate, 3), index);
+        return baseFindIndex(array, getIteratee(predicate, 3), index2);
       }
       function findLastIndex(array, predicate, fromIndex) {
         var length = array == null ? 0 : array.length;
         if (!length) {
           return -1;
         }
-        var index = length - 1;
+        var index2 = length - 1;
         if (fromIndex !== undefined$1) {
-          index = toInteger(fromIndex);
-          index = fromIndex < 0 ? nativeMax(length + index, 0) : nativeMin(index, length - 1);
+          index2 = toInteger(fromIndex);
+          index2 = fromIndex < 0 ? nativeMax(length + index2, 0) : nativeMin(index2, length - 1);
         }
-        return baseFindIndex(array, getIteratee(predicate, 3), index, true);
+        return baseFindIndex(array, getIteratee(predicate, 3), index2, true);
       }
       function flatten(array) {
         var length = array == null ? 0 : array.length;
@@ -3218,9 +3218,9 @@ var lodash = { exports: {} };
         return baseFlatten(array, depth);
       }
       function fromPairs(pairs) {
-        var index = -1, length = pairs == null ? 0 : pairs.length, result2 = {};
-        while (++index < length) {
-          var pair = pairs[index];
+        var index2 = -1, length = pairs == null ? 0 : pairs.length, result2 = {};
+        while (++index2 < length) {
+          var pair = pairs[index2];
           result2[pair[0]] = pair[1];
         }
         return result2;
@@ -3233,11 +3233,11 @@ var lodash = { exports: {} };
         if (!length) {
           return -1;
         }
-        var index = fromIndex == null ? 0 : toInteger(fromIndex);
-        if (index < 0) {
-          index = nativeMax(length + index, 0);
+        var index2 = fromIndex == null ? 0 : toInteger(fromIndex);
+        if (index2 < 0) {
+          index2 = nativeMax(length + index2, 0);
         }
-        return baseIndexOf(array, value, index);
+        return baseIndexOf(array, value, index2);
       }
       function initial(array) {
         var length = array == null ? 0 : array.length;
@@ -3276,12 +3276,12 @@ var lodash = { exports: {} };
         if (!length) {
           return -1;
         }
-        var index = length;
+        var index2 = length;
         if (fromIndex !== undefined$1) {
-          index = toInteger(fromIndex);
-          index = index < 0 ? nativeMax(length + index, 0) : nativeMin(index, length - 1);
+          index2 = toInteger(fromIndex);
+          index2 = index2 < 0 ? nativeMax(length + index2, 0) : nativeMin(index2, length - 1);
         }
-        return value === value ? strictLastIndexOf(array, value, index) : baseFindIndex(array, baseIsNaN, index, true);
+        return value === value ? strictLastIndexOf(array, value, index2) : baseFindIndex(array, baseIsNaN, index2, true);
       }
       function nth(array, n) {
         return array && array.length ? baseNth(array, toInteger(n)) : undefined$1;
@@ -3298,8 +3298,8 @@ var lodash = { exports: {} };
       }
       var pullAt = flatRest(function(array, indexes) {
         var length = array == null ? 0 : array.length, result2 = baseAt(array, indexes);
-        basePullAt(array, arrayMap(indexes, function(index) {
-          return isIndex(index, length) ? +index : index;
+        basePullAt(array, arrayMap(indexes, function(index2) {
+          return isIndex(index2, length) ? +index2 : index2;
         }).sort(compareAscending));
         return result2;
       });
@@ -3308,13 +3308,13 @@ var lodash = { exports: {} };
         if (!(array && array.length)) {
           return result2;
         }
-        var index = -1, indexes = [], length = array.length;
+        var index2 = -1, indexes = [], length = array.length;
         predicate = getIteratee(predicate, 3);
-        while (++index < length) {
-          var value = array[index];
-          if (predicate(value, index, array)) {
+        while (++index2 < length) {
+          var value = array[index2];
+          if (predicate(value, index2, array)) {
             result2.push(value);
-            indexes.push(index);
+            indexes.push(index2);
           }
         }
         basePullAt(array, indexes);
@@ -3346,9 +3346,9 @@ var lodash = { exports: {} };
       function sortedIndexOf(array, value) {
         var length = array == null ? 0 : array.length;
         if (length) {
-          var index = baseSortedIndex(array, value);
-          if (index < length && eq(array[index], value)) {
-            return index;
+          var index2 = baseSortedIndex(array, value);
+          if (index2 < length && eq(array[index2], value)) {
+            return index2;
           }
         }
         return -1;
@@ -3362,9 +3362,9 @@ var lodash = { exports: {} };
       function sortedLastIndexOf(array, value) {
         var length = array == null ? 0 : array.length;
         if (length) {
-          var index = baseSortedIndex(array, value, true) - 1;
-          if (eq(array[index], value)) {
-            return index;
+          var index2 = baseSortedIndex(array, value, true) - 1;
+          if (eq(array[index2], value)) {
+            return index2;
           }
         }
         return -1;
@@ -3437,8 +3437,8 @@ var lodash = { exports: {} };
             return true;
           }
         });
-        return baseTimes(length, function(index) {
-          return arrayMap(array, baseProperty(index));
+        return baseTimes(length, function(index2) {
+          return arrayMap(array, baseProperty(index2));
         });
       }
       function unzipWith(array, iteratee2) {
@@ -3623,9 +3623,9 @@ var lodash = { exports: {} };
         return isString2(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
       }
       var invokeMap = baseRest(function(collection, path, args) {
-        var index = -1, isFunc = typeof path == "function", result2 = isArrayLike(collection) ? Array2(collection.length) : [];
+        var index2 = -1, isFunc = typeof path == "function", result2 = isArrayLike(collection) ? Array2(collection.length) : [];
         baseEach(collection, function(value) {
-          result2[++index] = isFunc ? apply(path, value, args) : baseInvoke(value, path, args);
+          result2[++index2] = isFunc ? apply(path, value, args) : baseInvoke(value, path, args);
         });
         return result2;
       });
@@ -3778,7 +3778,7 @@ var lodash = { exports: {} };
         result2.placeholder = curryRight.placeholder;
         return result2;
       }
-      function debounce(func, wait, options) {
+      function debounce2(func, wait, options) {
         var lastArgs, lastThis, maxWait, result2, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
         if (typeof func != "function") {
           throw new TypeError2(FUNC_ERROR_TEXT);
@@ -3911,9 +3911,9 @@ var lodash = { exports: {} };
         transforms = transforms.length == 1 && isArray2(transforms[0]) ? arrayMap(transforms[0], baseUnary(getIteratee())) : arrayMap(baseFlatten(transforms, 1), baseUnary(getIteratee()));
         var funcsLength = transforms.length;
         return baseRest(function(args) {
-          var index = -1, length = nativeMin(args.length, funcsLength);
-          while (++index < length) {
-            args[index] = transforms[index].call(this, args[index]);
+          var index2 = -1, length = nativeMin(args.length, funcsLength);
+          while (++index2 < length) {
+            args[index2] = transforms[index2].call(this, args[index2]);
           }
           return apply(func, this, args);
         });
@@ -3949,7 +3949,7 @@ var lodash = { exports: {} };
           return apply(func, this, otherArgs);
         });
       }
-      function throttle(func, wait, options) {
+      function throttle2(func, wait, options) {
         var leading = true, trailing = true;
         if (typeof func != "function") {
           throw new TypeError2(FUNC_ERROR_TEXT);
@@ -3958,7 +3958,7 @@ var lodash = { exports: {} };
           leading = "leading" in options ? !!options.leading : leading;
           trailing = "trailing" in options ? !!options.trailing : trailing;
         }
-        return debounce(func, wait, {
+        return debounce2(func, wait, {
           "leading": leading,
           "maxWait": wait,
           "trailing": trailing
@@ -4014,12 +4014,12 @@ var lodash = { exports: {} };
       function isArrayLikeObject(value) {
         return isObjectLike(value) && isArrayLike(value);
       }
-      function isBoolean(value) {
+      function isBoolean2(value) {
         return value === true || value === false || isObjectLike(value) && baseGetTag(value) == boolTag;
       }
       var isBuffer = nativeIsBuffer || stubFalse;
       var isDate = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
-      function isElement(value) {
+      function isElement2(value) {
         return isObjectLike(value) && value.nodeType === 1 && !isPlainObject(value);
       }
       function isEmpty(value) {
@@ -4098,7 +4098,7 @@ var lodash = { exports: {} };
         }
         return baseIsNative(value);
       }
-      function isNull(value) {
+      function isNull2(value) {
         return value === null;
       }
       function isNil(value) {
@@ -4228,14 +4228,14 @@ var lodash = { exports: {} };
       }
       var defaults = baseRest(function(object, sources) {
         object = Object2(object);
-        var index = -1;
+        var index2 = -1;
         var length = sources.length;
         var guard = length > 2 ? sources[2] : undefined$1;
         if (guard && isIterateeCall(sources[0], sources[1], guard)) {
           length = 1;
         }
-        while (++index < length) {
-          var source = sources[index];
+        while (++index2 < length) {
+          var source = sources[index2];
           var props = keysIn(source);
           var propsIndex = -1;
           var propsLength = props.length;
@@ -4332,7 +4332,7 @@ var lodash = { exports: {} };
       var mergeWith = createAssigner(function(object, source, srcIndex, customizer) {
         baseMerge(object, source, srcIndex, customizer);
       });
-      var omit = flatRest(function(object, paths) {
+      var omit2 = flatRest(function(object, paths) {
         var result2 = {};
         if (object == null) {
           return result2;
@@ -4356,7 +4356,7 @@ var lodash = { exports: {} };
       function omitBy(object, predicate) {
         return pickBy(object, negate(getIteratee(predicate)));
       }
-      var pick = flatRest(function(object, paths) {
+      var pick2 = flatRest(function(object, paths) {
         return object == null ? {} : basePick(object, paths);
       });
       function pickBy(object, predicate) {
@@ -4373,15 +4373,15 @@ var lodash = { exports: {} };
       }
       function result(object, path, defaultValue) {
         path = castPath(path, object);
-        var index = -1, length = path.length;
+        var index2 = -1, length = path.length;
         if (!length) {
           length = 1;
           object = undefined$1;
         }
-        while (++index < length) {
-          var value = object == null ? undefined$1 : object[toKey(path[index])];
+        while (++index2 < length) {
+          var value = object == null ? undefined$1 : object[toKey(path[index2])];
           if (value === undefined$1) {
-            index = length;
+            index2 = length;
             value = defaultValue;
           }
           object = isFunction2(value) ? value.call(object) : value;
@@ -4410,8 +4410,8 @@ var lodash = { exports: {} };
             accumulator = {};
           }
         }
-        (isArrLike ? arrayEach : baseForOwn)(object, function(value, index, object2) {
-          return iteratee2(accumulator, value, index, object2);
+        (isArrLike ? arrayEach : baseForOwn)(object, function(value, index2, object2) {
+          return iteratee2(accumulator, value, index2, object2);
         });
         return accumulator;
       }
@@ -4493,9 +4493,9 @@ var lodash = { exports: {} };
         }
         return baseRandom(lower, upper);
       }
-      var camelCase = createCompounder(function(result2, word, index) {
+      var camelCase = createCompounder(function(result2, word, index2) {
         word = word.toLowerCase();
-        return result2 + (index ? capitalize(word) : word);
+        return result2 + (index2 ? capitalize(word) : word);
       });
       function capitalize(string) {
         return upperFirst(toString(string).toLowerCase());
@@ -4504,14 +4504,14 @@ var lodash = { exports: {} };
         string = toString(string);
         return string && string.replace(reLatin, deburrLetter).replace(reComboMark, "");
       }
-      function endsWith(string, target, position) {
+      function endsWith(string, target2, position) {
         string = toString(string);
-        target = baseToString(target);
+        target2 = baseToString(target2);
         var length = string.length;
         position = position === undefined$1 ? length : baseClamp(toInteger(position), 0, length);
         var end = position;
-        position -= target.length;
-        return position >= 0 && string.slice(position, end) == target;
+        position -= target2.length;
+        return position >= 0 && string.slice(position, end) == target2;
       }
       function escape(string) {
         string = toString(string);
@@ -4521,11 +4521,11 @@ var lodash = { exports: {} };
         string = toString(string);
         return string && reHasRegExpChar.test(string) ? string.replace(reRegExpChar, "\\$&") : string;
       }
-      var kebabCase = createCompounder(function(result2, word, index) {
-        return result2 + (index ? "-" : "") + word.toLowerCase();
+      var kebabCase = createCompounder(function(result2, word, index2) {
+        return result2 + (index2 ? "-" : "") + word.toLowerCase();
       });
-      var lowerCase = createCompounder(function(result2, word, index) {
-        return result2 + (index ? " " : "") + word.toLowerCase();
+      var lowerCase = createCompounder(function(result2, word, index2) {
+        return result2 + (index2 ? " " : "") + word.toLowerCase();
       });
       var lowerFirst = createCaseFirst("toLowerCase");
       function pad(string, length, chars) {
@@ -4570,8 +4570,8 @@ var lodash = { exports: {} };
         var args = arguments, string = toString(args[0]);
         return args.length < 3 ? string : string.replace(args[1], args[2]);
       }
-      var snakeCase = createCompounder(function(result2, word, index) {
-        return result2 + (index ? "_" : "") + word.toLowerCase();
+      var snakeCase = createCompounder(function(result2, word, index2) {
+        return result2 + (index2 ? "_" : "") + word.toLowerCase();
       });
       function split(string, separator, limit) {
         if (limit && typeof limit != "number" && isIterateeCall(string, separator, limit)) {
@@ -4590,14 +4590,14 @@ var lodash = { exports: {} };
         }
         return string.split(separator, limit);
       }
-      var startCase = createCompounder(function(result2, word, index) {
-        return result2 + (index ? " " : "") + upperFirst(word);
+      var startCase = createCompounder(function(result2, word, index2) {
+        return result2 + (index2 ? " " : "") + upperFirst(word);
       });
-      function startsWith(string, target, position) {
+      function startsWith(string, target2, position) {
         string = toString(string);
         position = position == null ? 0 : baseClamp(toInteger(position), 0, string.length);
-        target = baseToString(target);
-        return string.slice(position, position + target.length) == target;
+        target2 = baseToString(target2);
+        return string.slice(position, position + target2.length) == target2;
       }
       function template(string, options, guard) {
         var settings = lodash2.templateSettings;
@@ -4607,12 +4607,12 @@ var lodash = { exports: {} };
         string = toString(string);
         options = assignInWith({}, options, settings, customDefaultsAssignIn);
         var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn), importsKeys = keys(imports), importsValues = baseValues(imports, importsKeys);
-        var isEscaping, isEvaluating, index = 0, interpolate = options.interpolate || reNoMatch, source = "__p += '";
+        var isEscaping, isEvaluating, index2 = 0, interpolate = options.interpolate || reNoMatch, source = "__p += '";
         var reDelimiters = RegExp2((options.escape || reNoMatch).source + "|" + interpolate.source + "|" + (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + "|" + (options.evaluate || reNoMatch).source + "|$", "g");
         var sourceURL = "//# sourceURL=" + (hasOwnProperty.call(options, "sourceURL") ? (options.sourceURL + "").replace(/\s/g, " ") : "lodash.templateSources[" + ++templateCounter + "]") + "\n";
         string.replace(reDelimiters, function(match, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset) {
           interpolateValue || (interpolateValue = esTemplateValue);
-          source += string.slice(index, offset).replace(reUnescapedString, escapeStringChar);
+          source += string.slice(index2, offset).replace(reUnescapedString, escapeStringChar);
           if (escapeValue) {
             isEscaping = true;
             source += "' +\n__e(" + escapeValue + ") +\n'";
@@ -4624,7 +4624,7 @@ var lodash = { exports: {} };
           if (interpolateValue) {
             source += "' +\n((__t = (" + interpolateValue + ")) == null ? '' : __t) +\n'";
           }
-          index = offset + match.length;
+          index2 = offset + match.length;
           return match;
         });
         source += "';\n";
@@ -4724,9 +4724,9 @@ var lodash = { exports: {} };
             result2 = result2.slice(0, newEnd === undefined$1 ? end : newEnd);
           }
         } else if (string.indexOf(baseToString(separator), end) != end) {
-          var index = result2.lastIndexOf(separator);
-          if (index > -1) {
-            result2 = result2.slice(0, index);
+          var index2 = result2.lastIndexOf(separator);
+          if (index2 > -1) {
+            result2 = result2.slice(0, index2);
           }
         }
         return result2 + omission;
@@ -4735,8 +4735,8 @@ var lodash = { exports: {} };
         string = toString(string);
         return string && reHasEscapedHtml.test(string) ? string.replace(reEscapedHtml, unescapeHtmlChar) : string;
       }
-      var upperCase = createCompounder(function(result2, word, index) {
-        return result2 + (index ? " " : "") + word.toUpperCase();
+      var upperCase = createCompounder(function(result2, word, index2) {
+        return result2 + (index2 ? " " : "") + word.toUpperCase();
       });
       var upperFirst = createCaseFirst("toUpperCase");
       function words(string, pattern, guard) {
@@ -4770,9 +4770,9 @@ var lodash = { exports: {} };
           return [toIteratee(pair[0]), pair[1]];
         });
         return baseRest(function(args) {
-          var index = -1;
-          while (++index < length) {
-            var pair = pairs[index];
+          var index2 = -1;
+          while (++index2 < length) {
+            var pair = pairs[index2];
             if (apply(pair[0], this, args)) {
               return apply(pair[1], this, args);
             }
@@ -4883,17 +4883,17 @@ var lodash = { exports: {} };
       function stubTrue() {
         return true;
       }
-      function times(n, iteratee2) {
+      function times2(n, iteratee2) {
         n = toInteger(n);
         if (n < 1 || n > MAX_SAFE_INTEGER) {
           return [];
         }
-        var index = MAX_ARRAY_LENGTH, length = nativeMin(n, MAX_ARRAY_LENGTH);
+        var index2 = MAX_ARRAY_LENGTH, length = nativeMin(n, MAX_ARRAY_LENGTH);
         iteratee2 = getIteratee(iteratee2);
         n -= MAX_ARRAY_LENGTH;
         var result2 = baseTimes(length, iteratee2);
-        while (++index < n) {
-          iteratee2(index);
+        while (++index2 < n) {
+          iteratee2(index2);
         }
         return result2;
       }
@@ -4911,7 +4911,7 @@ var lodash = { exports: {} };
         return augend + addend;
       }, 0);
       var ceil = createRound("ceil");
-      var divide = createMathOperation(function(dividend, divisor) {
+      var divide2 = createMathOperation(function(dividend, divisor) {
         return dividend / divisor;
       }, 1);
       var floor = createRound("floor");
@@ -4936,7 +4936,7 @@ var lodash = { exports: {} };
       var multiply = createMathOperation(function(multiplier, multiplicand) {
         return multiplier * multiplicand;
       }, 1);
-      var round = createRound("round");
+      var round2 = createRound("round");
       var subtract = createMathOperation(function(minuend, subtrahend) {
         return minuend - subtrahend;
       }, 0);
@@ -4969,7 +4969,7 @@ var lodash = { exports: {} };
       lodash2.create = create;
       lodash2.curry = curry;
       lodash2.curryRight = curryRight;
-      lodash2.debounce = debounce;
+      lodash2.debounce = debounce2;
       lodash2.defaults = defaults;
       lodash2.defaultsDeep = defaultsDeep;
       lodash2.defer = defer;
@@ -5020,7 +5020,7 @@ var lodash = { exports: {} };
       lodash2.mixin = mixin;
       lodash2.negate = negate;
       lodash2.nthArg = nthArg;
-      lodash2.omit = omit;
+      lodash2.omit = omit2;
       lodash2.omitBy = omitBy;
       lodash2.once = once;
       lodash2.orderBy = orderBy;
@@ -5031,7 +5031,7 @@ var lodash = { exports: {} };
       lodash2.partial = partial;
       lodash2.partialRight = partialRight;
       lodash2.partition = partition;
-      lodash2.pick = pick;
+      lodash2.pick = pick2;
       lodash2.pickBy = pickBy;
       lodash2.property = property;
       lodash2.propertyOf = propertyOf;
@@ -5063,7 +5063,7 @@ var lodash = { exports: {} };
       lodash2.takeRightWhile = takeRightWhile;
       lodash2.takeWhile = takeWhile;
       lodash2.tap = tap;
-      lodash2.throttle = throttle;
+      lodash2.throttle = throttle2;
       lodash2.thru = thru;
       lodash2.toArray = toArray;
       lodash2.toPairs = toPairs;
@@ -5113,7 +5113,7 @@ var lodash = { exports: {} };
       lodash2.conformsTo = conformsTo;
       lodash2.deburr = deburr;
       lodash2.defaultTo = defaultTo;
-      lodash2.divide = divide;
+      lodash2.divide = divide2;
       lodash2.endsWith = endsWith;
       lodash2.eq = eq;
       lodash2.escape = escape;
@@ -5148,10 +5148,10 @@ var lodash = { exports: {} };
       lodash2.isArrayBuffer = isArrayBuffer;
       lodash2.isArrayLike = isArrayLike;
       lodash2.isArrayLikeObject = isArrayLikeObject;
-      lodash2.isBoolean = isBoolean;
+      lodash2.isBoolean = isBoolean2;
       lodash2.isBuffer = isBuffer;
       lodash2.isDate = isDate;
-      lodash2.isElement = isElement;
+      lodash2.isElement = isElement2;
       lodash2.isEmpty = isEmpty;
       lodash2.isEqual = isEqual2;
       lodash2.isEqualWith = isEqualWith;
@@ -5166,7 +5166,7 @@ var lodash = { exports: {} };
       lodash2.isNaN = isNaN;
       lodash2.isNative = isNative;
       lodash2.isNil = isNil;
-      lodash2.isNull = isNull;
+      lodash2.isNull = isNull2;
       lodash2.isNumber = isNumber2;
       lodash2.isObject = isObject2;
       lodash2.isObjectLike = isObjectLike;
@@ -5214,7 +5214,7 @@ var lodash = { exports: {} };
       lodash2.repeat = repeat;
       lodash2.replace = replace;
       lodash2.result = result;
-      lodash2.round = round;
+      lodash2.round = round2;
       lodash2.runInContext = runInContext2;
       lodash2.sample = sample;
       lodash2.size = size;
@@ -5232,7 +5232,7 @@ var lodash = { exports: {} };
       lodash2.sum = sum;
       lodash2.sumBy = sumBy;
       lodash2.template = template;
-      lodash2.times = times;
+      lodash2.times = times2;
       lodash2.toFinite = toFinite;
       lodash2.toInteger = toInteger;
       lodash2.toLength = toLength;
@@ -5265,10 +5265,10 @@ var lodash = { exports: {} };
       arrayEach(["bind", "bindKey", "curry", "curryRight", "partial", "partialRight"], function(methodName) {
         lodash2[methodName].placeholder = lodash2;
       });
-      arrayEach(["drop", "take"], function(methodName, index) {
+      arrayEach(["drop", "take"], function(methodName, index2) {
         LazyWrapper.prototype[methodName] = function(n) {
           n = n === undefined$1 ? 1 : nativeMax(toInteger(n), 0);
-          var result2 = this.__filtered__ && !index ? new LazyWrapper(this) : this.clone();
+          var result2 = this.__filtered__ && !index2 ? new LazyWrapper(this) : this.clone();
           if (result2.__filtered__) {
             result2.__takeCount__ = nativeMin(n, result2.__takeCount__);
           } else {
@@ -5283,8 +5283,8 @@ var lodash = { exports: {} };
           return this.reverse()[methodName](n).reverse();
         };
       });
-      arrayEach(["filter", "map", "takeWhile"], function(methodName, index) {
-        var type = index + 1, isFilter = type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
+      arrayEach(["filter", "map", "takeWhile"], function(methodName, index2) {
+        var type = index2 + 1, isFilter = type == LAZY_FILTER_FLAG || type == LAZY_WHILE_FLAG;
         LazyWrapper.prototype[methodName] = function(iteratee2) {
           var result2 = this.clone();
           result2.__iteratees__.push({
@@ -5295,14 +5295,14 @@ var lodash = { exports: {} };
           return result2;
         };
       });
-      arrayEach(["head", "last"], function(methodName, index) {
-        var takeName = "take" + (index ? "Right" : "");
+      arrayEach(["head", "last"], function(methodName, index2) {
+        var takeName = "take" + (index2 ? "Right" : "");
         LazyWrapper.prototype[methodName] = function() {
           return this[takeName](1).value()[0];
         };
       });
-      arrayEach(["initial", "tail"], function(methodName, index) {
-        var dropName = "drop" + (index ? "" : "Right");
+      arrayEach(["initial", "tail"], function(methodName, index2) {
+        var dropName = "drop" + (index2 ? "" : "Right");
         LazyWrapper.prototype[methodName] = function() {
           return this.__filtered__ ? new LazyWrapper(this) : this[dropName](1);
         };
@@ -5434,6 +5434,12 @@ const opt = Object.prototype.toString;
 function isArray(obj) {
   return opt.call(obj) === "[object Array]";
 }
+function isNull(obj) {
+  return opt.call(obj) === "[object Null]";
+}
+function isBoolean(obj) {
+  return opt.call(obj) === "[object Boolean]";
+}
 function isObject(obj) {
   return opt.call(obj) === "[object Object]";
 }
@@ -5449,9 +5455,225 @@ function isUndefined(obj) {
 function isFunction(obj) {
   return typeof obj === "function";
 }
+const isComponentInstance = (value) => {
+  return (value == null ? void 0 : value.$) !== void 0;
+};
 const configProviderInjectionKey = Symbol("ArcoConfigProvider");
+const calendarLang = {
+  formatYear: "YYYY \u5E74",
+  formatMonth: "YYYY \u5E74 MM \u6708",
+  today: "\u4ECA\u5929",
+  view: {
+    month: "\u6708",
+    year: "\u5E74",
+    week: "\u5468",
+    day: "\u65E5"
+  },
+  month: {
+    long: {
+      January: "\u4E00\u6708",
+      February: "\u4E8C\u6708",
+      March: "\u4E09\u6708",
+      April: "\u56DB\u6708",
+      May: "\u4E94\u6708",
+      June: "\u516D\u6708",
+      July: "\u4E03\u6708",
+      August: "\u516B\u6708",
+      September: "\u4E5D\u6708",
+      October: "\u5341\u6708",
+      November: "\u5341\u4E00\u6708",
+      December: "\u5341\u4E8C\u6708"
+    },
+    short: {
+      January: "\u4E00\u6708",
+      February: "\u4E8C\u6708",
+      March: "\u4E09\u6708",
+      April: "\u56DB\u6708",
+      May: "\u4E94\u6708",
+      June: "\u516D\u6708",
+      July: "\u4E03\u6708",
+      August: "\u516B\u6708",
+      September: "\u4E5D\u6708",
+      October: "\u5341\u6708",
+      November: "\u5341\u4E00\u6708",
+      December: "\u5341\u4E8C\u6708"
+    }
+  },
+  week: {
+    long: {
+      self: "\u5468",
+      monday: "\u5468\u4E00",
+      tuesday: "\u5468\u4E8C",
+      wednesday: "\u5468\u4E09",
+      thursday: "\u5468\u56DB",
+      friday: "\u5468\u4E94",
+      saturday: "\u5468\u516D",
+      sunday: "\u5468\u65E5"
+    },
+    short: {
+      self: "\u5468",
+      monday: "\u4E00",
+      tuesday: "\u4E8C",
+      wednesday: "\u4E09",
+      thursday: "\u56DB",
+      friday: "\u4E94",
+      saturday: "\u516D",
+      sunday: "\u65E5"
+    }
+  }
+};
+const lang = {
+  locale: "zh-CN",
+  empty: {
+    description: "\u6682\u65E0\u6570\u636E"
+  },
+  drawer: {
+    okText: "\u786E\u5B9A",
+    cancelText: "\u53D6\u6D88"
+  },
+  popconfirm: {
+    okText: "\u786E\u5B9A",
+    cancelText: "\u53D6\u6D88"
+  },
+  modal: {
+    okText: "\u786E\u5B9A",
+    cancelText: "\u53D6\u6D88"
+  },
+  pagination: {
+    goto: "\u524D\u5F80",
+    page: "\u9875",
+    countPerPage: "\u6761/\u9875",
+    total: "\u5171 {0} \u6761"
+  },
+  table: {
+    okText: "\u786E\u5B9A",
+    resetText: "\u91CD\u7F6E"
+  },
+  upload: {
+    start: "\u5F00\u59CB",
+    cancel: "\u53D6\u6D88",
+    delete: "\u5220\u9664",
+    retry: "\u70B9\u51FB\u91CD\u8BD5",
+    buttonText: "\u70B9\u51FB\u4E0A\u4F20",
+    preview: "\u9884\u89C8",
+    drag: "\u70B9\u51FB\u6216\u62D6\u62FD\u6587\u4EF6\u5230\u6B64\u5904\u4E0A\u4F20",
+    dragHover: "\u91CA\u653E\u6587\u4EF6\u5E76\u5F00\u59CB\u4E0A\u4F20",
+    error: "\u4E0A\u4F20\u5931\u8D25"
+  },
+  datePicker: {
+    view: calendarLang.view,
+    month: calendarLang.month,
+    week: calendarLang.week,
+    placeholder: {
+      date: "\u8BF7\u9009\u62E9\u65E5\u671F",
+      week: "\u8BF7\u9009\u62E9\u5468",
+      month: "\u8BF7\u9009\u62E9\u6708\u4EFD",
+      year: "\u8BF7\u9009\u62E9\u5E74\u4EFD",
+      quarter: "\u8BF7\u9009\u62E9\u5B63\u5EA6",
+      time: "\u8BF7\u9009\u62E9\u65F6\u95F4"
+    },
+    rangePlaceholder: {
+      date: ["\u5F00\u59CB\u65E5\u671F", "\u7ED3\u675F\u65E5\u671F"],
+      week: ["\u5F00\u59CB\u5468", "\u7ED3\u675F\u5468"],
+      month: ["\u5F00\u59CB\u6708\u4EFD", "\u7ED3\u675F\u6708\u4EFD"],
+      year: ["\u5F00\u59CB\u5E74\u4EFD", "\u7ED3\u675F\u5E74\u4EFD"],
+      quarter: ["\u5F00\u59CB\u5B63\u5EA6", "\u7ED3\u675F\u5B63\u5EA6"],
+      time: ["\u5F00\u59CB\u65F6\u95F4", "\u7ED3\u675F\u65F6\u95F4"]
+    },
+    selectTime: "\u9009\u62E9\u65F6\u95F4",
+    today: "\u4ECA\u5929",
+    now: "\u6B64\u523B",
+    ok: "\u786E\u5B9A"
+  },
+  image: {
+    loading: "\u52A0\u8F7D\u4E2D"
+  },
+  imagePreview: {
+    fullScreen: "\u5168\u5C4F",
+    rotateRight: "\u5411\u53F3\u65CB\u8F6C",
+    rotateLeft: "\u5411\u5DE6\u65CB\u8F6C",
+    zoomIn: "\u653E\u5927",
+    zoomOut: "\u7F29\u5C0F",
+    originalSize: "\u539F\u59CB\u5C3A\u5BF8"
+  },
+  typography: {
+    copied: "\u5DF2\u590D\u5236",
+    copy: "\u590D\u5236",
+    expand: "\u5C55\u5F00",
+    collapse: "\u6298\u53E0",
+    edit: "\u7F16\u8F91"
+  }
+};
+const LOCALE = ref("zh-CN");
+const I18N_MESSAGES = reactive({
+  "zh-CN": lang
+});
+const useI18n = () => {
+  const configProvider = inject(configProviderInjectionKey, void 0);
+  const i18nMessage = computed(() => {
+    var _a;
+    return (_a = configProvider == null ? void 0 : configProvider.locale) != null ? _a : I18N_MESSAGES[LOCALE.value];
+  });
+  const locale = computed(() => i18nMessage.value.locale);
+  const transform = (key, ...args) => {
+    const keyArray = key.split(".");
+    let temp = i18nMessage.value;
+    for (const keyItem of keyArray) {
+      if (!temp[keyItem]) {
+        return key;
+      }
+      temp = temp[keyItem];
+    }
+    if (isString(temp)) {
+      if (args.length > 0) {
+        return temp.replace(/{(\d+)}/g, (sub, index2) => {
+          var _a;
+          return (_a = args[index2]) != null ? _a : sub;
+        });
+      }
+      return temp;
+    }
+    return temp;
+  };
+  return {
+    locale,
+    t: transform
+  };
+};
+var __defProp$f = Object.defineProperty;
+var __defProps$7 = Object.defineProperties;
+var __getOwnPropDescs$7 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$g = Object.getOwnPropertySymbols;
+var __hasOwnProp$g = Object.prototype.hasOwnProperty;
+var __propIsEnum$g = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$f = (obj, key, value) => key in obj ? __defProp$f(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$f = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$g.call(b, prop))
+      __defNormalProp$f(a, prop, b[prop]);
+  if (__getOwnPropSymbols$g)
+    for (var prop of __getOwnPropSymbols$g(b)) {
+      if (__propIsEnum$g.call(b, prop))
+        __defNormalProp$f(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$7 = (a, b) => __defProps$7(a, __getOwnPropDescs$7(b));
+const COMPONENT_PREFIX = "A";
 const CLASS_PREFIX = "arco";
 const GLOBAL_CONFIG_NAME = "$arco";
+const getComponentPrefix = (options) => {
+  var _a;
+  return (_a = options == null ? void 0 : options.componentPrefix) != null ? _a : COMPONENT_PREFIX;
+};
+const setGlobalConfig = (app, options) => {
+  var _a;
+  if (options && options.classPrefix) {
+    app.config.globalProperties[GLOBAL_CONFIG_NAME] = __spreadProps$7(__spreadValues$f({}, (_a = app.config.globalProperties[GLOBAL_CONFIG_NAME]) != null ? _a : {}), {
+      classPrefix: options.classPrefix
+    });
+  }
+};
 const getPrefixCls = (componentName) => {
   var _a, _b, _c;
   const instance = getCurrentInstance();
@@ -5462,6 +5684,477 @@ const getPrefixCls = (componentName) => {
   }
   return prefix;
 };
+var MapShim = function() {
+  if (typeof Map !== "undefined") {
+    return Map;
+  }
+  function getIndex(arr, key) {
+    var result = -1;
+    arr.some(function(entry, index2) {
+      if (entry[0] === key) {
+        result = index2;
+        return true;
+      }
+      return false;
+    });
+    return result;
+  }
+  return function() {
+    function class_1() {
+      this.__entries__ = [];
+    }
+    Object.defineProperty(class_1.prototype, "size", {
+      get: function() {
+        return this.__entries__.length;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    class_1.prototype.get = function(key) {
+      var index2 = getIndex(this.__entries__, key);
+      var entry = this.__entries__[index2];
+      return entry && entry[1];
+    };
+    class_1.prototype.set = function(key, value) {
+      var index2 = getIndex(this.__entries__, key);
+      if (~index2) {
+        this.__entries__[index2][1] = value;
+      } else {
+        this.__entries__.push([key, value]);
+      }
+    };
+    class_1.prototype.delete = function(key) {
+      var entries = this.__entries__;
+      var index2 = getIndex(entries, key);
+      if (~index2) {
+        entries.splice(index2, 1);
+      }
+    };
+    class_1.prototype.has = function(key) {
+      return !!~getIndex(this.__entries__, key);
+    };
+    class_1.prototype.clear = function() {
+      this.__entries__.splice(0);
+    };
+    class_1.prototype.forEach = function(callback, ctx) {
+      if (ctx === void 0) {
+        ctx = null;
+      }
+      for (var _i = 0, _a = this.__entries__; _i < _a.length; _i++) {
+        var entry = _a[_i];
+        callback.call(ctx, entry[1], entry[0]);
+      }
+    };
+    return class_1;
+  }();
+}();
+var isBrowser = typeof window !== "undefined" && typeof document !== "undefined" && window.document === document;
+var global$1 = function() {
+  if (typeof global !== "undefined" && global.Math === Math) {
+    return global;
+  }
+  if (typeof self !== "undefined" && self.Math === Math) {
+    return self;
+  }
+  if (typeof window !== "undefined" && window.Math === Math) {
+    return window;
+  }
+  return Function("return this")();
+}();
+var requestAnimationFrame$1 = function() {
+  if (typeof requestAnimationFrame === "function") {
+    return requestAnimationFrame.bind(global$1);
+  }
+  return function(callback) {
+    return setTimeout(function() {
+      return callback(Date.now());
+    }, 1e3 / 60);
+  };
+}();
+var trailingTimeout = 2;
+function throttle(callback, delay) {
+  var leadingCall = false, trailingCall = false, lastCallTime = 0;
+  function resolvePending() {
+    if (leadingCall) {
+      leadingCall = false;
+      callback();
+    }
+    if (trailingCall) {
+      proxy();
+    }
+  }
+  function timeoutCallback() {
+    requestAnimationFrame$1(resolvePending);
+  }
+  function proxy() {
+    var timeStamp = Date.now();
+    if (leadingCall) {
+      if (timeStamp - lastCallTime < trailingTimeout) {
+        return;
+      }
+      trailingCall = true;
+    } else {
+      leadingCall = true;
+      trailingCall = false;
+      setTimeout(timeoutCallback, delay);
+    }
+    lastCallTime = timeStamp;
+  }
+  return proxy;
+}
+var REFRESH_DELAY = 20;
+var transitionKeys = ["top", "right", "bottom", "left", "width", "height", "size", "weight"];
+var mutationObserverSupported = typeof MutationObserver !== "undefined";
+var ResizeObserverController = function() {
+  function ResizeObserverController2() {
+    this.connected_ = false;
+    this.mutationEventsAdded_ = false;
+    this.mutationsObserver_ = null;
+    this.observers_ = [];
+    this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
+    this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
+  }
+  ResizeObserverController2.prototype.addObserver = function(observer) {
+    if (!~this.observers_.indexOf(observer)) {
+      this.observers_.push(observer);
+    }
+    if (!this.connected_) {
+      this.connect_();
+    }
+  };
+  ResizeObserverController2.prototype.removeObserver = function(observer) {
+    var observers2 = this.observers_;
+    var index2 = observers2.indexOf(observer);
+    if (~index2) {
+      observers2.splice(index2, 1);
+    }
+    if (!observers2.length && this.connected_) {
+      this.disconnect_();
+    }
+  };
+  ResizeObserverController2.prototype.refresh = function() {
+    var changesDetected = this.updateObservers_();
+    if (changesDetected) {
+      this.refresh();
+    }
+  };
+  ResizeObserverController2.prototype.updateObservers_ = function() {
+    var activeObservers = this.observers_.filter(function(observer) {
+      return observer.gatherActive(), observer.hasActive();
+    });
+    activeObservers.forEach(function(observer) {
+      return observer.broadcastActive();
+    });
+    return activeObservers.length > 0;
+  };
+  ResizeObserverController2.prototype.connect_ = function() {
+    if (!isBrowser || this.connected_) {
+      return;
+    }
+    document.addEventListener("transitionend", this.onTransitionEnd_);
+    window.addEventListener("resize", this.refresh);
+    if (mutationObserverSupported) {
+      this.mutationsObserver_ = new MutationObserver(this.refresh);
+      this.mutationsObserver_.observe(document, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    } else {
+      document.addEventListener("DOMSubtreeModified", this.refresh);
+      this.mutationEventsAdded_ = true;
+    }
+    this.connected_ = true;
+  };
+  ResizeObserverController2.prototype.disconnect_ = function() {
+    if (!isBrowser || !this.connected_) {
+      return;
+    }
+    document.removeEventListener("transitionend", this.onTransitionEnd_);
+    window.removeEventListener("resize", this.refresh);
+    if (this.mutationsObserver_) {
+      this.mutationsObserver_.disconnect();
+    }
+    if (this.mutationEventsAdded_) {
+      document.removeEventListener("DOMSubtreeModified", this.refresh);
+    }
+    this.mutationsObserver_ = null;
+    this.mutationEventsAdded_ = false;
+    this.connected_ = false;
+  };
+  ResizeObserverController2.prototype.onTransitionEnd_ = function(_a) {
+    var _b = _a.propertyName, propertyName = _b === void 0 ? "" : _b;
+    var isReflowProperty = transitionKeys.some(function(key) {
+      return !!~propertyName.indexOf(key);
+    });
+    if (isReflowProperty) {
+      this.refresh();
+    }
+  };
+  ResizeObserverController2.getInstance = function() {
+    if (!this.instance_) {
+      this.instance_ = new ResizeObserverController2();
+    }
+    return this.instance_;
+  };
+  ResizeObserverController2.instance_ = null;
+  return ResizeObserverController2;
+}();
+var defineConfigurable = function(target2, props) {
+  for (var _i = 0, _a = Object.keys(props); _i < _a.length; _i++) {
+    var key = _a[_i];
+    Object.defineProperty(target2, key, {
+      value: props[key],
+      enumerable: false,
+      writable: false,
+      configurable: true
+    });
+  }
+  return target2;
+};
+var getWindowOf = function(target2) {
+  var ownerGlobal = target2 && target2.ownerDocument && target2.ownerDocument.defaultView;
+  return ownerGlobal || global$1;
+};
+var emptyRect = createRectInit(0, 0, 0, 0);
+function toFloat(value) {
+  return parseFloat(value) || 0;
+}
+function getBordersSize(styles) {
+  var positions = [];
+  for (var _i = 1; _i < arguments.length; _i++) {
+    positions[_i - 1] = arguments[_i];
+  }
+  return positions.reduce(function(size, position) {
+    var value = styles["border-" + position + "-width"];
+    return size + toFloat(value);
+  }, 0);
+}
+function getPaddings(styles) {
+  var positions = ["top", "right", "bottom", "left"];
+  var paddings = {};
+  for (var _i = 0, positions_1 = positions; _i < positions_1.length; _i++) {
+    var position = positions_1[_i];
+    var value = styles["padding-" + position];
+    paddings[position] = toFloat(value);
+  }
+  return paddings;
+}
+function getSVGContentRect(target2) {
+  var bbox = target2.getBBox();
+  return createRectInit(0, 0, bbox.width, bbox.height);
+}
+function getHTMLElementContentRect(target2) {
+  var clientWidth = target2.clientWidth, clientHeight = target2.clientHeight;
+  if (!clientWidth && !clientHeight) {
+    return emptyRect;
+  }
+  var styles = getWindowOf(target2).getComputedStyle(target2);
+  var paddings = getPaddings(styles);
+  var horizPad = paddings.left + paddings.right;
+  var vertPad = paddings.top + paddings.bottom;
+  var width = toFloat(styles.width), height = toFloat(styles.height);
+  if (styles.boxSizing === "border-box") {
+    if (Math.round(width + horizPad) !== clientWidth) {
+      width -= getBordersSize(styles, "left", "right") + horizPad;
+    }
+    if (Math.round(height + vertPad) !== clientHeight) {
+      height -= getBordersSize(styles, "top", "bottom") + vertPad;
+    }
+  }
+  if (!isDocumentElement(target2)) {
+    var vertScrollbar = Math.round(width + horizPad) - clientWidth;
+    var horizScrollbar = Math.round(height + vertPad) - clientHeight;
+    if (Math.abs(vertScrollbar) !== 1) {
+      width -= vertScrollbar;
+    }
+    if (Math.abs(horizScrollbar) !== 1) {
+      height -= horizScrollbar;
+    }
+  }
+  return createRectInit(paddings.left, paddings.top, width, height);
+}
+var isSVGGraphicsElement = function() {
+  if (typeof SVGGraphicsElement !== "undefined") {
+    return function(target2) {
+      return target2 instanceof getWindowOf(target2).SVGGraphicsElement;
+    };
+  }
+  return function(target2) {
+    return target2 instanceof getWindowOf(target2).SVGElement && typeof target2.getBBox === "function";
+  };
+}();
+function isDocumentElement(target2) {
+  return target2 === getWindowOf(target2).document.documentElement;
+}
+function getContentRect(target2) {
+  if (!isBrowser) {
+    return emptyRect;
+  }
+  if (isSVGGraphicsElement(target2)) {
+    return getSVGContentRect(target2);
+  }
+  return getHTMLElementContentRect(target2);
+}
+function createReadOnlyRect(_a) {
+  var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+  var Constr = typeof DOMRectReadOnly !== "undefined" ? DOMRectReadOnly : Object;
+  var rect = Object.create(Constr.prototype);
+  defineConfigurable(rect, {
+    x,
+    y,
+    width,
+    height,
+    top: y,
+    right: x + width,
+    bottom: height + y,
+    left: x
+  });
+  return rect;
+}
+function createRectInit(x, y, width, height) {
+  return { x, y, width, height };
+}
+var ResizeObservation = function() {
+  function ResizeObservation2(target2) {
+    this.broadcastWidth = 0;
+    this.broadcastHeight = 0;
+    this.contentRect_ = createRectInit(0, 0, 0, 0);
+    this.target = target2;
+  }
+  ResizeObservation2.prototype.isActive = function() {
+    var rect = getContentRect(this.target);
+    this.contentRect_ = rect;
+    return rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight;
+  };
+  ResizeObservation2.prototype.broadcastRect = function() {
+    var rect = this.contentRect_;
+    this.broadcastWidth = rect.width;
+    this.broadcastHeight = rect.height;
+    return rect;
+  };
+  return ResizeObservation2;
+}();
+var ResizeObserverEntry = function() {
+  function ResizeObserverEntry2(target2, rectInit) {
+    var contentRect = createReadOnlyRect(rectInit);
+    defineConfigurable(this, { target: target2, contentRect });
+  }
+  return ResizeObserverEntry2;
+}();
+var ResizeObserverSPI = function() {
+  function ResizeObserverSPI2(callback, controller, callbackCtx) {
+    this.activeObservations_ = [];
+    this.observations_ = new MapShim();
+    if (typeof callback !== "function") {
+      throw new TypeError("The callback provided as parameter 1 is not a function.");
+    }
+    this.callback_ = callback;
+    this.controller_ = controller;
+    this.callbackCtx_ = callbackCtx;
+  }
+  ResizeObserverSPI2.prototype.observe = function(target2) {
+    if (!arguments.length) {
+      throw new TypeError("1 argument required, but only 0 present.");
+    }
+    if (typeof Element === "undefined" || !(Element instanceof Object)) {
+      return;
+    }
+    if (!(target2 instanceof getWindowOf(target2).Element)) {
+      throw new TypeError('parameter 1 is not of type "Element".');
+    }
+    var observations = this.observations_;
+    if (observations.has(target2)) {
+      return;
+    }
+    observations.set(target2, new ResizeObservation(target2));
+    this.controller_.addObserver(this);
+    this.controller_.refresh();
+  };
+  ResizeObserverSPI2.prototype.unobserve = function(target2) {
+    if (!arguments.length) {
+      throw new TypeError("1 argument required, but only 0 present.");
+    }
+    if (typeof Element === "undefined" || !(Element instanceof Object)) {
+      return;
+    }
+    if (!(target2 instanceof getWindowOf(target2).Element)) {
+      throw new TypeError('parameter 1 is not of type "Element".');
+    }
+    var observations = this.observations_;
+    if (!observations.has(target2)) {
+      return;
+    }
+    observations.delete(target2);
+    if (!observations.size) {
+      this.controller_.removeObserver(this);
+    }
+  };
+  ResizeObserverSPI2.prototype.disconnect = function() {
+    this.clearActive();
+    this.observations_.clear();
+    this.controller_.removeObserver(this);
+  };
+  ResizeObserverSPI2.prototype.gatherActive = function() {
+    var _this = this;
+    this.clearActive();
+    this.observations_.forEach(function(observation) {
+      if (observation.isActive()) {
+        _this.activeObservations_.push(observation);
+      }
+    });
+  };
+  ResizeObserverSPI2.prototype.broadcastActive = function() {
+    if (!this.hasActive()) {
+      return;
+    }
+    var ctx = this.callbackCtx_;
+    var entries = this.activeObservations_.map(function(observation) {
+      return new ResizeObserverEntry(observation.target, observation.broadcastRect());
+    });
+    this.callback_.call(ctx, entries, ctx);
+    this.clearActive();
+  };
+  ResizeObserverSPI2.prototype.clearActive = function() {
+    this.activeObservations_.splice(0);
+  };
+  ResizeObserverSPI2.prototype.hasActive = function() {
+    return this.activeObservations_.length > 0;
+  };
+  return ResizeObserverSPI2;
+}();
+var observers = typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : new MapShim();
+var ResizeObserver$2 = function() {
+  function ResizeObserver2(callback) {
+    if (!(this instanceof ResizeObserver2)) {
+      throw new TypeError("Cannot call a class as a function.");
+    }
+    if (!arguments.length) {
+      throw new TypeError("1 argument required, but only 0 present.");
+    }
+    var controller = ResizeObserverController.getInstance();
+    var observer = new ResizeObserverSPI(callback, controller, this);
+    observers.set(this, observer);
+  }
+  return ResizeObserver2;
+}();
+[
+  "observe",
+  "unobserve",
+  "disconnect"
+].forEach(function(method) {
+  ResizeObserver$2.prototype[method] = function() {
+    var _a;
+    return (_a = observers.get(this))[method].apply(_a, arguments);
+  };
+});
+var index$1 = function() {
+  if (typeof global$1.ResizeObserver !== "undefined") {
+    return global$1.ResizeObserver;
+  }
+  return ResizeObserver$2;
+}();
 var ShapeFlags;
 (function(ShapeFlags2) {
   ShapeFlags2[ShapeFlags2["ELEMENT"] = 1] = "ELEMENT";
@@ -5493,11 +6186,75 @@ var PatchFlags;
   PatchFlags2[PatchFlags2["HOISTED"] = -1] = "HOISTED";
   PatchFlags2[PatchFlags2["BAIL"] = -2] = "BAIL";
 })(PatchFlags || (PatchFlags = {}));
+const isElement = (vn) => {
+  return Boolean(vn && vn.shapeFlag & 1);
+};
 const isComponent = (vn, type) => {
   return Boolean(vn && vn.shapeFlag & 6);
 };
 const isArrayChildren = (vn, children) => {
   return Boolean(vn && vn.shapeFlag & 16);
+};
+const isSlotsChildren = (vn, children) => {
+  return Boolean(vn && vn.shapeFlag & 32);
+};
+const getFirstComponent = (children) => {
+  var _a, _b;
+  if (!children) {
+    return void 0;
+  }
+  for (const child of children) {
+    if (isElement(child) || isComponent(child)) {
+      return child;
+    }
+    if (isArrayChildren(child, child.children)) {
+      const result = getFirstComponent(child.children);
+      if (result)
+        return result;
+    } else if (isSlotsChildren(child, child.children)) {
+      const children2 = (_b = (_a = child.children).default) == null ? void 0 : _b.call(_a);
+      if (children2) {
+        const result = getFirstComponent(children2);
+        if (result)
+          return result;
+      }
+    } else if (isArray(child)) {
+      const result = getFirstComponent(child);
+      if (result)
+        return result;
+    }
+  }
+  return void 0;
+};
+const isEmptyChildren = (children) => {
+  if (!children) {
+    return true;
+  }
+  for (const item of children) {
+    if (item.children) {
+      return false;
+    }
+  }
+  return true;
+};
+const mergeFirstChild = (children, extraProps) => {
+  if (children && children.length > 0) {
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
+      if (isElement(child) || isComponent(child)) {
+        const props = isFunction(extraProps) ? extraProps(child) : extraProps;
+        children[i] = cloneVNode(child, props, true);
+        return true;
+      }
+      const _children = getChildrenArray(child);
+      if (_children && _children.length > 0) {
+        const result = mergeFirstChild(_children, extraProps);
+        if (result)
+          return true;
+      }
+    }
+  }
+  return false;
 };
 const getChildrenArray = (vn) => {
   if (isArrayChildren(vn, vn.children)) {
@@ -5505,6 +6262,36 @@ const getChildrenArray = (vn) => {
   }
   if (isArray(vn)) {
     return vn;
+  }
+  return void 0;
+};
+const getFirstElementFromVNode = (vn) => {
+  var _a, _b;
+  if (isElement(vn)) {
+    return vn.el;
+  }
+  if (isComponent(vn)) {
+    if (((_a = vn.el) == null ? void 0 : _a.nodeType) === 1) {
+      return vn.el;
+    }
+    if ((_b = vn.component) == null ? void 0 : _b.subTree) {
+      const ele = getFirstElementFromVNode(vn.component.subTree);
+      if (ele)
+        return ele;
+    }
+  } else {
+    const children = getChildrenArray(vn);
+    return getFirstElementFromChildren(children);
+  }
+  return void 0;
+};
+const getFirstElementFromChildren = (children) => {
+  if (children && children.length > 0) {
+    for (const child of children) {
+      const element = getFirstElementFromVNode(child);
+      if (element)
+        return element;
+    }
   }
   return void 0;
 };
@@ -5544,17 +6331,135 @@ const getComponentsFromChildren = (children, name) => {
   }
   return components;
 };
-(() => {
+var ResizeObserver$1 = defineComponent({
+  name: "ResizeObserver",
+  emits: [
+    "resize"
+  ],
+  setup(props, {
+    emit,
+    slots
+  }) {
+    let resizeObserver;
+    const componentRef = ref();
+    const element = computed(() => isComponentInstance(componentRef.value) ? componentRef.value.$el : componentRef.value);
+    const createResizeObserver = (target2) => {
+      if (!target2)
+        return;
+      resizeObserver = new index$1((entries) => {
+        const entry = entries[0];
+        emit("resize", entry);
+      });
+      resizeObserver.observe(target2);
+    };
+    const destroyResizeObserver = () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+    };
+    watch(element, (_element) => {
+      if (resizeObserver)
+        destroyResizeObserver();
+      if (_element)
+        createResizeObserver(_element);
+    });
+    onMounted(() => {
+      if (element.value) {
+        createResizeObserver(element.value);
+      }
+    });
+    onUnmounted(() => {
+      destroyResizeObserver();
+    });
+    return () => {
+      var _a, _b;
+      const firstChild = getFirstComponent((_b = (_a = slots.default) == null ? void 0 : _a.call(slots)) != null ? _b : []);
+      if (firstChild) {
+        return cloneVNode(firstChild, {
+          ref: componentRef
+        }, true);
+      }
+      return null;
+    };
+  }
+});
+const target$1 = typeof window === "undefined" ? global : window;
+const raf = target$1.requestAnimationFrame;
+const caf = target$1.cancelAnimationFrame;
+function throttleByRaf(cb) {
+  let timer = 0;
+  const throttle2 = (...args) => {
+    if (timer) {
+      caf(timer);
+    }
+    timer = raf(() => {
+      cb(...args);
+      timer = 0;
+    });
+  };
+  throttle2.cancel = () => {
+    caf(timer);
+    timer = 0;
+  };
+  return throttle2;
+}
+const NOOP = () => {
+  return void 0;
+};
+const isServerRendering = (() => {
   try {
     return !(typeof window !== "undefined" && document !== void 0);
   } catch (e) {
     return true;
   }
 })();
+const on = (() => {
+  if (isServerRendering) {
+    return NOOP;
+  }
+  return (element, event, handler, options = false) => {
+    element.addEventListener(event, handler, options);
+  };
+})();
+const off = (() => {
+  if (isServerRendering) {
+    return NOOP;
+  }
+  return (element, type, handler, options = false) => {
+    element.removeEventListener(type, handler, options);
+  };
+})();
 const getOverlay = (type) => {
   const popper = document.createElement("div");
   popper.setAttribute("class", `arco-overlay arco-overlay-${type}`);
   return popper;
+};
+const querySelector = (selectors, container) => {
+  var _a;
+  if (isServerRendering) {
+    return NOOP();
+  }
+  return (_a = (container != null ? container : document).querySelector(selectors)) != null ? _a : void 0;
+};
+const getElement = (target2, container) => {
+  if (isString(target2)) {
+    const selector = target2[0] === "#" ? `[id='${target2.slice(1)}']` : target2;
+    return querySelector(selector, container);
+  }
+  return target2;
+};
+const getRelativeRect = (target2, relative) => {
+  const targetRect = target2.getBoundingClientRect();
+  const relativeRect = relative.getBoundingClientRect();
+  return {
+    top: targetRect.top - relativeRect.top,
+    bottom: relativeRect.bottom - targetRect.bottom,
+    left: targetRect.left - relativeRect.left,
+    right: relativeRect.right - targetRect.right,
+    width: targetRect.width,
+    height: targetRect.height
+  };
 };
 var _export_sfc$1 = (sfc, props) => {
   for (const [key, val] of props) {
@@ -5562,7 +6467,7 @@ var _export_sfc$1 = (sfc, props) => {
   }
   return sfc;
 };
-const _sfc_main$d = defineComponent({
+const _sfc_main$M = defineComponent({
   name: "IconHover",
   props: {
     prefix: {
@@ -5584,7 +6489,7 @@ const _sfc_main$d = defineComponent({
     };
   }
 });
-function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$G(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("span", {
     class: normalizeClass([
       _ctx.prefixCls,
@@ -5598,8 +6503,8 @@ function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     renderSlot(_ctx.$slots, "default")
   ], 2);
 }
-var IconHover = /* @__PURE__ */ _export_sfc$1(_sfc_main$d, [["render", _sfc_render$7]]);
-const _sfc_main$c = defineComponent({
+var IconHover = /* @__PURE__ */ _export_sfc$1(_sfc_main$M, [["render", _sfc_render$G]]);
+const _sfc_main$L = defineComponent({
   name: "IconClose",
   props: {
     size: {
@@ -5642,12 +6547,12 @@ const _sfc_main$c = defineComponent({
     };
   }
 });
-const _hoisted_1$9 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$8 = /* @__PURE__ */ createElementVNode("path", { d: "M9.857 9.858 24 24m0 0 14.142 14.142M24 24 38.142 9.858M24 24 9.857 38.142" }, null, -1);
-const _hoisted_3$8 = [
-  _hoisted_2$8
+const _hoisted_1$r = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$p = /* @__PURE__ */ createElementVNode("path", { d: "M9.857 9.858 24 24m0 0 14.142 14.142M24 24 38.142 9.858M24 24 9.857 38.142" }, null, -1);
+const _hoisted_3$o = [
+  _hoisted_2$p
 ];
-function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$F(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -5658,9 +6563,9 @@ function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$8, 14, _hoisted_1$9);
+  }, _hoisted_3$o, 14, _hoisted_1$r);
 }
-var _IconClose = /* @__PURE__ */ _export_sfc$1(_sfc_main$c, [["render", _sfc_render$6]]);
+var _IconClose = /* @__PURE__ */ _export_sfc$1(_sfc_main$L, [["render", _sfc_render$F]]);
 const IconClose = Object.assign(_IconClose, {
   install: (app, options) => {
     var _a;
@@ -5668,7 +6573,7 @@ const IconClose = Object.assign(_IconClose, {
     app.component(iconPrefix + _IconClose.name, _IconClose);
   }
 });
-const _sfc_main$b = defineComponent({
+const _sfc_main$K = defineComponent({
   name: "IconInfoCircleFill",
   props: {
     size: {
@@ -5711,18 +6616,18 @@ const _sfc_main$b = defineComponent({
     };
   }
 });
-const _hoisted_1$8 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$7 = /* @__PURE__ */ createElementVNode("path", {
+const _hoisted_1$q = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$o = /* @__PURE__ */ createElementVNode("path", {
   "fill-rule": "evenodd",
   "clip-rule": "evenodd",
   d: "M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4 4 12.954 4 24s8.954 20 20 20Zm2-30a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2Zm0 17h1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h1v-8a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v11Z",
   fill: "currentColor",
   stroke: "none"
 }, null, -1);
-const _hoisted_3$7 = [
-  _hoisted_2$7
+const _hoisted_3$n = [
+  _hoisted_2$o
 ];
-function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$E(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -5733,9 +6638,9 @@ function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$7, 14, _hoisted_1$8);
+  }, _hoisted_3$n, 14, _hoisted_1$q);
 }
-var _IconInfoCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$b, [["render", _sfc_render$5]]);
+var _IconInfoCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$K, [["render", _sfc_render$E]]);
 const IconInfoCircleFill = Object.assign(_IconInfoCircleFill, {
   install: (app, options) => {
     var _a;
@@ -5743,7 +6648,7 @@ const IconInfoCircleFill = Object.assign(_IconInfoCircleFill, {
     app.component(iconPrefix + _IconInfoCircleFill.name, _IconInfoCircleFill);
   }
 });
-const _sfc_main$a = defineComponent({
+const _sfc_main$J = defineComponent({
   name: "IconCheckCircleFill",
   props: {
     size: {
@@ -5786,18 +6691,18 @@ const _sfc_main$a = defineComponent({
     };
   }
 });
-const _hoisted_1$7 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$6 = /* @__PURE__ */ createElementVNode("path", {
+const _hoisted_1$p = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$n = /* @__PURE__ */ createElementVNode("path", {
   "fill-rule": "evenodd",
   "clip-rule": "evenodd",
   d: "M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4 4 12.954 4 24s8.954 20 20 20Zm10.207-24.379a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0L22 26.172l-4.878-4.88a1 1 0 0 0-1.415 0l-1.414 1.415a1 1 0 0 0 0 1.414l7 7a1 1 0 0 0 1.414 0l11.5-11.5Z",
   fill: "currentColor",
   stroke: "none"
 }, null, -1);
-const _hoisted_3$6 = [
-  _hoisted_2$6
+const _hoisted_3$m = [
+  _hoisted_2$n
 ];
-function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$D(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -5808,9 +6713,9 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$6, 14, _hoisted_1$7);
+  }, _hoisted_3$m, 14, _hoisted_1$p);
 }
-var _IconCheckCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$a, [["render", _sfc_render$4]]);
+var _IconCheckCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$J, [["render", _sfc_render$D]]);
 const IconCheckCircleFill = Object.assign(_IconCheckCircleFill, {
   install: (app, options) => {
     var _a;
@@ -5818,7 +6723,7 @@ const IconCheckCircleFill = Object.assign(_IconCheckCircleFill, {
     app.component(iconPrefix + _IconCheckCircleFill.name, _IconCheckCircleFill);
   }
 });
-const _sfc_main$9 = defineComponent({
+const _sfc_main$I = defineComponent({
   name: "IconExclamationCircleFill",
   props: {
     size: {
@@ -5861,18 +6766,18 @@ const _sfc_main$9 = defineComponent({
     };
   }
 });
-const _hoisted_1$6 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$5 = /* @__PURE__ */ createElementVNode("path", {
+const _hoisted_1$o = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$m = /* @__PURE__ */ createElementVNode("path", {
   "fill-rule": "evenodd",
   "clip-rule": "evenodd",
   d: "M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4 4 12.954 4 24s8.954 20 20 20Zm-2-11a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v2Zm4-18a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V15Z",
   fill: "currentColor",
   stroke: "none"
 }, null, -1);
-const _hoisted_3$5 = [
-  _hoisted_2$5
+const _hoisted_3$l = [
+  _hoisted_2$m
 ];
-function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$C(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -5883,9 +6788,9 @@ function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$5, 14, _hoisted_1$6);
+  }, _hoisted_3$l, 14, _hoisted_1$o);
 }
-var _IconExclamationCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$9, [["render", _sfc_render$3]]);
+var _IconExclamationCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$I, [["render", _sfc_render$C]]);
 const IconExclamationCircleFill = Object.assign(_IconExclamationCircleFill, {
   install: (app, options) => {
     var _a;
@@ -5893,7 +6798,7 @@ const IconExclamationCircleFill = Object.assign(_IconExclamationCircleFill, {
     app.component(iconPrefix + _IconExclamationCircleFill.name, _IconExclamationCircleFill);
   }
 });
-const _sfc_main$8 = defineComponent({
+const _sfc_main$H = defineComponent({
   name: "IconCloseCircleFill",
   props: {
     size: {
@@ -5936,18 +6841,18 @@ const _sfc_main$8 = defineComponent({
     };
   }
 });
-const _hoisted_1$5 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$4 = /* @__PURE__ */ createElementVNode("path", {
+const _hoisted_1$n = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$l = /* @__PURE__ */ createElementVNode("path", {
   "fill-rule": "evenodd",
   "clip-rule": "evenodd",
   d: "M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4 4 12.954 4 24s8.954 20 20 20Zm4.955-27.771-4.95 4.95-4.95-4.95a1 1 0 0 0-1.414 0l-1.414 1.414a1 1 0 0 0 0 1.414l4.95 4.95-4.95 4.95a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-4.95-4.95 4.95-4.95a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0Z",
   fill: "currentColor",
   stroke: "none"
 }, null, -1);
-const _hoisted_3$4 = [
-  _hoisted_2$4
+const _hoisted_3$k = [
+  _hoisted_2$l
 ];
-function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$B(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -5958,9 +6863,9 @@ function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$4, 14, _hoisted_1$5);
+  }, _hoisted_3$k, 14, _hoisted_1$n);
 }
-var _IconCloseCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$8, [["render", _sfc_render$2]]);
+var _IconCloseCircleFill = /* @__PURE__ */ _export_sfc$1(_sfc_main$H, [["render", _sfc_render$B]]);
 const IconCloseCircleFill = Object.assign(_IconCloseCircleFill, {
   install: (app, options) => {
     var _a;
@@ -5969,7 +6874,37 @@ const IconCloseCircleFill = Object.assign(_IconCloseCircleFill, {
   }
 });
 const MESSAGE_TYPES = ["info", "success", "warning", "error"];
-const _sfc_main$7 = defineComponent({
+const INPUT_EVENTS = [
+  "onFocus",
+  "onFocusin",
+  "onFocusout",
+  "onBlur",
+  "onChange",
+  "onBeforeinput",
+  "onInput",
+  "onReset",
+  "onSubmit",
+  "onInvalid",
+  "onKeydown",
+  "onKeypress",
+  "onKeyup",
+  "onCopy",
+  "onCut",
+  "onPaste",
+  "onCompositionstart",
+  "onCompositionupdate",
+  "onCompositionend",
+  "onSelect",
+  "autocomplete",
+  "autofocus",
+  "maxlength",
+  "minlength",
+  "name",
+  "pattern",
+  "readonly",
+  "required"
+];
+const _sfc_main$G = defineComponent({
   name: "IconLoading",
   props: {
     size: {
@@ -6012,12 +6947,12 @@ const _sfc_main$7 = defineComponent({
     };
   }
 });
-const _hoisted_1$4 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
-const _hoisted_2$3 = /* @__PURE__ */ createElementVNode("path", { d: "M42 24c0 9.941-8.059 18-18 18S6 33.941 6 24 14.059 6 24 6" }, null, -1);
-const _hoisted_3$3 = [
-  _hoisted_2$3
+const _hoisted_1$m = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$k = /* @__PURE__ */ createElementVNode("path", { d: "M42 24c0 9.941-8.059 18-18 18S6 33.941 6 24 14.059 6 24 6" }, null, -1);
+const _hoisted_3$j = [
+  _hoisted_2$k
 ];
-function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$A(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("svg", {
     viewBox: "0 0 48 48",
     fill: "none",
@@ -6028,9 +6963,9 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     "stroke-width": _ctx.strokeWidth,
     "stroke-linecap": _ctx.strokeLinecap,
     "stroke-linejoin": _ctx.strokeLinejoin
-  }, _hoisted_3$3, 14, _hoisted_1$4);
+  }, _hoisted_3$j, 14, _hoisted_1$m);
 }
-var _IconLoading = /* @__PURE__ */ _export_sfc$1(_sfc_main$7, [["render", _sfc_render$1]]);
+var _IconLoading = /* @__PURE__ */ _export_sfc$1(_sfc_main$G, [["render", _sfc_render$A]]);
 const IconLoading = Object.assign(_IconLoading, {
   install: (app, options) => {
     var _a;
@@ -6038,6 +6973,1497 @@ const IconLoading = Object.assign(_IconLoading, {
     app.component(iconPrefix + _IconLoading.name, _IconLoading);
   }
 });
+const _sfc_main$F = defineComponent({
+  name: "FeedbackIcon",
+  components: {
+    IconLoading,
+    IconCheckCircleFill,
+    IconExclamationCircleFill,
+    IconCloseCircleFill
+  },
+  props: {
+    type: {
+      type: String
+    }
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("feedback-icon");
+    const cls = computed(() => [
+      prefixCls,
+      `${prefixCls}-status-${props.type}`
+    ]);
+    return {
+      cls
+    };
+  }
+});
+function _sfc_render$z(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_loading = resolveComponent("icon-loading");
+  const _component_icon_check_circle_fill = resolveComponent("icon-check-circle-fill");
+  const _component_icon_exclamation_circle_fill = resolveComponent("icon-exclamation-circle-fill");
+  const _component_icon_close_circle_fill = resolveComponent("icon-close-circle-fill");
+  return openBlock(), createElementBlock("span", {
+    class: normalizeClass(_ctx.cls)
+  }, [
+    _ctx.type === "validating" ? (openBlock(), createBlock(_component_icon_loading, { key: 0 })) : _ctx.type === "success" ? (openBlock(), createBlock(_component_icon_check_circle_fill, { key: 1 })) : _ctx.type === "warning" ? (openBlock(), createBlock(_component_icon_exclamation_circle_fill, { key: 2 })) : _ctx.type === "error" ? (openBlock(), createBlock(_component_icon_close_circle_fill, { key: 3 })) : createCommentVNode("v-if", true)
+  ], 2);
+}
+var FeedbackIcon = /* @__PURE__ */ _export_sfc$1(_sfc_main$F, [["render", _sfc_render$z]]);
+const Enter = {
+  key: "Enter",
+  code: "Enter"
+};
+const Backspace = {
+  key: "Backspace",
+  code: "Backspace"
+};
+var __defProp$e = Object.defineProperty;
+var __getOwnPropSymbols$f = Object.getOwnPropertySymbols;
+var __hasOwnProp$f = Object.prototype.hasOwnProperty;
+var __propIsEnum$f = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$e = (obj, key, value) => key in obj ? __defProp$e(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$e = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$f.call(b, prop))
+      __defNormalProp$e(a, prop, b[prop]);
+  if (__getOwnPropSymbols$f)
+    for (var prop of __getOwnPropSymbols$f(b)) {
+      if (__propIsEnum$f.call(b, prop))
+        __defNormalProp$e(a, prop, b[prop]);
+    }
+  return a;
+};
+const omit = (object, path) => {
+  const result = __spreadValues$e({}, object);
+  for (const item of path) {
+    if (item in result) {
+      delete result[item];
+    }
+  }
+  return result;
+};
+function pick(obj, keys) {
+  const clone = {};
+  keys.forEach((key) => {
+    const k = key;
+    if (key in obj) {
+      clone[k] = obj[k];
+    }
+  });
+  return clone;
+}
+const formItemInjectionKey = Symbol("ArcoFormItemContext");
+const useFormItem = ({
+  size,
+  disabled,
+  error,
+  uninject
+} = {}) => {
+  const formItemCtx = !uninject ? inject(formItemInjectionKey, {}) : {};
+  const mergedSize = computed(() => {
+    var _a;
+    return (_a = size == null ? void 0 : size.value) != null ? _a : formItemCtx.size;
+  });
+  const mergedDisabled = computed(() => (disabled == null ? void 0 : disabled.value) || formItemCtx.disabled);
+  const mergedError = computed(() => (error == null ? void 0 : error.value) || formItemCtx.error);
+  const feedback = toRef(formItemCtx, "feedback");
+  const eventHandlers = toRef(formItemCtx, "eventHandlers");
+  return {
+    formItemCtx,
+    mergedSize,
+    mergedDisabled,
+    mergedError,
+    feedback,
+    eventHandlers
+  };
+};
+const useSize = (size, { defaultValue = "medium" } = {}) => {
+  const configProviderCtx = inject(configProviderInjectionKey, void 0);
+  const mergedSize = computed(() => {
+    var _a, _b;
+    return (_b = (_a = size == null ? void 0 : size.value) != null ? _a : configProviderCtx == null ? void 0 : configProviderCtx.size) != null ? _b : defaultValue;
+  });
+  return {
+    mergedSize
+  };
+};
+var __defProp$d = Object.defineProperty;
+var __getOwnPropSymbols$e = Object.getOwnPropertySymbols;
+var __hasOwnProp$e = Object.prototype.hasOwnProperty;
+var __propIsEnum$e = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$d = (obj, key, value) => key in obj ? __defProp$d(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$d = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$e.call(b, prop))
+      __defNormalProp$d(a, prop, b[prop]);
+  if (__getOwnPropSymbols$e)
+    for (var prop of __getOwnPropSymbols$e(b)) {
+      if (__propIsEnum$e.call(b, prop))
+        __defNormalProp$d(a, prop, b[prop]);
+    }
+  return a;
+};
+var _Input = defineComponent({
+  name: "Input",
+  inheritAttrs: false,
+  props: {
+    modelValue: String,
+    defaultValue: {
+      type: String,
+      default: ""
+    },
+    size: {
+      type: String
+    },
+    allowClear: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: String,
+    maxLength: {
+      type: [Number, Object],
+      default: 0
+    },
+    showWordLimit: {
+      type: Boolean,
+      default: false
+    },
+    wordLength: {
+      type: Function
+    },
+    wordSlice: {
+      type: Function
+    },
+    inputAttrs: {
+      type: Object
+    },
+    type: {
+      type: String,
+      default: "text"
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "input": (value, ev) => true,
+    "change": (value, ev) => true,
+    "pressEnter": (ev) => true,
+    "clear": (ev) => true,
+    "focus": (ev) => true,
+    "blur": (ev) => true
+  },
+  setup(props, {
+    emit,
+    slots,
+    attrs
+  }) {
+    const {
+      size,
+      disabled,
+      error,
+      modelValue
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("input");
+    const inputRef = ref();
+    const {
+      mergedSize: _mergedSize,
+      mergedDisabled,
+      mergedError: _mergedError,
+      feedback,
+      eventHandlers
+    } = useFormItem({
+      size,
+      disabled,
+      error
+    });
+    const {
+      mergedSize
+    } = useSize(_mergedSize);
+    const _value = ref(props.defaultValue);
+    const computedValue = computed(() => {
+      var _a;
+      return (_a = props.modelValue) != null ? _a : _value.value;
+    });
+    watch(modelValue, (value) => {
+      if (isUndefined(value) || isNull(value)) {
+        _value.value = "";
+      }
+    });
+    let preValue = computedValue.value;
+    const focused = ref(false);
+    const showClearBtn = computed(() => props.allowClear && !mergedDisabled.value && Boolean(computedValue.value));
+    const isComposition = ref(false);
+    const compositionValue = ref("");
+    const getValueLength = (value) => {
+      var _a;
+      if (isFunction(props.wordLength)) {
+        return props.wordLength(value);
+      }
+      return (_a = value.length) != null ? _a : 0;
+    };
+    const valueLength = computed(() => getValueLength(computedValue.value));
+    const mergedError = computed(() => _mergedError.value || Boolean(isObject(props.maxLength) && props.maxLength.errorOnly && valueLength.value > maxLength.value));
+    const maxLengthErrorOnly = computed(() => isObject(props.maxLength) && Boolean(props.maxLength.errorOnly));
+    const maxLength = computed(() => {
+      if (isObject(props.maxLength)) {
+        return props.maxLength.length;
+      }
+      return props.maxLength;
+    });
+    const updateValue = (value, inner = true) => {
+      var _a, _b;
+      if (maxLength.value && !maxLengthErrorOnly.value && getValueLength(value) > maxLength.value) {
+        value = (_b = (_a = props.wordSlice) == null ? void 0 : _a.call(props, value, maxLength.value)) != null ? _b : value.slice(0, maxLength.value);
+      }
+      _value.value = value;
+      if (inner) {
+        emit("update:modelValue", value);
+      }
+    };
+    const handleMousedown = (e) => {
+      if (inputRef.value && e.target !== inputRef.value) {
+        e.preventDefault();
+        inputRef.value.focus();
+      }
+    };
+    const emitChange = (value, ev) => {
+      var _a, _b;
+      if (value !== preValue) {
+        preValue = value;
+        emit("change", value, ev);
+        (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onChange) == null ? void 0 : _b.call(_a, ev);
+      }
+    };
+    const handleFocus = (ev) => {
+      var _a, _b;
+      focused.value = true;
+      preValue = computedValue.value;
+      emit("focus", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onFocus) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleBlur = (ev) => {
+      var _a, _b;
+      focused.value = false;
+      emitChange(computedValue.value, ev);
+      emit("blur", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onBlur) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleComposition = (e) => {
+      var _a;
+      const {
+        value
+      } = e.target;
+      if (e.type === "compositionend") {
+        isComposition.value = false;
+        compositionValue.value = "";
+        updateValue(value);
+        emit("input", value, e);
+        nextTick(() => {
+          if (inputRef.value && computedValue.value !== inputRef.value.value) {
+            inputRef.value.value = computedValue.value;
+          }
+        });
+      } else {
+        isComposition.value = true;
+        compositionValue.value = computedValue.value + ((_a = e.data) != null ? _a : "");
+      }
+    };
+    const handleInput = (e) => {
+      var _a, _b;
+      const {
+        value
+      } = e.target;
+      if (!isComposition.value) {
+        updateValue(value);
+        emit("input", value, e);
+        (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onInput) == null ? void 0 : _b.call(_a, e);
+        nextTick(() => {
+          if (inputRef.value && computedValue.value !== inputRef.value.value) {
+            inputRef.value.value = computedValue.value;
+          }
+        });
+      }
+    };
+    const handleClear = (ev) => {
+      updateValue("");
+      emitChange("", ev);
+      emit("clear", ev);
+    };
+    const handleKeyDown = (e) => {
+      const keyCode = e.key || e.code;
+      if (!isComposition.value && keyCode === Enter.key) {
+        emitChange(computedValue.value, e);
+        emit("pressEnter", e);
+      }
+    };
+    const outerCls = computed(() => [`${prefixCls}-outer`, `${prefixCls}-outer-size-${mergedSize.value}`, {
+      [`${prefixCls}-outer-has-suffix`]: Boolean(slots.suffix),
+      [`${prefixCls}-outer-disabled`]: mergedDisabled.value
+    }]);
+    const wrapperCls = computed(() => [`${prefixCls}-wrapper`, {
+      [`${prefixCls}-error`]: mergedError.value,
+      [`${prefixCls}-disabled`]: mergedDisabled.value,
+      [`${prefixCls}-focus`]: focused.value
+    }]);
+    const cls = computed(() => [prefixCls, `${prefixCls}-size-${mergedSize.value}`]);
+    const wrapperAttrs = computed(() => omit(attrs, INPUT_EVENTS));
+    const inputAttrs = computed(() => pick(attrs, INPUT_EVENTS));
+    const mergeInputAttrs = computed(() => {
+      const attrs2 = __spreadValues$d(__spreadValues$d({}, inputAttrs.value), props.inputAttrs);
+      if (mergedError.value) {
+        attrs2["aria-invalid"] = true;
+      }
+      return attrs2;
+    });
+    const renderInput = (hasOuter) => {
+      var _a;
+      return createVNode("span", mergeProps({
+        "class": wrapperCls.value,
+        "onMousedown": handleMousedown
+      }, !hasOuter ? wrapperAttrs.value : void 0), [slots.prefix && createVNode("span", {
+        "class": `${prefixCls}-prefix`
+      }, [slots.prefix()]), createVNode("input", mergeProps(mergeInputAttrs.value, {
+        "ref": inputRef,
+        "class": cls.value,
+        "value": computedValue.value,
+        "type": props.type,
+        "placeholder": props.placeholder,
+        "readonly": props.readonly,
+        "disabled": mergedDisabled.value,
+        "onInput": handleInput,
+        "onKeydown": handleKeyDown,
+        "onFocus": handleFocus,
+        "onBlur": handleBlur,
+        "onCompositionstart": handleComposition,
+        "onCompositionupdate": handleComposition,
+        "onCompositionend": handleComposition
+      }), null), showClearBtn.value && createVNode(IconHover, {
+        "prefix": prefixCls,
+        "class": `${prefixCls}-clear-btn`,
+        "onClick": handleClear
+      }, {
+        default: () => [createVNode(IconClose, null, null)]
+      }), (slots.suffix || Boolean(props.maxLength) && props.showWordLimit || Boolean(feedback.value)) && createVNode("span", {
+        "class": [`${prefixCls}-suffix`, {
+          [`${prefixCls}-suffix-has-feedback`]: feedback.value
+        }]
+      }, [Boolean(props.maxLength) && props.showWordLimit && createVNode("span", {
+        "class": `${prefixCls}-word-limit`
+      }, [valueLength.value, createTextVNode("/"), maxLength.value]), (_a = slots.suffix) == null ? void 0 : _a.call(slots), Boolean(feedback.value) && createVNode(FeedbackIcon, {
+        "type": feedback.value
+      }, null)])]);
+    };
+    const render2 = () => {
+      if (slots.prepend || slots.append) {
+        return createVNode("span", mergeProps({
+          "class": outerCls.value
+        }, wrapperAttrs.value), [slots.prepend && createVNode("span", {
+          "class": `${prefixCls}-prepend`
+        }, [slots.prepend()]), renderInput(true), slots.append && createVNode("span", {
+          "class": `${prefixCls}-append`
+        }, [slots.append()])]);
+      }
+      return renderInput();
+    };
+    return {
+      inputRef,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+const _sfc_main$E = defineComponent({
+  name: "IconSearch",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-search`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$l = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$j = /* @__PURE__ */ createElementVNode("path", { d: "M33.072 33.071c6.248-6.248 6.248-16.379 0-22.627-6.249-6.249-16.38-6.249-22.628 0-6.248 6.248-6.248 16.379 0 22.627 6.248 6.248 16.38 6.248 22.628 0Zm0 0 8.485 8.485" }, null, -1);
+const _hoisted_3$i = [
+  _hoisted_2$j
+];
+function _sfc_render$y(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$i, 14, _hoisted_1$l);
+}
+var _IconSearch = /* @__PURE__ */ _export_sfc$1(_sfc_main$E, [["render", _sfc_render$y]]);
+const IconSearch = Object.assign(_IconSearch, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconSearch.name, _IconSearch);
+  }
+});
+const buttonGroupInjectionKey = Symbol("ArcoButtonGroup");
+const _sfc_main$D = defineComponent({
+  name: "Button",
+  components: {
+    IconLoading
+  },
+  props: {
+    type: {
+      type: String
+    },
+    shape: {
+      type: String
+    },
+    status: {
+      type: String
+    },
+    size: {
+      type: String
+    },
+    long: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean
+    },
+    htmlType: {
+      type: String,
+      default: "button"
+    },
+    href: String
+  },
+  emits: {
+    click: (ev) => true
+  },
+  setup(props, { emit }) {
+    const { size, disabled } = toRefs(props);
+    const prefixCls = getPrefixCls("btn");
+    const groupContext = inject(buttonGroupInjectionKey, void 0);
+    const _size = computed(() => {
+      var _a;
+      return (_a = size.value) != null ? _a : groupContext == null ? void 0 : groupContext.size;
+    });
+    const _disabled = computed(() => Boolean(disabled.value || (groupContext == null ? void 0 : groupContext.disabled)));
+    const { mergedSize: _mergedSize, mergedDisabled } = useFormItem({
+      size: _size,
+      disabled: _disabled
+    });
+    const { mergedSize } = useSize(_mergedSize);
+    const cls = computed(() => {
+      var _a, _b, _c, _d, _e, _f;
+      return [
+        prefixCls,
+        `${prefixCls}-${(_b = (_a = props.type) != null ? _a : groupContext == null ? void 0 : groupContext.type) != null ? _b : "secondary"}`,
+        `${prefixCls}-shape-${(_d = (_c = props.shape) != null ? _c : groupContext == null ? void 0 : groupContext.shape) != null ? _d : "square"}`,
+        `${prefixCls}-size-${mergedSize.value}`,
+        `${prefixCls}-status-${(_f = (_e = props.status) != null ? _e : groupContext == null ? void 0 : groupContext.status) != null ? _f : "normal"}`,
+        {
+          [`${prefixCls}-long`]: props.long,
+          [`${prefixCls}-loading`]: props.loading,
+          [`${prefixCls}-disabled`]: mergedDisabled.value,
+          [`${prefixCls}-link`]: isString(props.href)
+        }
+      ];
+    });
+    const handleClick = (ev) => {
+      if (props.disabled || props.loading) {
+        return;
+      }
+      emit("click", ev);
+    };
+    return {
+      prefixCls,
+      cls,
+      mergedDisabled,
+      handleClick
+    };
+  }
+});
+const _hoisted_1$k = ["href"];
+const _hoisted_2$i = ["type", "disabled"];
+function _sfc_render$x(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_loading = resolveComponent("icon-loading");
+  return _ctx.href ? (openBlock(), createElementBlock("a", {
+    key: 0,
+    class: normalizeClass([
+      _ctx.cls,
+      { [`${_ctx.prefixCls}-only-icon`]: _ctx.$slots.icon && !_ctx.$slots.default }
+    ]),
+    href: _ctx.mergedDisabled || _ctx.loading ? void 0 : _ctx.href,
+    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.handleClick && _ctx.handleClick(...args))
+  }, [
+    _ctx.loading || _ctx.$slots.icon ? (openBlock(), createElementBlock("span", {
+      key: 0,
+      class: normalizeClass(`${_ctx.prefixCls}-icon`)
+    }, [
+      _ctx.loading ? (openBlock(), createBlock(_component_icon_loading, {
+        key: 0,
+        spin: "true"
+      })) : renderSlot(_ctx.$slots, "icon", { key: 1 })
+    ], 2)) : createCommentVNode("v-if", true),
+    renderSlot(_ctx.$slots, "default")
+  ], 10, _hoisted_1$k)) : (openBlock(), createElementBlock("button", {
+    key: 1,
+    class: normalizeClass([
+      _ctx.cls,
+      { [`${_ctx.prefixCls}-only-icon`]: _ctx.$slots.icon && !_ctx.$slots.default }
+    ]),
+    type: _ctx.htmlType,
+    disabled: _ctx.mergedDisabled,
+    onClick: _cache[1] || (_cache[1] = (...args) => _ctx.handleClick && _ctx.handleClick(...args))
+  }, [
+    _ctx.loading || _ctx.$slots.icon ? (openBlock(), createElementBlock("span", {
+      key: 0,
+      class: normalizeClass(`${_ctx.prefixCls}-icon`)
+    }, [
+      _ctx.loading ? (openBlock(), createBlock(_component_icon_loading, {
+        key: 0,
+        spin: true
+      })) : renderSlot(_ctx.$slots, "icon", { key: 1 })
+    ], 2)) : createCommentVNode("v-if", true),
+    renderSlot(_ctx.$slots, "default")
+  ], 10, _hoisted_2$i));
+}
+var _Button = /* @__PURE__ */ _export_sfc$1(_sfc_main$D, [["render", _sfc_render$x]]);
+const _sfc_main$C = defineComponent({
+  name: "ButtonGroup",
+  props: {
+    type: {
+      type: String
+    },
+    status: {
+      type: String
+    },
+    shape: {
+      type: String
+    },
+    size: {
+      type: String
+    },
+    disabled: {
+      type: Boolean
+    }
+  },
+  setup(props) {
+    const { type, size, status, disabled, shape } = toRefs(props);
+    const prefixCls = getPrefixCls("btn-group");
+    provide(buttonGroupInjectionKey, reactive({
+      type,
+      size,
+      shape,
+      status,
+      disabled
+    }));
+    return {
+      prefixCls
+    };
+  }
+});
+function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", {
+    class: normalizeClass(_ctx.prefixCls)
+  }, [
+    renderSlot(_ctx.$slots, "default")
+  ], 2);
+}
+var ButtonGroup = /* @__PURE__ */ _export_sfc$1(_sfc_main$C, [["render", _sfc_render$w]]);
+const Button = Object.assign(_Button, {
+  Group: ButtonGroup,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Button.name, _Button);
+    app.component(componentPrefix + ButtonGroup.name, ButtonGroup);
+  }
+});
+var InputSearch = defineComponent({
+  name: "InputSearch",
+  props: {
+    searchButton: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String
+    },
+    buttonText: {
+      type: String
+    },
+    buttonProps: {
+      type: Object
+    }
+  },
+  emits: {
+    search: (value, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const {
+      size
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("input-search");
+    const {
+      mergedSize
+    } = useSize(size);
+    const inputRef = ref();
+    const handleClick = (e) => {
+      if (inputRef.value.inputRef) {
+        emit("search", inputRef.value.inputRef.value, e);
+      }
+    };
+    const renderSuffix = () => {
+      var _a;
+      return createVNode(Fragment, null, [props.loading ? createVNode(IconLoading, null, null) : createVNode(IconHover, {
+        "onClick": handleClick
+      }, {
+        default: () => [createVNode(IconSearch, null, null)]
+      }), (_a = slots.suffix) == null ? void 0 : _a.call(slots)]);
+    };
+    const renderButton = () => {
+      var _a;
+      let _slots = {};
+      if (props.buttonText || slots["button-default"] || slots["button-icon"]) {
+        _slots = {
+          default: (_a = slots["button-default"]) != null ? _a : props.buttonText ? () => props.buttonText : void 0,
+          icon: slots["button-icon"]
+        };
+      } else {
+        _slots = {
+          icon: () => createVNode(IconSearch, null, null)
+        };
+      }
+      return createVNode(Button, mergeProps({
+        "type": "primary",
+        "class": `${prefixCls}-btn`,
+        "disabled": props.disabled,
+        "size": mergedSize.value,
+        "loading": props.loading
+      }, props.buttonProps, {
+        "onClick": handleClick
+      }), _slots);
+    };
+    const render2 = () => createVNode(_Input, {
+      "ref": inputRef,
+      "class": prefixCls,
+      "size": mergedSize.value,
+      "disabled": props.disabled
+    }, {
+      prepend: slots.prepend,
+      prefix: slots.prefix,
+      suffix: props.searchButton ? slots.suffix : renderSuffix,
+      append: props.searchButton ? renderButton : slots.append
+    });
+    return {
+      inputRef,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+const _sfc_main$B = defineComponent({
+  name: "IconEye",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-eye`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$j = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$h = /* @__PURE__ */ createElementVNode("path", {
+  "clip-rule": "evenodd",
+  d: "M24 37c6.627 0 12.627-4.333 18-13-5.373-8.667-11.373-13-18-13-6.627 0-12.627 4.333-18 13 5.373 8.667 11.373 13 18 13Z"
+}, null, -1);
+const _hoisted_3$h = /* @__PURE__ */ createElementVNode("path", { d: "M29 24a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z" }, null, -1);
+const _hoisted_4$3 = [
+  _hoisted_2$h,
+  _hoisted_3$h
+];
+function _sfc_render$v(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_4$3, 14, _hoisted_1$j);
+}
+var _IconEye = /* @__PURE__ */ _export_sfc$1(_sfc_main$B, [["render", _sfc_render$v]]);
+const IconEye = Object.assign(_IconEye, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconEye.name, _IconEye);
+  }
+});
+const _sfc_main$A = defineComponent({
+  name: "IconEyeInvisible",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-eye-invisible`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$i = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$g = /* @__PURE__ */ createElementVNode("path", { d: "M14 14.5c-2.69 2-5.415 5.33-8 9.5 5.373 8.667 11.373 13 18 13 3.325 0 6.491-1.09 9.5-3.271M17.463 12.5C19 11 21.75 11 24 11c6.627 0 12.627 4.333 18 13-1.766 2.848-3.599 5.228-5.5 7.14" }, null, -1);
+const _hoisted_3$g = /* @__PURE__ */ createElementVNode("path", { d: "M29 24a5 5 0 1 1-10 0 5 5 0 0 1 10 0ZM6.852 7.103l34.294 34.294" }, null, -1);
+const _hoisted_4$2 = [
+  _hoisted_2$g,
+  _hoisted_3$g
+];
+function _sfc_render$u(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_4$2, 14, _hoisted_1$i);
+}
+var _IconEyeInvisible = /* @__PURE__ */ _export_sfc$1(_sfc_main$A, [["render", _sfc_render$u]]);
+const IconEyeInvisible = Object.assign(_IconEyeInvisible, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconEyeInvisible.name, _IconEyeInvisible);
+  }
+});
+const _sfc_main$z = defineComponent({
+  name: "InputPassword",
+  components: {
+    IconEye,
+    IconEyeInvisible,
+    AIconHover: IconHover,
+    AInput: _Input
+  },
+  props: {
+    invisibleButton: {
+      type: Boolean,
+      default: true
+    }
+  },
+  setup() {
+    const inputRef = ref();
+    const invisible = ref(true);
+    const handleInvisible = () => {
+      invisible.value = !invisible.value;
+    };
+    return {
+      inputRef,
+      invisible,
+      handleInvisible
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  }
+});
+function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_eye = resolveComponent("icon-eye");
+  const _component_icon_eye_invisible = resolveComponent("icon-eye-invisible");
+  const _component_a_icon_hover = resolveComponent("a-icon-hover");
+  const _component_a_input = resolveComponent("a-input");
+  return openBlock(), createBlock(_component_a_input, {
+    ref: "inputRef",
+    type: _ctx.invisible ? "password" : "text"
+  }, createSlots({ _: 2 }, [
+    _ctx.$slots.prepend ? {
+      name: "prepend",
+      fn: withCtx(() => [
+        renderSlot(_ctx.$slots, "prepend")
+      ])
+    } : void 0,
+    _ctx.$slots.prefix ? {
+      name: "prefix",
+      fn: withCtx(() => [
+        renderSlot(_ctx.$slots, "prefix")
+      ])
+    } : void 0,
+    _ctx.invisibleButton || _ctx.$slots.suffix ? {
+      name: "suffix",
+      fn: withCtx(() => [
+        _ctx.invisibleButton ? (openBlock(), createBlock(_component_a_icon_hover, {
+          key: 0,
+          onClick: _ctx.handleInvisible,
+          onMousedown: _cache[0] || (_cache[0] = withModifiers(() => {
+          }, ["prevent"])),
+          onMouseup: _cache[1] || (_cache[1] = withModifiers(() => {
+          }, ["prevent"]))
+        }, {
+          default: withCtx(() => [
+            _ctx.invisible ? (openBlock(), createBlock(_component_icon_eye, { key: 0 })) : (openBlock(), createBlock(_component_icon_eye_invisible, { key: 1 }))
+          ]),
+          _: 1
+        }, 8, ["onClick"])) : createCommentVNode("v-if", true),
+        renderSlot(_ctx.$slots, "suffix")
+      ])
+    } : void 0,
+    _ctx.$slots.append ? {
+      name: "append",
+      fn: withCtx(() => [
+        renderSlot(_ctx.$slots, "append")
+      ])
+    } : void 0
+  ]), 1032, ["type"]);
+}
+var InputPassword = /* @__PURE__ */ _export_sfc$1(_sfc_main$z, [["render", _sfc_render$t]]);
+const _sfc_main$y = defineComponent({
+  name: "InputGroup",
+  setup() {
+    const prefixCls = getPrefixCls("input-group");
+    return {
+      prefixCls
+    };
+  }
+});
+function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("div", {
+    class: normalizeClass(_ctx.prefixCls)
+  }, [
+    renderSlot(_ctx.$slots, "default")
+  ], 2);
+}
+var InputGroup = /* @__PURE__ */ _export_sfc$1(_sfc_main$y, [["render", _sfc_render$s]]);
+const Input = Object.assign(_Input, {
+  Search: InputSearch,
+  Password: InputPassword,
+  Group: InputGroup,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Input.name, _Input);
+    app.component(componentPrefix + InputGroup.name, InputGroup);
+    app.component(componentPrefix + InputSearch.name, InputSearch);
+    app.component(componentPrefix + InputPassword.name, InputPassword);
+  }
+});
+var __defProp$c = Object.defineProperty;
+var __getOwnPropSymbols$d = Object.getOwnPropertySymbols;
+var __hasOwnProp$d = Object.prototype.hasOwnProperty;
+var __propIsEnum$d = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$c = (obj, key, value) => key in obj ? __defProp$c(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$c = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$d.call(b, prop))
+      __defNormalProp$c(a, prop, b[prop]);
+  if (__getOwnPropSymbols$d)
+    for (var prop of __getOwnPropSymbols$d(b)) {
+      if (__propIsEnum$d.call(b, prop))
+        __defNormalProp$c(a, prop, b[prop]);
+    }
+  return a;
+};
+const getViewPortSize = () => {
+  return {
+    width: document.documentElement.clientWidth || window.innerWidth,
+    height: document.documentElement.clientHeight || window.innerHeight
+  };
+};
+const getElementScrollRect = (element, containerRect) => {
+  var _a, _b;
+  const rect = element.getBoundingClientRect();
+  return {
+    top: rect.top,
+    bottom: rect.bottom,
+    left: rect.left,
+    right: rect.right,
+    scrollTop: rect.top - containerRect.top,
+    scrollBottom: rect.bottom - containerRect.top,
+    scrollLeft: rect.left - containerRect.left,
+    scrollRight: rect.right - containerRect.left,
+    width: (_a = element.offsetWidth) != null ? _a : element.clientWidth,
+    height: (_b = element.offsetHeight) != null ? _b : element.clientHeight
+  };
+};
+const getBoundaryPosition = (position) => {
+  switch (position) {
+    case "top":
+    case "tl":
+    case "tr":
+      return "top";
+    case "bottom":
+    case "bl":
+    case "br":
+      return "bottom";
+    case "left":
+    case "lt":
+    case "lb":
+      return "left";
+    case "right":
+    case "rt":
+    case "rb":
+      return "right";
+    default:
+      return "top";
+  }
+};
+const changePosition = (position, direction) => {
+  switch (direction) {
+    case "top":
+      switch (position) {
+        case "bottom":
+          return "top";
+        case "bl":
+          return "tl";
+        case "br":
+          return "tr";
+        default:
+          return position;
+      }
+    case "bottom":
+      switch (position) {
+        case "top":
+          return "bottom";
+        case "tl":
+          return "bl";
+        case "tr":
+          return "br";
+        default:
+          return position;
+      }
+    case "left":
+      switch (position) {
+        case "right":
+          return "left";
+        case "rt":
+          return "lt";
+        case "rb":
+          return "lb";
+        default:
+          return position;
+      }
+    case "right":
+      switch (position) {
+        case "left":
+          return "right";
+        case "lt":
+          return "rt";
+        case "lb":
+          return "rb";
+        default:
+          return position;
+      }
+    default:
+      return position;
+  }
+};
+const getFitPosition = (position, popupPosition, {
+  containerRect,
+  triggerRect,
+  popupRect,
+  offset,
+  translate
+}) => {
+  const direction = getBoundaryPosition(position);
+  const viewPortSize = getViewPortSize();
+  const viewPortBoundary = {
+    top: containerRect.top + popupPosition.top,
+    bottom: viewPortSize.height - (containerRect.top + popupPosition.top + popupRect.height),
+    left: containerRect.left + popupPosition.left,
+    right: viewPortSize.width - (containerRect.left + popupPosition.left + popupRect.width)
+  };
+  let finalPosition = position;
+  if (direction === "top" && viewPortBoundary.top < 0) {
+    if (triggerRect.top > popupRect.height) {
+      popupPosition.top = -containerRect.top;
+    } else {
+      const fitPosition = getPopupOffset("bottom", triggerRect, popupRect, {
+        offset,
+        translate
+      });
+      if (viewPortSize.height - (containerRect.top + fitPosition.top + popupRect.height) > 0) {
+        finalPosition = changePosition(position, "bottom");
+        popupPosition.top = fitPosition.top;
+      }
+    }
+  }
+  if (direction === "bottom" && viewPortBoundary.bottom < 0) {
+    if (viewPortSize.height - triggerRect.bottom > popupRect.height) {
+      popupPosition.top = -containerRect.top + (viewPortSize.height - popupRect.height);
+    } else {
+      const fitPosition = getPopupOffset("top", triggerRect, popupRect, {
+        offset,
+        translate
+      });
+      if (containerRect.top + fitPosition.top > 0) {
+        finalPosition = changePosition(position, "top");
+        popupPosition.top = fitPosition.top;
+      }
+    }
+  }
+  if (direction === "left" && viewPortBoundary.left < 0) {
+    if (triggerRect.left > popupRect.width) {
+      popupPosition.left = -containerRect.left;
+    } else {
+      const fitPosition = getPopupOffset("right", triggerRect, popupRect, {
+        offset,
+        translate
+      });
+      if (viewPortSize.width - (containerRect.left + fitPosition.left + popupRect.width) > 0) {
+        finalPosition = changePosition(position, "right");
+        popupPosition.left = fitPosition.left;
+      }
+    }
+  }
+  if (direction === "right" && viewPortBoundary.right < 0) {
+    if (viewPortSize.width - triggerRect.right > popupRect.width) {
+      popupPosition.left = -containerRect.left + (viewPortSize.width - popupRect.width);
+    } else {
+      const fitPosition = getPopupOffset("left", triggerRect, popupRect, {
+        offset,
+        translate
+      });
+      if (containerRect.left + fitPosition.left > 0) {
+        finalPosition = changePosition(position, "left");
+        popupPosition.left = fitPosition.left;
+      }
+    }
+  }
+  if (direction === "top" || direction === "bottom") {
+    if (viewPortBoundary.left < 0) {
+      popupPosition.left = -containerRect.left;
+    } else if (viewPortBoundary.right < 0) {
+      popupPosition.left = -containerRect.left + (viewPortSize.width - popupRect.width);
+    }
+  }
+  if (direction === "left" || direction === "right") {
+    if (viewPortBoundary.top < 0) {
+      popupPosition.top = -containerRect.top;
+    } else if (viewPortBoundary.bottom < 0) {
+      popupPosition.top = -containerRect.top + (viewPortSize.height - popupRect.height);
+    }
+  }
+  return {
+    popupPosition,
+    position: finalPosition
+  };
+};
+const getPopupOffset = (position, triggerRect, popupRect, {
+  offset = 0,
+  translate = [0, 0]
+} = {}) => {
+  var _a;
+  const _translate = (_a = isArray(translate) ? translate : translate[position]) != null ? _a : [0, 0];
+  switch (position) {
+    case "top":
+      return {
+        left: triggerRect.scrollLeft + Math.round(triggerRect.width / 2) - Math.round(popupRect.width / 2) + _translate[0],
+        top: triggerRect.scrollTop - popupRect.height - offset + _translate[1]
+      };
+    case "tl":
+      return {
+        left: triggerRect.scrollLeft + _translate[0],
+        top: triggerRect.scrollTop - popupRect.height - offset + _translate[1]
+      };
+    case "tr":
+      return {
+        left: triggerRect.scrollRight - popupRect.width + _translate[0],
+        top: triggerRect.scrollTop - popupRect.height - offset + _translate[1]
+      };
+    case "bottom":
+      return {
+        left: triggerRect.scrollLeft + Math.round(triggerRect.width / 2) - Math.round(popupRect.width / 2) + _translate[0],
+        top: triggerRect.scrollBottom + offset + _translate[1]
+      };
+    case "bl":
+      return {
+        left: triggerRect.scrollLeft + _translate[0],
+        top: triggerRect.scrollBottom + offset + _translate[1]
+      };
+    case "br":
+      return {
+        left: triggerRect.scrollRight - popupRect.width + _translate[0],
+        top: triggerRect.scrollBottom + offset + _translate[1]
+      };
+    case "left":
+      return {
+        left: triggerRect.scrollLeft - popupRect.width - offset + _translate[0],
+        top: triggerRect.scrollTop + Math.round(triggerRect.height / 2) - Math.round(popupRect.height / 2) + _translate[1]
+      };
+    case "lt":
+      return {
+        left: triggerRect.scrollLeft - popupRect.width - offset + _translate[0],
+        top: triggerRect.scrollTop + _translate[1]
+      };
+    case "lb":
+      return {
+        left: triggerRect.scrollLeft - popupRect.width - offset + _translate[0],
+        top: triggerRect.scrollBottom - popupRect.height + _translate[1]
+      };
+    case "right":
+      return {
+        left: triggerRect.scrollRight + offset + _translate[0],
+        top: triggerRect.scrollTop + Math.round(triggerRect.height / 2) - Math.round(popupRect.height / 2) + _translate[1]
+      };
+    case "rt":
+      return {
+        left: triggerRect.scrollRight + offset + _translate[0],
+        top: triggerRect.scrollTop + _translate[1]
+      };
+    case "rb":
+      return {
+        left: triggerRect.scrollRight + offset + _translate[0],
+        top: triggerRect.scrollBottom - popupRect.height + _translate[1]
+      };
+    default:
+      return {
+        left: 0,
+        top: 0
+      };
+  }
+};
+const getTransformOrigin = (position) => {
+  let originX = "0";
+  if (["top", "bottom"].includes(position)) {
+    originX = "50%";
+  } else if (["left", "lt", "lb", "tr", "br"].includes(position)) {
+    originX = "100%";
+  }
+  let originY = "0";
+  if (["left", "right"].includes(position)) {
+    originY = "50%";
+  } else if (["top", "tl", "tr", "lt", "rt"].includes(position)) {
+    originY = "100%";
+  }
+  return `${originX} ${originY}`;
+};
+const getPopupStyle = (position, containerRect, triggerRect, popupRect, {
+  offset = 0,
+  translate = [0, 0],
+  customStyle = {},
+  autoFitPosition = false
+} = {}) => {
+  let finalPosition = position;
+  let popupPosition = getPopupOffset(position, triggerRect, popupRect, {
+    offset,
+    translate
+  });
+  if (autoFitPosition) {
+    const result = getFitPosition(position, popupPosition, {
+      containerRect,
+      popupRect,
+      triggerRect,
+      offset,
+      translate
+    });
+    popupPosition = result.popupPosition;
+    finalPosition = result.position;
+  }
+  const style = __spreadValues$c({
+    left: `${popupPosition.left}px`,
+    top: `${popupPosition.top}px`
+  }, customStyle);
+  return {
+    style,
+    position: finalPosition
+  };
+};
+const getArrowStyle = (position, triggerRect, popupRect, {
+  customStyle = {}
+}) => {
+  if (["top", "tl", "tr", "bottom", "bl", "br"].includes(position)) {
+    let offsetLeft = Math.abs(triggerRect.scrollLeft + triggerRect.width / 2 - popupRect.scrollLeft);
+    if (offsetLeft > popupRect.width - 8) {
+      if (triggerRect.width > popupRect.width) {
+        offsetLeft = popupRect.width / 2;
+      } else {
+        offsetLeft = popupRect.width - 8;
+      }
+    }
+    if (["top", "tl", "tr"].includes(position)) {
+      return __spreadValues$c({
+        left: `${offsetLeft}px`,
+        bottom: "0",
+        transform: "translate(-50%,50%) rotate(45deg)"
+      }, customStyle);
+    }
+    return __spreadValues$c({
+      left: `${offsetLeft}px`,
+      top: "0",
+      transform: "translate(-50%,-50%) rotate(45deg)"
+    }, customStyle);
+  }
+  let offsetTop = Math.abs(triggerRect.scrollTop + triggerRect.height / 2 - popupRect.scrollTop);
+  if (offsetTop > popupRect.height - 8) {
+    if (triggerRect.height > popupRect.height) {
+      offsetTop = popupRect.height / 2;
+    } else {
+      offsetTop = popupRect.height - 8;
+    }
+  }
+  if (["left", "lt", "lb"].includes(position)) {
+    return __spreadValues$c({
+      top: `${offsetTop}px`,
+      right: "0",
+      transform: "translate(50%,-50%) rotate(45deg)"
+    }, customStyle);
+  }
+  return __spreadValues$c({
+    top: `${offsetTop}px`,
+    left: "0",
+    transform: "translate(-50%,-50%) rotate(45deg)"
+  }, customStyle);
+};
+const isScrollElement = (element) => {
+  return element.scrollHeight > element.offsetHeight || element.scrollWidth > element.offsetWidth;
+};
+const getScrollElements = (container) => {
+  var _a;
+  const scrollElements = [];
+  let element = container;
+  while (element && element !== document.documentElement) {
+    if (isScrollElement(element)) {
+      scrollElements.push(element);
+    }
+    element = (_a = element.parentElement) != null ? _a : void 0;
+  }
+  return scrollElements;
+};
+const useFirstElement = () => {
+  const children = {};
+  const firstElement = ref();
+  const getFirstElement = () => {
+    const element = getFirstElementFromChildren(children.value);
+    if (element !== firstElement.value) {
+      firstElement.value = element;
+    }
+  };
+  onMounted(() => getFirstElement());
+  onUpdated(() => getFirstElement());
+  return {
+    children,
+    firstElement
+  };
+};
+var ResizeObserver = defineComponent({
+  name: "ResizeObserver",
+  props: {
+    watchOnUpdated: Boolean
+  },
+  emits: [
+    "resize"
+  ],
+  setup(props, { emit, slots }) {
+    const { children, firstElement } = useFirstElement();
+    let resizeObserver;
+    const createResizeObserver = (target2) => {
+      if (!target2)
+        return;
+      resizeObserver = new index$1((entries) => {
+        const entry = entries[0];
+        emit("resize", entry);
+      });
+      resizeObserver.observe(target2);
+    };
+    const destroyResizeObserver = () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+    };
+    watch(firstElement, (element) => {
+      if (resizeObserver)
+        destroyResizeObserver();
+      if (element) {
+        createResizeObserver(element);
+      }
+    });
+    onBeforeUnmount(() => {
+      if (resizeObserver)
+        destroyResizeObserver();
+    });
+    return () => {
+      var _a;
+      children.value = (_a = slots.default) == null ? void 0 : _a.call(slots);
+      return children.value;
+    };
+  }
+});
+function usePickSlots(slots, slotName) {
+  const slot = ref(slots[slotName]);
+  onUpdated(() => {
+    const newSlot = slots[slotName];
+    if (slot.value !== newSlot) {
+      slot.value = newSlot;
+    }
+  });
+  return slot;
+}
+const triggerInjectionKey = Symbol("ArcoTrigger");
 const POPUP_BASE_Z_INDEX = 1e3;
 const MESSAGE_BASE_Z_INDEX = 5e3;
 const Z_INDEX_STEP = 1;
@@ -6121,6 +8547,1386 @@ function usePopupManager(type, {
     isLastDialog
   };
 }
+const useResizeObserver = ({
+  elementRef,
+  onResize
+}) => {
+  let resizeObserver;
+  const createResizeObserver = () => {
+    if (!elementRef.value)
+      return;
+    resizeObserver = new index$1((entries) => {
+      const entry = entries[0];
+      isFunction(onResize) && onResize(entry);
+    });
+    resizeObserver.observe(elementRef.value);
+  };
+  const destroyResizeObserver = () => {
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
+    }
+  };
+  return {
+    createResizeObserver,
+    destroyResizeObserver
+  };
+};
+var ClientOnly = defineComponent({
+  name: "ClientOnly",
+  setup(_, {
+    slots
+  }) {
+    const mounted = ref(false);
+    onMounted(() => mounted.value = true);
+    return () => {
+      var _a;
+      if (mounted.value) {
+        return (_a = slots.default) == null ? void 0 : _a.call(slots);
+      }
+      return null;
+    };
+  }
+});
+const useTeleportContainer = ({
+  popupContainer,
+  visible,
+  defaultContainer = "body",
+  documentContainer
+}) => {
+  const teleportContainer = ref(popupContainer.value);
+  const containerRef = ref();
+  const getContainer = () => {
+    const element = getElement(popupContainer.value);
+    const _teleportContainer = element ? popupContainer.value : defaultContainer;
+    const _containerElement = element != null ? element : documentContainer ? document.documentElement : getElement(defaultContainer);
+    if (_teleportContainer !== teleportContainer.value) {
+      teleportContainer.value = _teleportContainer;
+    }
+    if (_containerElement !== containerRef.value) {
+      containerRef.value = _containerElement;
+    }
+  };
+  onMounted(() => getContainer());
+  watch(visible, (visible2) => {
+    if (teleportContainer.value !== popupContainer.value && visible2) {
+      getContainer();
+    }
+  });
+  return {
+    teleportContainer,
+    containerRef
+  };
+};
+var __defProp$b = Object.defineProperty;
+var __defProps$6 = Object.defineProperties;
+var __getOwnPropDescs$6 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$c = Object.getOwnPropertySymbols;
+var __hasOwnProp$c = Object.prototype.hasOwnProperty;
+var __propIsEnum$c = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$b = (obj, key, value) => key in obj ? __defProp$b(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$b = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$c.call(b, prop))
+      __defNormalProp$b(a, prop, b[prop]);
+  if (__getOwnPropSymbols$c)
+    for (var prop of __getOwnPropSymbols$c(b)) {
+      if (__propIsEnum$c.call(b, prop))
+        __defNormalProp$b(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$6 = (a, b) => __defProps$6(a, __getOwnPropDescs$6(b));
+const TRIGGER_EVENTS = ["onClick", "onMouseenter", "onMouseleave", "onFocusin", "onFocusout", "onContextmenu"];
+var _Trigger = defineComponent({
+  name: "Trigger",
+  inheritAttrs: false,
+  props: {
+    popupVisible: {
+      type: Boolean,
+      default: void 0
+    },
+    defaultPopupVisible: {
+      type: Boolean,
+      default: false
+    },
+    trigger: {
+      type: [String, Array],
+      default: "hover"
+    },
+    position: {
+      type: String,
+      default: "bottom"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    popupOffset: {
+      type: Number,
+      default: 0
+    },
+    popupTranslate: {
+      type: [Array, Object]
+    },
+    showArrow: {
+      type: Boolean,
+      default: false
+    },
+    alignPoint: {
+      type: Boolean,
+      default: false
+    },
+    popupHoverStay: {
+      type: Boolean,
+      default: true
+    },
+    blurToClose: {
+      type: Boolean,
+      default: true
+    },
+    clickToClose: {
+      type: Boolean,
+      default: true
+    },
+    clickOutsideToClose: {
+      type: Boolean,
+      default: true
+    },
+    unmountOnClose: {
+      type: Boolean,
+      default: true
+    },
+    contentClass: {
+      type: [String, Array, Object]
+    },
+    contentStyle: {
+      type: Object
+    },
+    arrowClass: {
+      type: [String, Array, Object]
+    },
+    arrowStyle: {
+      type: Object
+    },
+    popupStyle: {
+      type: Object
+    },
+    animationName: {
+      type: String,
+      default: "fade-in"
+    },
+    duration: {
+      type: [Number, Object]
+    },
+    mouseEnterDelay: {
+      type: Number,
+      default: 100
+    },
+    mouseLeaveDelay: {
+      type: Number,
+      default: 100
+    },
+    focusDelay: {
+      type: Number,
+      default: 0
+    },
+    autoFitPopupWidth: {
+      type: Boolean,
+      default: false
+    },
+    autoFitPopupMinWidth: {
+      type: Boolean,
+      default: false
+    },
+    autoFixPosition: {
+      type: Boolean,
+      default: true
+    },
+    popupContainer: {
+      type: [String, Object]
+    },
+    updateAtScroll: {
+      type: Boolean,
+      default: false
+    },
+    autoFitTransformOrigin: {
+      type: Boolean,
+      default: false
+    },
+    hideEmpty: {
+      type: Boolean,
+      default: false
+    },
+    openedClass: {
+      type: [String, Array, Object]
+    },
+    autoFitPosition: {
+      type: Boolean,
+      default: true
+    },
+    renderToBody: {
+      type: Boolean,
+      default: true
+    },
+    preventFocus: {
+      type: Boolean,
+      default: false
+    },
+    onPopupVisibleChange: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:popupVisible",
+    "popupVisibleChange",
+    "show",
+    "hide",
+    "resize"
+  ],
+  setup(props, {
+    emit,
+    slots,
+    attrs
+  }) {
+    const {
+      popupContainer
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("trigger");
+    const popupAttrs = computed(() => omit(attrs, TRIGGER_EVENTS));
+    const configCtx = inject(configProviderInjectionKey, void 0);
+    const triggerMethods = computed(() => [].concat(props.trigger));
+    const childrenRefs = /* @__PURE__ */ new Set();
+    const triggerCtx = inject(triggerInjectionKey, void 0);
+    const {
+      children,
+      firstElement
+    } = useFirstElement();
+    const popupRef = ref();
+    const popupVisible = ref(props.defaultPopupVisible);
+    const popupPosition = ref(props.position);
+    const popupStyle = ref({});
+    const transformStyle = ref({});
+    const arrowStyle = ref({});
+    const arrowRef = ref();
+    const mousePosition = ref({
+      top: 0,
+      left: 0
+    });
+    const computedVisible = computed(() => {
+      var _a;
+      return (_a = props.popupVisible) != null ? _a : popupVisible.value;
+    });
+    const {
+      teleportContainer,
+      containerRef
+    } = useTeleportContainer({
+      popupContainer,
+      visible: computedVisible,
+      documentContainer: true
+    });
+    const {
+      zIndex
+    } = usePopupManager("popup", {
+      visible: computedVisible
+    });
+    let delayTimer = 0;
+    let outsideListener = false;
+    const cleanDelayTimer = () => {
+      if (delayTimer) {
+        window.clearTimeout(delayTimer);
+        delayTimer = 0;
+      }
+    };
+    const updateMousePosition = (e) => {
+      if (props.alignPoint) {
+        const {
+          pageX,
+          pageY
+        } = e;
+        mousePosition.value = {
+          top: pageY,
+          left: pageX
+        };
+      }
+    };
+    const updatePopupStyle = () => {
+      if (!firstElement.value || !popupRef.value || !containerRef.value) {
+        return;
+      }
+      const containerRect = containerRef.value.getBoundingClientRect();
+      const triggerRect = props.alignPoint ? {
+        top: mousePosition.value.top,
+        bottom: mousePosition.value.top,
+        left: mousePosition.value.left,
+        right: mousePosition.value.left,
+        scrollTop: mousePosition.value.top,
+        scrollBottom: mousePosition.value.top,
+        scrollLeft: mousePosition.value.left,
+        scrollRight: mousePosition.value.left,
+        width: 0,
+        height: 0
+      } : getElementScrollRect(firstElement.value, containerRect);
+      const popupRect = getElementScrollRect(popupRef.value, containerRect);
+      const {
+        style,
+        position
+      } = getPopupStyle(props.position, containerRect, triggerRect, popupRect, {
+        offset: props.popupOffset,
+        translate: props.popupTranslate,
+        customStyle: props.popupStyle,
+        autoFitPosition: props.autoFitPosition
+      });
+      if (props.autoFitTransformOrigin) {
+        transformStyle.value = {
+          transformOrigin: getTransformOrigin(position)
+        };
+      }
+      if (props.autoFitPopupMinWidth) {
+        style.minWidth = `${triggerRect.width}px`;
+      } else if (props.autoFitPopupWidth) {
+        style.width = `${triggerRect.width}px`;
+      }
+      if (popupPosition.value !== position) {
+        popupPosition.value = position;
+      }
+      popupStyle.value = style;
+      if (props.showArrow) {
+        arrowStyle.value = getArrowStyle(position, triggerRect, popupRect, {
+          customStyle: props.arrowStyle
+        });
+      }
+    };
+    const changeVisible = (visible, delay) => {
+      if (visible === computedVisible.value && delayTimer === 0) {
+        return;
+      }
+      const update = () => {
+        popupVisible.value = visible;
+        emit("update:popupVisible", visible);
+        emit("popupVisibleChange", visible);
+        if (visible) {
+          nextTick(() => {
+            updatePopupStyle();
+          });
+        }
+      };
+      if (delay) {
+        cleanDelayTimer();
+        if (visible !== computedVisible.value) {
+          delayTimer = window.setTimeout(update, delay);
+        }
+      } else {
+        update();
+      }
+    };
+    const handleClick = (e) => {
+      var _a;
+      (_a = attrs.onClick) == null ? void 0 : _a.call(attrs, e);
+      if (props.disabled || computedVisible.value && !props.clickToClose) {
+        return;
+      }
+      if (triggerMethods.value.includes("click")) {
+        updateMousePosition(e);
+        changeVisible(!computedVisible.value);
+      } else if (triggerMethods.value.includes("contextMenu") && computedVisible.value) {
+        changeVisible(false);
+      }
+    };
+    const handleMouseEnter = (e) => {
+      var _a;
+      (_a = attrs.onMouseenter) == null ? void 0 : _a.call(attrs, e);
+      if (props.disabled || !triggerMethods.value.includes("hover")) {
+        return;
+      }
+      updateMousePosition(e);
+      changeVisible(true, props.mouseEnterDelay);
+    };
+    const handleMouseEnterWithContext = (e) => {
+      triggerCtx == null ? void 0 : triggerCtx.onMouseenter(e);
+      handleMouseEnter(e);
+    };
+    const handleMouseLeave = (e) => {
+      var _a;
+      (_a = attrs.onMouseleave) == null ? void 0 : _a.call(attrs, e);
+      if (props.disabled || !triggerMethods.value.includes("hover")) {
+        return;
+      }
+      changeVisible(false, props.mouseLeaveDelay);
+    };
+    const handleMouseLeaveWithContext = (e) => {
+      triggerCtx == null ? void 0 : triggerCtx.onMouseleave(e);
+      handleMouseLeave(e);
+    };
+    const handleFocusin = (e) => {
+      var _a;
+      (_a = attrs.onFocusin) == null ? void 0 : _a.call(attrs, e);
+      if (props.disabled || !triggerMethods.value.includes("focus")) {
+        return;
+      }
+      changeVisible(true, props.focusDelay);
+    };
+    const handleFocusout = (e) => {
+      var _a;
+      (_a = attrs.onFocusout) == null ? void 0 : _a.call(attrs, e);
+      if (props.disabled || !triggerMethods.value.includes("focus")) {
+        return;
+      }
+      if (!props.blurToClose) {
+        return;
+      }
+      changeVisible(false);
+    };
+    const handleContextmenu = (e) => {
+      var _a;
+      (_a = attrs.onContextmenu) == null ? void 0 : _a.call(attrs, e);
+      e.preventDefault();
+      if (props.disabled || !triggerMethods.value.includes("contextMenu") || computedVisible.value && !props.clickToClose) {
+        return;
+      }
+      updateMousePosition(e);
+      changeVisible(!computedVisible.value);
+    };
+    const addChildRef = (ref2) => {
+      childrenRefs.add(ref2);
+      triggerCtx == null ? void 0 : triggerCtx.addChildRef(ref2);
+    };
+    const removeChildRef = (ref2) => {
+      childrenRefs.delete(ref2);
+      triggerCtx == null ? void 0 : triggerCtx.removeChildRef(ref2);
+    };
+    provide(triggerInjectionKey, reactive({
+      onMouseenter: handleMouseEnterWithContext,
+      onMouseleave: handleMouseLeaveWithContext,
+      addChildRef,
+      removeChildRef
+    }));
+    const removeOutsideListener = () => {
+      off(document.documentElement, "mousedown", handleOutsideClick);
+      outsideListener = false;
+    };
+    const contentSlot = usePickSlots(slots, "content");
+    const hidePopup = computed(() => {
+      var _a;
+      return props.hideEmpty && isEmptyChildren((_a = contentSlot.value) == null ? void 0 : _a.call(contentSlot));
+    });
+    const handleOutsideClick = (e) => {
+      var _a, _b, _c;
+      if (((_a = firstElement.value) == null ? void 0 : _a.contains(e.target)) || ((_b = popupRef.value) == null ? void 0 : _b.contains(e.target))) {
+        return;
+      }
+      for (const item of childrenRefs) {
+        if ((_c = item.value) == null ? void 0 : _c.contains(e.target)) {
+          return;
+        }
+      }
+      removeOutsideListener();
+      changeVisible(false);
+    };
+    const handleScroll = throttleByRaf(() => {
+      if (computedVisible.value) {
+        updatePopupStyle();
+      }
+    });
+    const handleResize = () => {
+      if (computedVisible.value) {
+        updatePopupStyle();
+      }
+    };
+    const onTargetResize = () => {
+      handleResize();
+      emit("resize");
+    };
+    const handlePopupMouseDown = (e) => {
+      if (props.preventFocus) {
+        e.preventDefault();
+      }
+    };
+    triggerCtx == null ? void 0 : triggerCtx.addChildRef(popupRef);
+    const triggerCls = computed(() => {
+      return computedVisible.value ? props.openedClass : void 0;
+    });
+    let scrollElements;
+    watch(computedVisible, (value) => {
+      if (props.clickOutsideToClose) {
+        if (!value && outsideListener) {
+          removeOutsideListener();
+        } else if (value && !outsideListener) {
+          on(document.documentElement, "mousedown", handleOutsideClick);
+          outsideListener = true;
+        }
+      }
+      if (props.updateAtScroll || (configCtx == null ? void 0 : configCtx.updateAtScroll)) {
+        if (value) {
+          scrollElements = getScrollElements(firstElement.value);
+          for (const item of scrollElements) {
+            item.addEventListener("scroll", handleScroll);
+          }
+        } else if (scrollElements) {
+          for (const item of scrollElements) {
+            item.removeEventListener("scroll", handleScroll);
+          }
+          scrollElements = void 0;
+        }
+      }
+      if (value) {
+        mounted.value = true;
+      }
+    });
+    watch(() => [props.autoFitPopupWidth, props.autoFitPopupMinWidth], () => {
+      if (computedVisible.value) {
+        updatePopupStyle();
+      }
+    });
+    const {
+      createResizeObserver,
+      destroyResizeObserver
+    } = useResizeObserver({
+      elementRef: containerRef,
+      onResize: handleResize
+    });
+    onMounted(() => {
+      createResizeObserver();
+      if (computedVisible.value) {
+        updatePopupStyle();
+        if (props.clickOutsideToClose && !outsideListener) {
+          on(document.documentElement, "mousedown", handleOutsideClick);
+          outsideListener = true;
+        }
+        if (props.updateAtScroll || (configCtx == null ? void 0 : configCtx.updateAtScroll)) {
+          scrollElements = getScrollElements(firstElement.value);
+          for (const item of scrollElements) {
+            item.addEventListener("scroll", handleScroll);
+          }
+        }
+      }
+    });
+    onUpdated(() => {
+      if (computedVisible.value) {
+        updatePopupStyle();
+      }
+    });
+    onBeforeUnmount(() => {
+      triggerCtx == null ? void 0 : triggerCtx.removeChildRef(popupRef);
+      destroyResizeObserver();
+      if (outsideListener) {
+        removeOutsideListener();
+      }
+      if (scrollElements) {
+        for (const item of scrollElements) {
+          item.removeEventListener("scroll", handleScroll);
+        }
+        scrollElements = void 0;
+      }
+    });
+    const mounted = ref(computedVisible.value);
+    const handleShow = () => {
+      if (computedVisible.value) {
+        emit("show");
+      }
+    };
+    const handleHide = () => {
+      if (!computedVisible.value) {
+        mounted.value = false;
+        emit("hide");
+      }
+    };
+    return () => {
+      var _a, _b;
+      children.value = (_b = (_a = slots.default) == null ? void 0 : _a.call(slots)) != null ? _b : [];
+      mergeFirstChild(children.value, {
+        class: triggerCls.value,
+        onClick: handleClick,
+        onMouseenter: handleMouseEnter,
+        onMouseleave: handleMouseLeave,
+        onFocusin: handleFocusin,
+        onFocusout: handleFocusout,
+        onContextmenu: handleContextmenu
+      });
+      return createVNode(Fragment, null, [props.autoFixPosition ? createVNode(ResizeObserver, {
+        "onResize": onTargetResize
+      }, {
+        default: () => [children.value]
+      }) : children.value, createVNode(ClientOnly, null, {
+        default: () => [createVNode(Teleport, {
+          "to": teleportContainer.value,
+          "disabled": !props.renderToBody
+        }, {
+          default: () => [(!props.unmountOnClose || computedVisible.value || mounted.value) && !hidePopup.value && createVNode(ResizeObserver, {
+            "onResize": handleResize
+          }, {
+            default: () => [createVNode("div", mergeProps({
+              "ref": popupRef,
+              "class": [`${prefixCls}-popup`, `${prefixCls}-position-${popupPosition.value}`],
+              "style": __spreadProps$6(__spreadValues$b({}, popupStyle.value), {
+                zIndex: zIndex.value
+              }),
+              "trigger-placement": popupPosition.value,
+              "onMouseenter": handleMouseEnterWithContext,
+              "onMouseleave": handleMouseLeaveWithContext,
+              "onMousedown": handlePopupMouseDown
+            }, popupAttrs.value), [createVNode(Transition, {
+              "name": props.animationName,
+              "duration": props.duration,
+              "appear": true,
+              "onAfterEnter": handleShow,
+              "onAfterLeave": handleHide
+            }, {
+              default: () => {
+                var _a2;
+                return [withDirectives(createVNode("div", {
+                  "class": `${prefixCls}-popup-wrapper`,
+                  "style": transformStyle.value
+                }, [createVNode("div", {
+                  "class": [`${prefixCls}-content`, props.contentClass],
+                  "style": props.contentStyle
+                }, [(_a2 = slots.content) == null ? void 0 : _a2.call(slots)]), props.showArrow && createVNode("div", {
+                  "ref": arrowRef,
+                  "class": [`${prefixCls}-arrow`, props.arrowClass],
+                  "style": arrowStyle.value
+                }, null)]), [[vShow, computedVisible.value]])];
+              }
+            })])]
+          })]
+        })]
+      })]);
+    };
+  }
+});
+const Trigger = Object.assign(_Trigger, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Trigger.name, _Trigger);
+  }
+});
+const _sfc_main$x = defineComponent({
+  name: "IconEmpty",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-empty`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$h = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$f = /* @__PURE__ */ createElementVNode("path", { d: "M24 5v6m7 1 4-4m-18 4-4-4m28.5 22H28s-1 3-4 3-4-3-4-3H6.5M40 41H8a2 2 0 0 1-2-2v-8.46a2 2 0 0 1 .272-1.007l6.15-10.54A2 2 0 0 1 14.148 18H33.85a2 2 0 0 1 1.728.992l6.149 10.541A2 2 0 0 1 42 30.541V39a2 2 0 0 1-2 2Z" }, null, -1);
+const _hoisted_3$f = [
+  _hoisted_2$f
+];
+function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$f, 14, _hoisted_1$h);
+}
+var _IconEmpty = /* @__PURE__ */ _export_sfc$1(_sfc_main$x, [["render", _sfc_render$r]]);
+const IconEmpty = Object.assign(_IconEmpty, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconEmpty.name, _IconEmpty);
+  }
+});
+const _sfc_main$w = defineComponent({
+  name: "Empty",
+  components: {
+    IconEmpty
+  },
+  props: {
+    description: String,
+    imgSrc: String
+  },
+  setup() {
+    const prefixCls = getPrefixCls("empty");
+    const { t } = useI18n();
+    return {
+      prefixCls,
+      t
+    };
+  }
+});
+const _hoisted_1$g = ["src", "alt"];
+function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_empty = resolveComponent("icon-empty");
+  return openBlock(), createElementBlock("div", {
+    class: normalizeClass(_ctx.prefixCls)
+  }, [
+    createElementVNode("div", {
+      class: normalizeClass(`${_ctx.prefixCls}-image`)
+    }, [
+      renderSlot(_ctx.$slots, "image", {}, () => [
+        _ctx.imgSrc ? (openBlock(), createElementBlock("img", {
+          key: 0,
+          src: _ctx.imgSrc,
+          alt: _ctx.description || "empty"
+        }, null, 8, _hoisted_1$g)) : (openBlock(), createBlock(_component_icon_empty, { key: 1 }))
+      ])
+    ], 2),
+    createElementVNode("div", {
+      class: normalizeClass(`${_ctx.prefixCls}-description`)
+    }, [
+      renderSlot(_ctx.$slots, "default", {}, () => [
+        createTextVNode(toDisplayString(_ctx.description || _ctx.t("empty.description")), 1)
+      ])
+    ], 2)
+  ], 2);
+}
+var _Empty = /* @__PURE__ */ _export_sfc$1(_sfc_main$w, [["render", _sfc_render$q]]);
+const Empty = Object.assign(_Empty, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Empty.name, _Empty);
+  }
+});
+const DOT_NUMBER = 5;
+var DotLoading = defineComponent({
+  name: "DotLoading",
+  props: {
+    size: {
+      type: Number
+    }
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("dot-loading");
+    return () => {
+      const style = props.size ? {
+        width: `${props.size}px`,
+        height: `${props.size}px`
+      } : {};
+      return createVNode("div", {
+        "class": prefixCls,
+        "style": {
+          width: props.size ? `${props.size * 7}px` : void 0,
+          height: props.size ? `${props.size}px` : void 0
+        }
+      }, [Array(DOT_NUMBER).fill(1).map((_, index2) => createVNode("div", {
+        "class": `${prefixCls}-item`,
+        "key": index2,
+        "style": style
+      }, null))]);
+    };
+  }
+});
+var _Spin = defineComponent({
+  name: "Spin",
+  props: {
+    size: {
+      type: Number
+    },
+    loading: Boolean,
+    dot: Boolean,
+    tip: String
+  },
+  setup(props, {
+    slots,
+    attrs
+  }) {
+    const prefixCls = getPrefixCls("spin");
+    const cls = computed(() => [prefixCls, {
+      [`${prefixCls}-loading`]: props.loading,
+      [`${prefixCls}-with-tip`]: props.tip && !slots.default
+    }]);
+    const renderIcon = () => {
+      if (slots.icon) {
+        const iconVNode = getFirstComponent(slots.icon());
+        if (iconVNode) {
+          return cloneVNode(iconVNode, {
+            spin: true
+          });
+        }
+      }
+      if (slots.element) {
+        return slots.element();
+      }
+      if (props.dot) {
+        return createVNode(DotLoading, {
+          "size": props.size
+        }, null);
+      }
+      return createVNode(IconLoading, {
+        "spin": true
+      }, null);
+    };
+    const renderSpinIcon = () => {
+      const style = props.size ? {
+        fontSize: `${props.size}px`
+      } : void 0;
+      return createVNode(Fragment, null, [createVNode("div", {
+        "class": `${prefixCls}-icon`,
+        "style": style
+      }, [renderIcon()]), props.tip && createVNode("div", {
+        "class": `${prefixCls}-tip`
+      }, [props.tip])]);
+    };
+    return () => createVNode("div", {
+      "class": cls.value
+    }, [slots.default ? createVNode(Fragment, null, [slots.default(), props.loading && createVNode("div", {
+      "class": `${prefixCls}-mask`
+    }, [createVNode("div", {
+      "class": `${prefixCls}-mask-icon`
+    }, [renderSpinIcon()])])]) : renderSpinIcon()]);
+  }
+});
+const Spin = Object.assign(_Spin, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Spin.name, _Spin);
+  }
+});
+const _sfc_main$v = defineComponent({
+  name: "SelectDropdown",
+  components: {
+    Empty,
+    Spin
+  },
+  props: {
+    loading: Boolean,
+    empty: Boolean,
+    virtualList: Boolean,
+    bottomOffset: {
+      type: Number,
+      default: 0
+    },
+    onScroll: {
+      type: [Function, Array]
+    },
+    onReachBottom: {
+      type: [Function, Array]
+    }
+  },
+  emits: ["scroll", "reachBottom"],
+  setup(props, { emit, slots }) {
+    const prefixCls = getPrefixCls("select-dropdown");
+    const wrapperRef = ref();
+    const handleScroll = (e) => {
+      const { scrollTop, scrollHeight, offsetHeight } = e.target;
+      const bottom = scrollHeight - (scrollTop + offsetHeight);
+      if (bottom <= props.bottomOffset) {
+        emit("reachBottom", e);
+      }
+      emit("scroll", e);
+    };
+    const cls = computed(() => [
+      prefixCls,
+      {
+        [`${prefixCls}-has-footer`]: Boolean(slots.footer)
+      }
+    ]);
+    return {
+      prefixCls,
+      cls,
+      wrapperRef,
+      handleScroll
+    };
+  }
+});
+function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_spin = resolveComponent("spin");
+  const _component_empty = resolveComponent("empty");
+  return openBlock(), createElementBlock("div", {
+    class: normalizeClass(_ctx.cls)
+  }, [
+    _ctx.loading ? (openBlock(), createBlock(_component_spin, {
+      key: 0,
+      class: normalizeClass(`${_ctx.prefixCls}-loading`)
+    }, null, 8, ["class"])) : _ctx.empty ? (openBlock(), createElementBlock("div", {
+      key: 1,
+      class: normalizeClass(`${_ctx.prefixCls}-empty`)
+    }, [
+      renderSlot(_ctx.$slots, "empty", {}, () => [
+        createVNode(_component_empty)
+      ])
+    ], 2)) : createCommentVNode("v-if", true),
+    _ctx.virtualList && !_ctx.loading && !_ctx.empty ? renderSlot(_ctx.$slots, "virtual-list", { key: 2 }) : createCommentVNode("v-if", true),
+    !_ctx.virtualList ? withDirectives((openBlock(), createElementBlock("div", {
+      key: 3,
+      ref: "wrapperRef",
+      class: normalizeClass(`${_ctx.prefixCls}-list-wrapper`),
+      onScroll: _cache[0] || (_cache[0] = (...args) => _ctx.handleScroll && _ctx.handleScroll(...args))
+    }, [
+      createElementVNode("ul", {
+        class: normalizeClass(`${_ctx.prefixCls}-list`)
+      }, [
+        renderSlot(_ctx.$slots, "default")
+      ], 2)
+    ], 34)), [
+      [vShow, !_ctx.loading && !_ctx.empty]
+    ]) : createCommentVNode("v-if", true),
+    _ctx.$slots.footer && !_ctx.empty ? (openBlock(), createElementBlock("div", {
+      key: 4,
+      class: normalizeClass(`${_ctx.prefixCls}-footer`)
+    }, [
+      renderSlot(_ctx.$slots, "footer")
+    ], 2)) : createCommentVNode("v-if", true)
+  ], 2);
+}
+var SelectDropdown = /* @__PURE__ */ _export_sfc$1(_sfc_main$v, [["render", _sfc_render$p]]);
+var IconCheck = defineComponent({
+  name: "IconCheck",
+  render() {
+    return createVNode("svg", {
+      "viewBox": "0 0 1024 1024",
+      "width": "200",
+      "height": "200",
+      "fill": "currentColor"
+    }, [createVNode("path", {
+      "d": "M877.44815445 206.10060629a64.72691371 64.72691371 0 0 0-95.14856334 4.01306852L380.73381888 685.46812814 235.22771741 533.48933518a64.72691371 64.72691371 0 0 0-92.43003222-1.03563036l-45.82665557 45.82665443a64.72691371 64.72691371 0 0 0-0.90617629 90.61767965l239.61903446 250.10479331a64.72691371 64.72691371 0 0 0 71.19960405 15.14609778 64.33855261 64.33855261 0 0 0 35.08198741-21.23042702l36.24707186-42.71976334 40.5190474-40.77795556-3.36579926-3.49525333 411.40426297-486.74638962a64.72691371 64.72691371 0 0 0-3.88361443-87.64024149l-45.3088404-45.43829334z",
+      "p-id": "840"
+    }, null)]);
+  }
+});
+const checkboxGroupKey = Symbol("ArcoCheckboxGroup");
+var _Checkbox = defineComponent({
+  name: "Checkbox",
+  components: {
+    IconCheck,
+    IconHover
+  },
+  props: {
+    modelValue: {
+      type: [Boolean, Array],
+      default: void 0
+    },
+    defaultChecked: {
+      type: Boolean,
+      default: false
+    },
+    value: {
+      type: [String, Number]
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    indeterminate: {
+      type: Boolean,
+      default: false
+    },
+    uninjectGroupContext: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "change": (value, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const {
+      disabled
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("checkbox");
+    const checkboxRef = ref();
+    const checkboxGroupCtx = !props.uninjectGroupContext ? inject(checkboxGroupKey, void 0) : void 0;
+    const isGroup = (checkboxGroupCtx == null ? void 0 : checkboxGroupCtx.name) === "ArcoCheckboxGroup";
+    const {
+      mergedDisabled: _mergedDisabled,
+      eventHandlers
+    } = useFormItem({
+      disabled
+    });
+    const mergedDisabled = computed(() => (checkboxGroupCtx == null ? void 0 : checkboxGroupCtx.disabled) || (_mergedDisabled == null ? void 0 : _mergedDisabled.value));
+    const _checked = ref(props.defaultChecked);
+    const computedValue = computed(() => {
+      var _a;
+      return isGroup ? checkboxGroupCtx == null ? void 0 : checkboxGroupCtx.computedValue : (_a = props.modelValue) != null ? _a : _checked.value;
+    });
+    const computedChecked = computed(() => {
+      var _a;
+      return isArray(computedValue.value) ? computedValue.value.includes((_a = props.value) != null ? _a : true) : computedValue.value;
+    });
+    const handleClick = (ev) => {
+      ev.stopPropagation();
+    };
+    const handleChange = (e) => {
+      var _a, _b, _c, _d;
+      const {
+        checked
+      } = e.target;
+      let newValue = checked;
+      if (isArray(computedValue.value)) {
+        const set = new Set(computedValue.value);
+        if (checked) {
+          set.add((_a = props.value) != null ? _a : true);
+        } else {
+          set.delete((_b = props.value) != null ? _b : true);
+        }
+        newValue = Array.from(set);
+      }
+      _checked.value = checked;
+      if (isGroup && isArray(newValue)) {
+        checkboxGroupCtx == null ? void 0 : checkboxGroupCtx.handleChange(newValue, e);
+      } else {
+        emit("update:modelValue", newValue);
+        emit("change", newValue, e);
+        (_d = (_c = eventHandlers.value) == null ? void 0 : _c.onChange) == null ? void 0 : _d.call(_c, e);
+      }
+      nextTick(() => {
+        if (checkboxRef.value && checkboxRef.value.checked !== computedChecked.value) {
+          checkboxRef.value.checked = computedChecked.value;
+        }
+      });
+    };
+    const cls = computed(() => [prefixCls, {
+      [`${prefixCls}-checked`]: computedChecked.value,
+      [`${prefixCls}-indeterminate`]: props.indeterminate,
+      [`${prefixCls}-disabled`]: mergedDisabled.value
+    }]);
+    const handleFocus = (ev) => {
+      var _a, _b;
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onFocus) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleBlur = (ev) => {
+      var _a, _b;
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onBlur) == null ? void 0 : _b.call(_a, ev);
+    };
+    watch(computedValue, (value) => {
+      var _a;
+      let checked;
+      if (isArray(value)) {
+        checked = value.includes((_a = props.value) != null ? _a : true);
+      } else {
+        checked = value;
+      }
+      if (_checked.value !== checked) {
+        _checked.value = checked;
+      }
+      if (checkboxRef.value && checkboxRef.value.checked !== checked) {
+        checkboxRef.value.checked = checked;
+      }
+    });
+    return () => {
+      var _a, _b, _c, _d, _e;
+      return createVNode("label", {
+        "class": cls.value
+      }, [createVNode("input", {
+        "ref": checkboxRef,
+        "type": "checkbox",
+        "checked": computedChecked.value,
+        "value": props.value,
+        "class": `${prefixCls}-target`,
+        "disabled": mergedDisabled.value,
+        "onClick": handleClick,
+        "onChange": handleChange,
+        "onFocus": handleFocus,
+        "onBlur": handleBlur
+      }, null), (_e = (_d = (_a = slots.checkbox) == null ? void 0 : _a.call(slots, {
+        checked: computedChecked.value,
+        disabled: mergedDisabled.value
+      })) != null ? _d : (_c = checkboxGroupCtx == null ? void 0 : (_b = checkboxGroupCtx.slots).checkbox) == null ? void 0 : _c.call(_b, {
+        checked: computedChecked.value,
+        disabled: mergedDisabled.value
+      })) != null ? _e : createVNode(IconHover, {
+        "class": `${prefixCls}-icon-hover`,
+        "disabled": mergedDisabled.value || computedChecked.value
+      }, {
+        default: () => [createVNode("div", {
+          "class": `${prefixCls}-icon`
+        }, [computedChecked.value && createVNode(IconCheck, {
+          "class": `${prefixCls}-icon-check`
+        }, null)])]
+      }), slots.default && createVNode("span", {
+        "class": `${prefixCls}-label`
+      }, [slots.default()])]);
+    };
+  }
+});
+var CheckboxGroup = defineComponent({
+  name: "CheckboxGroup",
+  props: {
+    modelValue: {
+      type: Array,
+      default: void 0
+    },
+    defaultValue: {
+      type: Array,
+      default: () => []
+    },
+    options: {
+      type: Array
+    },
+    direction: {
+      type: String,
+      default: "horizontal"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    onChange: {
+      type: [Function, Array]
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "change": (value, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const {
+      disabled
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("checkbox-group");
+    const {
+      mergedDisabled,
+      eventHandlers
+    } = useFormItem({
+      disabled
+    });
+    const _value = ref(props.defaultValue);
+    const computedValue = computed(() => {
+      var _a;
+      return (_a = props.modelValue) != null ? _a : _value.value;
+    });
+    const options = computed(() => {
+      var _a;
+      return ((_a = props.options) != null ? _a : []).map((option) => {
+        if (isString(option) || isNumber(option)) {
+          return {
+            label: option,
+            value: option
+          };
+        }
+        return option;
+      });
+    });
+    const handleChange = (value, e) => {
+      var _a, _b;
+      _value.value = value;
+      emit("update:modelValue", value);
+      emit("change", value, e);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onChange) == null ? void 0 : _b.call(_a, e);
+    };
+    provide(checkboxGroupKey, reactive({
+      name: "ArcoCheckboxGroup",
+      computedValue,
+      disabled: mergedDisabled,
+      slots,
+      handleChange
+    }));
+    const cls = computed(() => [prefixCls, `${prefixCls}-direction-${props.direction}`]);
+    watch(() => props.modelValue, (curValue) => {
+      if (curValue) {
+        _value.value = [...curValue];
+      }
+    });
+    const renderOptions = () => {
+      return options.value.map((option, index2) => createVNode(_Checkbox, {
+        "key": option.value,
+        "value": option.value,
+        "disabled": option.disabled,
+        "indeterminate": option.indeterminate,
+        "modelValue": computedValue.value.includes(option.value)
+      }, {
+        default: () => [slots.label ? slots.label({
+          data: option
+        }) : isFunction(option.label) ? option.label() : option.label]
+      }));
+    };
+    return () => {
+      var _a;
+      return createVNode("span", {
+        "class": cls.value
+      }, [options.value.length > 0 ? renderOptions() : (_a = slots.default) == null ? void 0 : _a.call(slots)]);
+    };
+  }
+});
+const Checkbox = Object.assign(_Checkbox, {
+  Group: CheckboxGroup,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Checkbox.name, _Checkbox);
+    app.component(componentPrefix + CheckboxGroup.name, CheckboxGroup);
+  }
+});
+const selectInjectionKey = Symbol("ArcoSelectContext");
+var __defProp$a = Object.defineProperty;
+var __defProps$5 = Object.defineProperties;
+var __getOwnPropDescs$5 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$b = Object.getOwnPropertySymbols;
+var __hasOwnProp$b = Object.prototype.hasOwnProperty;
+var __propIsEnum$b = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$a = (obj, key, value) => key in obj ? __defProp$a(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$a = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$b.call(b, prop))
+      __defNormalProp$a(a, prop, b[prop]);
+  if (__getOwnPropSymbols$b)
+    for (var prop of __getOwnPropSymbols$b(b)) {
+      if (__propIsEnum$b.call(b, prop))
+        __defNormalProp$a(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$5 = (a, b) => __defProps$5(a, __getOwnPropDescs$5(b));
+const isGroupOption = (option) => {
+  return isObject(option) && "isGroup" in option;
+};
+const isGroupOptionInfo = (option) => {
+  return isObject(option) && "isGroup" in option;
+};
+const getValueString = (value, valueKey = "value") => String(isObject(value) ? value[valueKey] : value);
+const getKeyFromValue = (value, valueKey = "value") => {
+  if (isObject(value)) {
+    return `__arco__option__object__${value[valueKey]}`;
+  }
+  if (value || isNumber(value)) {
+    return `__arco__option__${typeof value}-${value}`;
+  }
+  return "";
+};
+const createOptionInfo = (option, {
+  valueKey,
+  fieldNames,
+  origin,
+  index: index2 = -1
+}) => {
+  var _a;
+  if (isObject(option)) {
+    const value = option[fieldNames.value];
+    return {
+      raw: option,
+      index: index2,
+      key: getKeyFromValue(value, valueKey),
+      origin,
+      value,
+      label: (_a = option[fieldNames.label]) != null ? _a : getValueString(value, valueKey),
+      render: option[fieldNames.render],
+      disabled: Boolean(option[fieldNames.disabled]),
+      tagProps: option[fieldNames.tagProps]
+    };
+  }
+  const raw = {
+    value: option,
+    label: String(option),
+    disabled: false
+  };
+  return __spreadValues$a({
+    raw,
+    index: index2,
+    key: getKeyFromValue(option, valueKey),
+    origin
+  }, raw);
+};
+const getOptionInfos = (options, {
+  valueKey,
+  fieldNames,
+  origin,
+  optionInfoMap
+}) => {
+  var _a;
+  const infos = [];
+  for (const item of options) {
+    if (isGroupOption(item)) {
+      const options2 = getOptionInfos((_a = item.options) != null ? _a : [], {
+        valueKey,
+        fieldNames,
+        origin,
+        optionInfoMap
+      });
+      if (options2.length > 0) {
+        infos.push(__spreadProps$5(__spreadValues$a({}, item), {
+          key: `__arco__group__${item.label}`,
+          options: options2
+        }));
+      }
+    } else {
+      const optionInfo = createOptionInfo(item, {
+        valueKey,
+        fieldNames,
+        origin
+      });
+      infos.push(optionInfo);
+      if (!optionInfoMap.get(optionInfo.key)) {
+        optionInfoMap.set(optionInfo.key, optionInfo);
+      }
+    }
+  }
+  return infos;
+};
+const getValidOptions = (optionInfos, {
+  inputValue,
+  filterOption
+}) => {
+  const travel = (optionInfos2) => {
+    var _a;
+    const options = [];
+    for (const item of optionInfos2) {
+      if (isGroupOptionInfo(item)) {
+        const _options = travel((_a = item.options) != null ? _a : []);
+        if (_options.length > 0) {
+          options.push(__spreadProps$5(__spreadValues$a({}, item), { options: _options }));
+        }
+      } else if (isValidOption(item, { inputValue, filterOption })) {
+        options.push(item);
+      }
+    }
+    return options;
+  };
+  return travel(optionInfos);
+};
+const isValidOption = (optionInfo, {
+  inputValue,
+  filterOption
+}) => {
+  if (isFunction(filterOption)) {
+    return !inputValue || filterOption(inputValue, optionInfo.raw);
+  }
+  if (filterOption) {
+    return optionInfo.label.toLowerCase().includes((inputValue != null ? inputValue : "").toLowerCase());
+  }
+  return true;
+};
 const isEqual = (obj, other) => {
   if (!obj || !other) {
     return false;
@@ -6169,6 +9975,887 @@ const isEqualVariable = (a, b) => {
   }
   return a === b;
 };
+const _sfc_main$u = defineComponent({
+  name: "Option",
+  components: {
+    Checkbox
+  },
+  props: {
+    value: [String, Number, Object],
+    label: String,
+    disabled: Boolean,
+    tagProps: {
+      type: Object
+    },
+    extra: {
+      type: Object
+    },
+    index: {
+      type: Number
+    },
+    internal: Boolean
+  },
+  setup(props) {
+    const { disabled, tagProps: _tagProps, index: index2 } = toRefs(props);
+    const prefixCls = getPrefixCls("select-option");
+    const selectCtx = inject(selectInjectionKey, void 0);
+    const instance = getCurrentInstance();
+    const itemRef = ref();
+    const tagProps = ref(_tagProps.value);
+    watch(_tagProps, (cur, pre) => {
+      if (!isEqual(cur, pre)) {
+        tagProps.value = cur;
+      }
+    });
+    const textContent = ref("");
+    const value = computed(() => {
+      var _a, _b;
+      return (_b = (_a = props.value) != null ? _a : props.label) != null ? _b : textContent.value;
+    });
+    const label = computed(() => {
+      var _a;
+      return (_a = props.label) != null ? _a : textContent.value;
+    });
+    const key = computed(() => getKeyFromValue(value.value, selectCtx == null ? void 0 : selectCtx.valueKey));
+    const component = computed(() => {
+      var _a;
+      return (_a = selectCtx == null ? void 0 : selectCtx.component) != null ? _a : "li";
+    });
+    const setTextContent = () => {
+      var _a;
+      if (!props.label && itemRef.value) {
+        const text = (_a = itemRef.value.textContent) != null ? _a : "";
+        if (textContent.value !== text) {
+          textContent.value = text;
+        }
+      }
+    };
+    onMounted(() => setTextContent());
+    onUpdated(() => setTextContent());
+    const isSelected = computed(() => {
+      var _a;
+      return (_a = selectCtx == null ? void 0 : selectCtx.valueKeys.includes(key.value)) != null ? _a : false;
+    });
+    const isActive = computed(() => (selectCtx == null ? void 0 : selectCtx.activeKey) === key.value);
+    let isValid = ref(true);
+    if (!props.internal) {
+      const optionInfo = reactive({
+        raw: {
+          value,
+          label,
+          disabled,
+          tagProps
+        },
+        ref: itemRef,
+        index: index2,
+        key,
+        origin: "slot",
+        value,
+        label,
+        disabled,
+        tagProps
+      });
+      isValid = computed(() => isValidOption(optionInfo, {
+        inputValue: selectCtx == null ? void 0 : selectCtx.inputValue,
+        filterOption: selectCtx == null ? void 0 : selectCtx.filterOption
+      }));
+      if (instance) {
+        selectCtx == null ? void 0 : selectCtx.addSlotOptionInfo(instance.uid, optionInfo);
+      }
+      onBeforeUnmount(() => {
+        if (instance) {
+          selectCtx == null ? void 0 : selectCtx.removeSlotOptionInfo(instance.uid);
+        }
+      });
+    }
+    const handleClick = (ev) => {
+      if (!props.disabled) {
+        selectCtx == null ? void 0 : selectCtx.onSelect(key.value, ev);
+      }
+    };
+    const handleMouseEnter = () => {
+      if (!props.disabled) {
+        selectCtx == null ? void 0 : selectCtx.setActiveKey(key.value);
+      }
+    };
+    const handleMouseLeave = () => {
+      if (!props.disabled) {
+        selectCtx == null ? void 0 : selectCtx.setActiveKey();
+      }
+    };
+    const cls = computed(() => [
+      prefixCls,
+      {
+        [`${prefixCls}-disabled`]: props.disabled,
+        [`${prefixCls}-active`]: isActive.value,
+        [`${prefixCls}-multiple`]: selectCtx == null ? void 0 : selectCtx.multiple
+      }
+    ]);
+    return {
+      prefixCls,
+      cls,
+      selectCtx,
+      itemRef,
+      component,
+      isSelected,
+      isValid,
+      handleClick,
+      handleMouseEnter,
+      handleMouseLeave
+    };
+  }
+});
+function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_checkbox = resolveComponent("checkbox");
+  return withDirectives((openBlock(), createBlock(resolveDynamicComponent(_ctx.component), {
+    ref: "itemRef",
+    class: normalizeClass([_ctx.cls, { [`${_ctx.prefixCls}-has-suffix`]: Boolean(_ctx.$slots.suffix) }]),
+    onClick: _ctx.handleClick,
+    onMouseenter: _ctx.handleMouseEnter,
+    onMouseleave: _ctx.handleMouseLeave
+  }, {
+    default: withCtx(() => [
+      _ctx.$slots.icon ? (openBlock(), createElementBlock("span", {
+        key: 0,
+        class: normalizeClass(`${_ctx.prefixCls}-icon`)
+      }, [
+        renderSlot(_ctx.$slots, "icon")
+      ], 2)) : createCommentVNode("v-if", true),
+      _ctx.selectCtx && _ctx.selectCtx.multiple ? (openBlock(), createBlock(_component_checkbox, {
+        key: 1,
+        class: normalizeClass(`${_ctx.prefixCls}-checkbox`),
+        "model-value": _ctx.isSelected,
+        disabled: _ctx.disabled,
+        "uninject-group-context": ""
+      }, {
+        default: withCtx(() => [
+          renderSlot(_ctx.$slots, "default", {}, () => [
+            createTextVNode(toDisplayString(_ctx.label), 1)
+          ])
+        ]),
+        _: 3
+      }, 8, ["class", "model-value", "disabled"])) : (openBlock(), createElementBlock("span", {
+        key: 2,
+        class: normalizeClass(`${_ctx.prefixCls}-content`)
+      }, [
+        renderSlot(_ctx.$slots, "default", {}, () => [
+          createTextVNode(toDisplayString(_ctx.label), 1)
+        ])
+      ], 2)),
+      _ctx.$slots.suffix ? (openBlock(), createElementBlock("span", {
+        key: 3,
+        class: normalizeClass(`${_ctx.prefixCls}-suffix`)
+      }, [
+        renderSlot(_ctx.$slots, "suffix")
+      ], 2)) : createCommentVNode("v-if", true)
+    ]),
+    _: 3
+  }, 8, ["class", "onClick", "onMouseenter", "onMouseleave"])), [
+    [vShow, _ctx.isValid]
+  ]);
+}
+var Option = /* @__PURE__ */ _export_sfc$1(_sfc_main$u, [["render", _sfc_render$o]]);
+var __defProp$9 = Object.defineProperty;
+var __defProps$4 = Object.defineProperties;
+var __getOwnPropDescs$4 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$a = Object.getOwnPropertySymbols;
+var __hasOwnProp$a = Object.prototype.hasOwnProperty;
+var __propIsEnum$a = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$9 = (obj, key, value) => key in obj ? __defProp$9(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$9 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$a.call(b, prop))
+      __defNormalProp$9(a, prop, b[prop]);
+  if (__getOwnPropSymbols$a)
+    for (var prop of __getOwnPropSymbols$a(b)) {
+      if (__propIsEnum$a.call(b, prop))
+        __defNormalProp$9(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$4 = (a, b) => __defProps$4(a, __getOwnPropDescs$4(b));
+const DEFAULT_FIELD_NAMES$1 = {
+  value: "value",
+  label: "label",
+  disabled: "disabled",
+  tagProps: "tagProps",
+  render: "render"
+};
+const useOptions = ({
+  options,
+  extraOptions,
+  inputValue,
+  filterOption,
+  showExtraOptions,
+  valueKey,
+  fieldNames
+}) => {
+  const mergedFieldNames = computed(() => __spreadValues$9(__spreadValues$9({}, DEFAULT_FIELD_NAMES$1), fieldNames == null ? void 0 : fieldNames.value));
+  const slotOptionInfoMap = reactive(/* @__PURE__ */ new Map());
+  const sortedSlotOptionInfos = ref([]);
+  watch(slotOptionInfoMap, (slotOptionInfoMap2) => {
+    sortedSlotOptionInfos.value = Array.from(slotOptionInfoMap2.values()).sort((a, b) => {
+      if (isNumber(a.index) && isNumber(b.index)) {
+        return a.index - b.index;
+      }
+      return 0;
+    });
+  }, { deep: true });
+  const propOptionData = computed(() => {
+    var _a, _b;
+    const optionInfoMap2 = /* @__PURE__ */ new Map();
+    const optionInfos = getOptionInfos((_a = options == null ? void 0 : options.value) != null ? _a : [], {
+      valueKey: (_b = valueKey == null ? void 0 : valueKey.value) != null ? _b : "value",
+      fieldNames: mergedFieldNames.value,
+      origin: "options",
+      optionInfoMap: optionInfoMap2
+    });
+    return {
+      optionInfos,
+      optionInfoMap: optionInfoMap2
+    };
+  });
+  const extraOptionData = computed(() => {
+    var _a, _b;
+    const optionInfoMap2 = /* @__PURE__ */ new Map();
+    const optionInfos = getOptionInfos((_a = extraOptions == null ? void 0 : extraOptions.value) != null ? _a : [], {
+      valueKey: (_b = valueKey == null ? void 0 : valueKey.value) != null ? _b : "value",
+      fieldNames: mergedFieldNames.value,
+      origin: "extraOptions",
+      optionInfoMap: optionInfoMap2
+    });
+    return {
+      optionInfos,
+      optionInfoMap: optionInfoMap2
+    };
+  });
+  const optionInfoMap = reactive(/* @__PURE__ */ new Map());
+  watch([
+    slotOptionInfoMap,
+    options != null ? options : ref([]),
+    extraOptions != null ? extraOptions : ref([]),
+    valueKey != null ? valueKey : ref("value")
+  ], () => {
+    optionInfoMap.clear();
+    sortedSlotOptionInfos.value.forEach((info, index2) => {
+      optionInfoMap.set(info.key, __spreadProps$4(__spreadValues$9({}, info), { index: index2 }));
+    });
+    propOptionData.value.optionInfoMap.forEach((info) => {
+      if (!optionInfoMap.has(info.key)) {
+        info.index = optionInfoMap.size;
+        optionInfoMap.set(info.key, info);
+      }
+    });
+    extraOptionData.value.optionInfoMap.forEach((info) => {
+      if (!optionInfoMap.has(info.key)) {
+        info.index = optionInfoMap.size;
+        optionInfoMap.set(info.key, info);
+      }
+    });
+  }, { immediate: true, deep: true });
+  const validOptions = computed(() => {
+    var _a;
+    const options2 = getValidOptions(propOptionData.value.optionInfos, {
+      inputValue: inputValue == null ? void 0 : inputValue.value,
+      filterOption: filterOption == null ? void 0 : filterOption.value
+    });
+    if ((_a = showExtraOptions == null ? void 0 : showExtraOptions.value) != null ? _a : true) {
+      options2.push(...getValidOptions(extraOptionData.value.optionInfos, {
+        inputValue: inputValue == null ? void 0 : inputValue.value,
+        filterOption: filterOption == null ? void 0 : filterOption.value
+      }));
+    }
+    return options2;
+  });
+  const validOptionInfos = computed(() => Array.from(optionInfoMap.values()).filter((optionInfo) => {
+    if (optionInfo.origin === "extraOptions" && (showExtraOptions == null ? void 0 : showExtraOptions.value) === false) {
+      return false;
+    }
+    return isValidOption(optionInfo, {
+      inputValue: inputValue == null ? void 0 : inputValue.value,
+      filterOption: filterOption == null ? void 0 : filterOption.value
+    });
+  }));
+  const enabledOptionKeys = computed(() => validOptionInfos.value.filter((optionInfo) => !optionInfo.disabled).map((info) => info.key));
+  const getNextSlotOptionIndex = () => slotOptionInfoMap.size;
+  const addSlotOptionInfo = (id, optionInfo) => {
+    slotOptionInfoMap.set(id, optionInfo);
+  };
+  const removeSlotOptionInfo = (id) => {
+    slotOptionInfoMap.delete(id);
+  };
+  return {
+    validOptions,
+    optionInfoMap,
+    validOptionInfos,
+    enabledOptionKeys,
+    getNextSlotOptionIndex,
+    addSlotOptionInfo,
+    removeSlotOptionInfo
+  };
+};
+const KEYBOARD_KEY = {
+  ENTER: "Enter",
+  ESC: "Escape",
+  BACKSPACE: "Backspace",
+  TAB: "Tab",
+  SPACE: " ",
+  ARROW_UP: "ArrowUp",
+  ARROW_DOWN: "ArrowDown",
+  ARROW_LEFT: "ArrowLeft",
+  ARROW_RIGHT: "ArrowRight"
+};
+const stringifyCodeKey = (k) => {
+  return JSON.stringify({
+    key: k.key,
+    ctrl: Boolean(k.ctrl),
+    shift: Boolean(k.shift),
+    alt: Boolean(k.alt),
+    meta: Boolean(k.meta)
+  });
+};
+const getKeyDownHandler = (codeKeyMap) => {
+  const map = {};
+  codeKeyMap.forEach((callback, codeKey) => {
+    const _codeKey = isString(codeKey) ? { key: codeKey } : codeKey;
+    map[stringifyCodeKey(_codeKey)] = callback;
+  });
+  return (event) => {
+    const key = stringifyCodeKey({
+      key: event.key,
+      ctrl: event.ctrlKey,
+      shift: event.shiftKey,
+      alt: event.altKey,
+      meta: event.metaKey
+    });
+    const callback = map[key];
+    if (callback) {
+      event.stopPropagation();
+      callback(event);
+    }
+  };
+};
+const useSelect = ({
+  multiple,
+  options,
+  extraOptions,
+  inputValue,
+  filterOption,
+  showExtraOptions,
+  component,
+  valueKey,
+  fieldNames,
+  loading,
+  popupVisible,
+  valueKeys,
+  dropdownRef,
+  optionRefs,
+  virtualListRef,
+  onSelect,
+  onPopupVisibleChange
+}) => {
+  const {
+    validOptions,
+    optionInfoMap,
+    validOptionInfos,
+    enabledOptionKeys,
+    getNextSlotOptionIndex,
+    addSlotOptionInfo,
+    removeSlotOptionInfo
+  } = useOptions({
+    options,
+    extraOptions,
+    inputValue,
+    filterOption,
+    showExtraOptions,
+    valueKey,
+    fieldNames
+  });
+  const activeKey = ref();
+  watch(enabledOptionKeys, (enabledKeys) => {
+    if (!activeKey.value || !enabledKeys.includes(activeKey.value)) {
+      activeKey.value = enabledKeys[0];
+    }
+  });
+  const setActiveKey = (key) => {
+    activeKey.value = key;
+  };
+  const getNextActiveKey = (direction) => {
+    const _length = enabledOptionKeys.value.length;
+    if (_length === 0) {
+      return void 0;
+    }
+    if (!activeKey.value) {
+      if (direction === "down") {
+        return enabledOptionKeys.value[0];
+      }
+      return enabledOptionKeys.value[_length - 1];
+    }
+    const activeIndex = enabledOptionKeys.value.indexOf(activeKey.value);
+    const nextIndex = (_length + activeIndex + (direction === "up" ? -1 : 1)) % _length;
+    return enabledOptionKeys.value[nextIndex];
+  };
+  const scrollIntoView = (key) => {
+    var _a, _b, _c;
+    if (virtualListRef == null ? void 0 : virtualListRef.value) {
+      virtualListRef.value.scrollTo({ key });
+    }
+    const optionInfo = optionInfoMap.get(key);
+    const wrapperEle = (_b = (_a = dropdownRef == null ? void 0 : dropdownRef.value) == null ? void 0 : _a.$refs) == null ? void 0 : _b.wrapperRef;
+    const optionEle = (_c = optionRefs == null ? void 0 : optionRefs.value[key]) != null ? _c : optionInfo == null ? void 0 : optionInfo.ref;
+    if (!wrapperEle || !optionEle) {
+      return;
+    }
+    if (wrapperEle.scrollHeight === wrapperEle.offsetHeight) {
+      return;
+    }
+    const optionRect = getRelativeRect(optionEle, wrapperEle);
+    const wrapperScrollTop = wrapperEle.scrollTop;
+    if (optionRect.top < 0) {
+      wrapperEle.scrollTo(0, wrapperScrollTop + optionRect.top);
+    } else if (optionRect.bottom < 0) {
+      wrapperEle.scrollTo(0, wrapperScrollTop - optionRect.bottom);
+    }
+  };
+  watch(popupVisible, (visible) => {
+    if (visible) {
+      const current = valueKeys.value[valueKeys.value.length - 1];
+      const _activeKey = enabledOptionKeys.value.includes(current) ? current : enabledOptionKeys.value[0];
+      if (_activeKey !== activeKey.value) {
+        activeKey.value = _activeKey;
+      }
+      nextTick(() => {
+        if (activeKey.value) {
+          scrollIntoView(activeKey.value);
+        }
+      });
+    }
+  });
+  const handleKeyDown = getKeyDownHandler(/* @__PURE__ */ new Map([
+    [
+      KEYBOARD_KEY.ENTER,
+      (e) => {
+        if (!(loading == null ? void 0 : loading.value)) {
+          if (popupVisible.value) {
+            if (activeKey.value) {
+              onSelect(activeKey.value, e);
+            }
+          } else {
+            onPopupVisibleChange(true);
+          }
+        }
+        e.preventDefault();
+      }
+    ],
+    [
+      KEYBOARD_KEY.ESC,
+      (e) => {
+        onPopupVisibleChange(false);
+        e.preventDefault();
+      }
+    ],
+    [
+      KEYBOARD_KEY.ARROW_DOWN,
+      (e) => {
+        const next = getNextActiveKey("down");
+        if (next) {
+          activeKey.value = next;
+          scrollIntoView(next);
+        }
+        e.preventDefault();
+      }
+    ],
+    [
+      KEYBOARD_KEY.ARROW_UP,
+      (e) => {
+        const next = getNextActiveKey("up");
+        if (next) {
+          activeKey.value = next;
+          scrollIntoView(next);
+        }
+        e.preventDefault();
+      }
+    ]
+  ]));
+  provide(selectInjectionKey, reactive({
+    multiple,
+    valueKey,
+    inputValue,
+    filterOption,
+    component,
+    valueKeys,
+    activeKey,
+    setActiveKey,
+    onSelect,
+    getNextSlotOptionIndex,
+    addSlotOptionInfo,
+    removeSlotOptionInfo
+  }));
+  return {
+    validOptions,
+    optionInfoMap,
+    validOptionInfos,
+    enabledOptionKeys,
+    activeKey,
+    setActiveKey,
+    addSlotOptionInfo,
+    removeSlotOptionInfo,
+    getNextActiveKey,
+    scrollIntoView,
+    handleKeyDown
+  };
+};
+const _sfc_main$t = defineComponent({
+  name: "IconMore",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-more`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$f = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$e = /* @__PURE__ */ createElementVNode("path", {
+  d: "M38 25v-2h2v2h-2ZM23 25v-2h2v2h-2ZM8 25v-2h2v2H8Z",
+  fill: "currentColor",
+  stroke: "none"
+}, null, -1);
+const _hoisted_3$e = /* @__PURE__ */ createElementVNode("path", { d: "M38 25v-2h2v2h-2ZM23 25v-2h2v2h-2ZM8 25v-2h2v2H8Z" }, null, -1);
+const _hoisted_4$1 = [
+  _hoisted_2$e,
+  _hoisted_3$e
+];
+function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_4$1, 14, _hoisted_1$f);
+}
+var _IconMore = /* @__PURE__ */ _export_sfc$1(_sfc_main$t, [["render", _sfc_render$n]]);
+const IconMore = Object.assign(_IconMore, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconMore.name, _IconMore);
+  }
+});
+const _sfc_main$s = defineComponent({
+  name: "IconUp",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-up`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$e = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$d = /* @__PURE__ */ createElementVNode("path", { d: "M39.6 30.557 24.043 15 8.487 30.557" }, null, -1);
+const _hoisted_3$d = [
+  _hoisted_2$d
+];
+function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$d, 14, _hoisted_1$e);
+}
+var _IconUp = /* @__PURE__ */ _export_sfc$1(_sfc_main$s, [["render", _sfc_render$m]]);
+const IconUp = Object.assign(_IconUp, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconUp.name, _IconUp);
+  }
+});
+const _sfc_main$r = defineComponent({
+  name: "IconDown",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-down`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$d = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$c = /* @__PURE__ */ createElementVNode("path", { d: "M39.6 17.443 24.043 33 8.487 17.443" }, null, -1);
+const _hoisted_3$c = [
+  _hoisted_2$c
+];
+function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$c, 14, _hoisted_1$d);
+}
+var _IconDown = /* @__PURE__ */ _export_sfc$1(_sfc_main$r, [["render", _sfc_render$l]]);
+const IconDown = Object.assign(_IconDown, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconDown.name, _IconDown);
+  }
+});
+const _sfc_main$q = defineComponent({
+  name: "IconLeft",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-left`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$c = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$b = /* @__PURE__ */ createElementVNode("path", { d: "M32 8.4 16.444 23.956 32 39.513" }, null, -1);
+const _hoisted_3$b = [
+  _hoisted_2$b
+];
+function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$b, 14, _hoisted_1$c);
+}
+var _IconLeft = /* @__PURE__ */ _export_sfc$1(_sfc_main$q, [["render", _sfc_render$k]]);
+const IconLeft = Object.assign(_IconLeft, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconLeft.name, _IconLeft);
+  }
+});
+const _sfc_main$p = defineComponent({
+  name: "IconRight",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-right`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$b = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$a = /* @__PURE__ */ createElementVNode("path", { d: "m16 39.513 15.556-15.557L16 8.4" }, null, -1);
+const _hoisted_3$a = [
+  _hoisted_2$a
+];
+function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$a, 14, _hoisted_1$b);
+}
+var _IconRight = /* @__PURE__ */ _export_sfc$1(_sfc_main$p, [["render", _sfc_render$j]]);
+const IconRight = Object.assign(_IconRight, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconRight.name, _IconRight);
+  }
+});
 const useChildrenComponents = (name) => {
   const children = {};
   const components = ref([]);
@@ -6187,7 +10874,4314 @@ const useChildrenComponents = (name) => {
     components
   };
 };
-const _sfc_main$6 = defineComponent({
+const useInput = ({
+  defaultValue,
+  modelValue,
+  emit,
+  eventName = "input",
+  updateEventName = "update:modelValue",
+  eventHandlers
+}) => {
+  var _a;
+  const inputRef = ref();
+  const _value = ref((_a = defaultValue == null ? void 0 : defaultValue.value) != null ? _a : "");
+  const _focused = ref(false);
+  const isComposition = ref(false);
+  const compositionValue = ref("");
+  let initialValue;
+  const computedValue = computed(() => {
+    var _a2;
+    return (_a2 = modelValue == null ? void 0 : modelValue.value) != null ? _a2 : _value.value;
+  });
+  const updateValue = (value, ev) => {
+    _value.value = value;
+    emit(updateEventName, value);
+    emit(eventName, value, ev);
+  };
+  const handleInput = (ev) => {
+    const { value } = ev.target;
+    if (!isComposition.value) {
+      updateValue(value, ev);
+    }
+  };
+  const handleChange = (ev) => {
+    if (eventName === "input" && computedValue.value !== initialValue) {
+      initialValue = computedValue.value;
+      emit("change", computedValue.value, ev);
+    }
+  };
+  const handleComposition = (ev) => {
+    var _a2;
+    const { value } = ev.target;
+    if (ev.type === "compositionend") {
+      isComposition.value = false;
+      compositionValue.value = "";
+      updateValue(value, ev);
+    } else {
+      isComposition.value = true;
+      compositionValue.value = computedValue.value + ((_a2 = ev.data) != null ? _a2 : "");
+    }
+  };
+  const handleFocus = (ev) => {
+    var _a2, _b;
+    _focused.value = true;
+    initialValue = computedValue.value;
+    emit("focus", ev);
+    (_b = (_a2 = eventHandlers == null ? void 0 : eventHandlers.value) == null ? void 0 : _a2.onFocus) == null ? void 0 : _b.call(_a2, ev);
+  };
+  const handleBlur = (ev) => {
+    var _a2, _b;
+    _focused.value = false;
+    emit("blur", ev);
+    (_b = (_a2 = eventHandlers == null ? void 0 : eventHandlers.value) == null ? void 0 : _a2.onBlur) == null ? void 0 : _b.call(_a2, ev);
+    handleChange(ev);
+  };
+  const handleKeyDown = (ev) => {
+    const keyCode = ev.key || ev.code;
+    if (!isComposition.value && keyCode === Enter.key) {
+      emit("pressEnter", ev);
+      handleChange(ev);
+    }
+  };
+  const handleMousedown = (ev) => {
+    if (inputRef.value && ev.target !== inputRef.value) {
+      ev.preventDefault();
+      inputRef.value.focus();
+    }
+  };
+  watch(computedValue, (value) => {
+    if (inputRef.value && value !== inputRef.value.value) {
+      inputRef.value.value = value;
+    }
+  });
+  return {
+    inputRef,
+    _value,
+    _focused,
+    isComposition,
+    compositionValue,
+    computedValue,
+    handleInput,
+    handleComposition,
+    handleFocus,
+    handleBlur,
+    handleKeyDown,
+    handleMousedown
+  };
+};
+var InputLabel = defineComponent({
+  name: "InputLabel",
+  inheritAttrs: false,
+  props: {
+    modelValue: Object,
+    inputValue: {
+      type: String,
+      default: ""
+    },
+    enabledInput: Boolean,
+    formatLabel: Function,
+    placeholder: String,
+    retainInputValue: Boolean,
+    disabled: Boolean,
+    baseCls: String,
+    size: String,
+    error: Boolean,
+    focused: Boolean,
+    uninjectFormItemContext: Boolean
+  },
+  emits: ["update:inputValue", "inputValueChange", "focus", "blur"],
+  setup(props, {
+    attrs,
+    emit,
+    slots
+  }) {
+    var _a;
+    const {
+      size,
+      disabled,
+      error,
+      inputValue,
+      uninjectFormItemContext
+    } = toRefs(props);
+    const prefixCls = (_a = props.baseCls) != null ? _a : getPrefixCls("input-label");
+    const {
+      mergedSize: _mergedSize,
+      mergedDisabled,
+      mergedError,
+      eventHandlers
+    } = useFormItem({
+      size,
+      disabled,
+      error,
+      uninject: uninjectFormItemContext == null ? void 0 : uninjectFormItemContext.value
+    });
+    const {
+      mergedSize
+    } = useSize(_mergedSize);
+    const {
+      inputRef,
+      _focused,
+      computedValue: computedInputValue,
+      handleInput,
+      handleComposition,
+      handleFocus,
+      handleBlur,
+      handleMousedown
+    } = useInput({
+      modelValue: inputValue,
+      emit,
+      eventName: "inputValueChange",
+      updateEventName: "update:inputValue",
+      eventHandlers
+    });
+    const mergedFocused = computed(() => {
+      var _a2;
+      return (_a2 = props.focused) != null ? _a2 : _focused.value;
+    });
+    const showInput = computed(() => props.enabledInput && _focused.value || !props.modelValue);
+    const mergedPlaceholder = computed(() => {
+      if (props.enabledInput && props.modelValue) {
+        return props.modelValue.label;
+      }
+      return props.placeholder;
+    });
+    const renderLabel = () => {
+      var _a2, _b, _c, _d, _e;
+      if (props.modelValue) {
+        return (_e = (_c = (_a2 = slots.default) == null ? void 0 : _a2.call(slots, {
+          data: props.modelValue
+        })) != null ? _c : (_b = props.formatLabel) == null ? void 0 : _b.call(props, props.modelValue)) != null ? _e : (_d = props.modelValue) == null ? void 0 : _d.label;
+      }
+      return null;
+    };
+    const cls = computed(() => [prefixCls, `${prefixCls}-size-${mergedSize.value}`, {
+      [`${prefixCls}-search`]: props.enabledInput,
+      [`${prefixCls}-focus`]: mergedFocused.value,
+      [`${prefixCls}-disabled`]: mergedDisabled.value,
+      [`${prefixCls}-error`]: mergedError.value
+    }]);
+    const wrapperAttrs = computed(() => omit(attrs, INPUT_EVENTS));
+    const inputAttrs = computed(() => pick(attrs, INPUT_EVENTS));
+    const render2 = () => createVNode("span", mergeProps(wrapperAttrs.value, {
+      "class": cls.value,
+      "onMousedown": handleMousedown
+    }), [slots.prefix && createVNode("span", {
+      "class": `${prefixCls}-prefix`
+    }, [slots.prefix()]), createVNode("input", mergeProps(inputAttrs.value, {
+      "ref": inputRef,
+      "class": [`${prefixCls}-input`, {
+        [`${prefixCls}-input-hidden`]: !showInput.value
+      }],
+      "value": computedInputValue.value,
+      "readonly": !props.enabledInput,
+      "placeholder": mergedPlaceholder.value,
+      "disabled": mergedDisabled.value,
+      "onInput": handleInput,
+      "onFocus": handleFocus,
+      "onBlur": handleBlur,
+      "onCompositionstart": handleComposition,
+      "onCompositionupdate": handleComposition,
+      "onCompositionend": handleComposition
+    }), null), createVNode("span", {
+      "class": [`${prefixCls}-value`, {
+        [`${prefixCls}-value-hidden`]: showInput.value
+      }]
+    }, [renderLabel()]), slots.suffix && createVNode("span", {
+      "class": `${prefixCls}-suffix`
+    }, [slots.suffix()])]);
+    return {
+      inputRef,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+var __defProp$8 = Object.defineProperty;
+var __getOwnPropSymbols$9 = Object.getOwnPropertySymbols;
+var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
+var __propIsEnum$9 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$8 = (obj, key, value) => key in obj ? __defProp$8(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$8 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$9.call(b, prop))
+      __defNormalProp$8(a, prop, b[prop]);
+  if (__getOwnPropSymbols$9)
+    for (var prop of __getOwnPropSymbols$9(b)) {
+      if (__propIsEnum$9.call(b, prop))
+        __defNormalProp$8(a, prop, b[prop]);
+    }
+  return a;
+};
+const getValueData = (value, fieldNames) => {
+  const result = [];
+  for (const item of value) {
+    if (isObject(item)) {
+      result.push({
+        raw: item,
+        value: item[fieldNames.value],
+        label: item[fieldNames.label],
+        closable: item[fieldNames.closable],
+        tagProps: item[fieldNames.tagProps]
+      });
+    } else if (value || isNumber(value)) {
+      const raw = {
+        value: item,
+        label: String(item),
+        closable: true
+      };
+      result.push(__spreadValues$8({
+        raw
+      }, raw));
+    }
+  }
+  return result;
+};
+const TAG_COLORS = [
+  "red",
+  "orangered",
+  "orange",
+  "gold",
+  "lime",
+  "green",
+  "cyan",
+  "blue",
+  "arcoblue",
+  "purple",
+  "pinkpurple",
+  "magenta",
+  "gray"
+];
+const _sfc_main$o = defineComponent({
+  name: "Tag",
+  components: {
+    IconHover,
+    IconClose,
+    IconLoading
+  },
+  props: {
+    color: {
+      type: String
+    },
+    size: {
+      type: String
+    },
+    visible: {
+      type: Boolean,
+      default: void 0
+    },
+    defaultVisible: {
+      type: Boolean,
+      default: true
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    closable: {
+      type: Boolean,
+      default: false
+    },
+    checkable: {
+      type: Boolean,
+      default: false
+    },
+    checked: {
+      type: Boolean,
+      default: void 0
+    },
+    defaultChecked: {
+      type: Boolean,
+      default: true
+    },
+    onClose: {
+      type: [Function, Array]
+    },
+    onCheck: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:visible",
+    "update:checked",
+    "close",
+    "check"
+  ],
+  setup(props, { emit }) {
+    const { size } = toRefs(props);
+    const prefixCls = getPrefixCls("tag");
+    const isBuiltInColor = computed(() => props.color && TAG_COLORS.includes(props.color));
+    const isCustomColor = computed(() => props.color && !TAG_COLORS.includes(props.color));
+    const _visible = ref(props.defaultVisible);
+    const _checked = ref(props.defaultChecked);
+    const computedVisible = computed(() => {
+      var _a;
+      return (_a = props.visible) != null ? _a : _visible.value;
+    });
+    const computedChecked = computed(() => {
+      var _a;
+      return props.checkable ? (_a = props.checked) != null ? _a : _checked.value : true;
+    });
+    const { mergedSize: _mergedSize } = useSize(size);
+    const mergedSize = computed(() => {
+      if (_mergedSize.value === "mini") {
+        return "small";
+      }
+      return _mergedSize.value;
+    });
+    const handleClose = (ev) => {
+      _visible.value = false;
+      emit("update:visible", false);
+      emit("close", ev);
+    };
+    const handleClick = (ev) => {
+      if (props.checkable) {
+        const newChecked = !computedChecked.value;
+        _checked.value = newChecked;
+        emit("update:checked", newChecked);
+        emit("check", newChecked, ev);
+      }
+    };
+    const cls = computed(() => [
+      prefixCls,
+      `${prefixCls}-size-${mergedSize.value}`,
+      {
+        [`${prefixCls}-loading`]: props.loading,
+        [`${prefixCls}-hide`]: !computedVisible.value,
+        [`${prefixCls}-${props.color}`]: isBuiltInColor.value,
+        [`${prefixCls}-checkable`]: props.checkable,
+        [`${prefixCls}-checked`]: computedChecked.value,
+        [`${prefixCls}-custom-color`]: isCustomColor.value
+      }
+    ]);
+    const style = computed(() => {
+      if (isCustomColor.value) {
+        return {
+          backgroundColor: props.color
+        };
+      }
+      return void 0;
+    });
+    return {
+      prefixCls,
+      cls,
+      style,
+      computedVisible,
+      computedChecked,
+      handleClick,
+      handleClose
+    };
+  }
+});
+function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_close = resolveComponent("icon-close");
+  const _component_icon_hover = resolveComponent("icon-hover");
+  const _component_icon_loading = resolveComponent("icon-loading");
+  return _ctx.computedVisible ? (openBlock(), createElementBlock("span", {
+    key: 0,
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.style),
+    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.handleClick && _ctx.handleClick(...args))
+  }, [
+    _ctx.$slots.icon ? (openBlock(), createElementBlock("span", {
+      key: 0,
+      class: normalizeClass(`${_ctx.prefixCls}-icon`)
+    }, [
+      renderSlot(_ctx.$slots, "icon")
+    ], 2)) : createCommentVNode("v-if", true),
+    renderSlot(_ctx.$slots, "default"),
+    _ctx.closable ? (openBlock(), createBlock(_component_icon_hover, {
+      key: 1,
+      prefix: _ctx.prefixCls,
+      class: normalizeClass(`${_ctx.prefixCls}-close-btn`),
+      onClick: withModifiers(_ctx.handleClose, ["stop"])
+    }, {
+      default: withCtx(() => [
+        renderSlot(_ctx.$slots, "close-icon", {}, () => [
+          createVNode(_component_icon_close)
+        ])
+      ]),
+      _: 3
+    }, 8, ["prefix", "class", "onClick"])) : createCommentVNode("v-if", true),
+    _ctx.loading ? (openBlock(), createElementBlock("span", {
+      key: 2,
+      class: normalizeClass(`${_ctx.prefixCls}-loading-icon`)
+    }, [
+      createVNode(_component_icon_loading)
+    ], 2)) : createCommentVNode("v-if", true)
+  ], 6)) : createCommentVNode("v-if", true);
+}
+var _Tag = /* @__PURE__ */ _export_sfc$1(_sfc_main$o, [["render", _sfc_render$i]]);
+const Tag = Object.assign(_Tag, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Tag.name, _Tag);
+  }
+});
+var __defProp$7 = Object.defineProperty;
+var __getOwnPropSymbols$8 = Object.getOwnPropertySymbols;
+var __hasOwnProp$8 = Object.prototype.hasOwnProperty;
+var __propIsEnum$8 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$7 = (obj, key, value) => key in obj ? __defProp$7(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$7 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$8.call(b, prop))
+      __defNormalProp$7(a, prop, b[prop]);
+  if (__getOwnPropSymbols$8)
+    for (var prop of __getOwnPropSymbols$8(b)) {
+      if (__propIsEnum$8.call(b, prop))
+        __defNormalProp$7(a, prop, b[prop]);
+    }
+  return a;
+};
+const DEFAULT_FIELD_NAMES = {
+  value: "value",
+  label: "label",
+  closable: "closable",
+  tagProps: "tagProps"
+};
+var _InputTag = defineComponent({
+  name: "InputTag",
+  inheritAttrs: false,
+  props: {
+    modelValue: {
+      type: Array
+    },
+    defaultValue: {
+      type: Array,
+      default: () => []
+    },
+    inputValue: String,
+    defaultInputValue: {
+      type: String,
+      default: ""
+    },
+    placeholder: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    allowClear: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String
+    },
+    maxTagCount: {
+      type: Number,
+      default: 0
+    },
+    retainInputValue: {
+      type: Boolean,
+      default: false
+    },
+    formatTag: {
+      type: Function
+    },
+    uniqueValue: {
+      type: Boolean,
+      default: false
+    },
+    fieldNames: {
+      type: Object
+    },
+    baseCls: String,
+    focused: Boolean,
+    disabledInput: Boolean,
+    uninjectFormItemContext: Boolean,
+    onChange: {
+      type: [Function, Array]
+    },
+    onInputValueChange: {
+      type: [Function, Array]
+    },
+    onPressEnter: {
+      type: [Function, Array]
+    },
+    onRemove: {
+      type: [Function, Array]
+    },
+    onClear: {
+      type: [Function, Array]
+    },
+    onFocus: {
+      type: [Function, Array]
+    },
+    onBlur: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:modelValue",
+    "update:inputValue",
+    "change",
+    "inputValueChange",
+    "pressEnter",
+    "remove",
+    "clear",
+    "focus",
+    "blur"
+  ],
+  setup(props, {
+    emit,
+    slots,
+    attrs
+  }) {
+    const {
+      size,
+      disabled,
+      error,
+      uninjectFormItemContext,
+      modelValue
+    } = toRefs(props);
+    const prefixCls = props.baseCls || getPrefixCls("input-tag");
+    const inputRef = ref();
+    const mirrorRef = ref();
+    const {
+      mergedSize: _mergedSize,
+      mergedDisabled,
+      mergedError,
+      feedback,
+      eventHandlers
+    } = useFormItem({
+      size,
+      disabled,
+      error,
+      uninject: uninjectFormItemContext == null ? void 0 : uninjectFormItemContext.value
+    });
+    const {
+      mergedSize
+    } = useSize(_mergedSize);
+    const mergedFieldNames = computed(() => __spreadValues$7(__spreadValues$7({}, DEFAULT_FIELD_NAMES), props.fieldNames));
+    const _focused = ref(false);
+    const _value = ref(props.defaultValue);
+    const _inputValue = ref(props.defaultInputValue);
+    const isComposition = ref(false);
+    const compositionValue = ref("");
+    const inputStyle = reactive({
+      width: "12px"
+    });
+    const mergedFocused = computed(() => props.focused || _focused.value);
+    const updateInputValue = (value) => {
+      _inputValue.value = value;
+      emit("update:inputValue", value);
+    };
+    const handleComposition = (e) => {
+      var _a;
+      const {
+        value
+      } = e.target;
+      if (e.type === "compositionend") {
+        isComposition.value = false;
+        compositionValue.value = "";
+        emit("inputValueChange", value, e);
+        updateInputValue(value);
+      } else {
+        isComposition.value = true;
+        compositionValue.value = computedInputValue.value + ((_a = e.data) != null ? _a : "");
+      }
+    };
+    const computedValue = computed(() => {
+      var _a;
+      return (_a = props.modelValue) != null ? _a : _value.value;
+    });
+    const computedInputValue = computed(() => {
+      var _a;
+      return (_a = props.inputValue) != null ? _a : _inputValue.value;
+    });
+    watch(modelValue, (value) => {
+      if (isUndefined(value) || isNull(value)) {
+        _value.value = [];
+      }
+    });
+    const handleMousedown = (e) => {
+      if (inputRef.value && e.target !== inputRef.value) {
+        e.preventDefault();
+        inputRef.value.focus();
+      }
+    };
+    const handleInput = (e) => {
+      const {
+        value
+      } = e.target;
+      if (!isComposition.value) {
+        emit("inputValueChange", value, e);
+        updateInputValue(value);
+      }
+    };
+    const tags = computed(() => {
+      const valueData = getValueData(computedValue.value, mergedFieldNames.value);
+      if (props.maxTagCount > 0) {
+        const invisibleTags = valueData.length - props.maxTagCount;
+        if (invisibleTags > 0) {
+          const result = valueData.slice(0, props.maxTagCount);
+          const raw = {
+            value: "__arco__more",
+            label: `+${invisibleTags}...`,
+            closable: false
+          };
+          result.push(__spreadValues$7({
+            raw
+          }, raw));
+          return result;
+        }
+      }
+      return valueData;
+    });
+    const updateValue = (value, ev) => {
+      var _a, _b;
+      _value.value = value;
+      emit("update:modelValue", value);
+      emit("change", value, ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onChange) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleRemove = (value, index2, e) => {
+      var _a;
+      const newValue = (_a = computedValue.value) == null ? void 0 : _a.filter((_, i) => i !== index2);
+      updateValue(newValue, e);
+      emit("remove", value, e);
+    };
+    const handleClear = (e) => {
+      const newValue = [];
+      updateValue(newValue, e);
+      emit("clear", e);
+    };
+    const showClearBtn = computed(() => !mergedDisabled.value && !props.readonly && props.allowClear && Boolean(computedValue.value.length));
+    const handlePressEnter = (e) => {
+      var _a;
+      if (computedInputValue.value) {
+        e.preventDefault();
+        emit("pressEnter", computedInputValue.value, e);
+        if (props.uniqueValue && ((_a = computedValue.value) == null ? void 0 : _a.includes(computedInputValue.value))) {
+          return;
+        }
+        const newValue = computedValue.value.concat(computedInputValue.value);
+        updateValue(newValue, e);
+        if (!props.retainInputValue) {
+          _inputValue.value = "";
+          emit("update:inputValue", "");
+          emit("inputValueChange", "", e);
+        }
+      }
+    };
+    const handleFocus = (ev) => {
+      var _a, _b;
+      _focused.value = true;
+      emit("focus", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onFocus) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleBlur = (ev) => {
+      var _a, _b;
+      _focused.value = false;
+      emit("blur", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onBlur) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleKeyDown = (e) => {
+      const keyCode = e.key || e.code;
+      if (!isComposition.value && computedInputValue.value && keyCode === Enter.key) {
+        handlePressEnter(e);
+      }
+      if (!isComposition.value && tags.value.length > 0 && !computedInputValue.value && keyCode === Backspace.key) {
+        const lastIndex = tags.value.length - 1;
+        handleRemove(tags.value[lastIndex].value, lastIndex, e);
+      }
+    };
+    const setInputWidth = (width) => {
+      if (width > 12) {
+        inputStyle.width = `${width}px`;
+      } else {
+        inputStyle.width = "12px";
+      }
+    };
+    onMounted(() => {
+      if (mirrorRef.value) {
+        setInputWidth(mirrorRef.value.offsetWidth);
+      }
+    });
+    const handleResize = () => {
+      if (mirrorRef.value) {
+        setInputWidth(mirrorRef.value.offsetWidth);
+      }
+    };
+    watch(computedInputValue, (value) => {
+      if (inputRef.value && !isComposition.value && value !== inputRef.value.value) {
+        inputRef.value.value = value;
+      }
+    });
+    const cls = computed(() => [prefixCls, `${prefixCls}-size-${mergedSize.value}`, {
+      [`${prefixCls}-disabled`]: mergedDisabled.value,
+      [`${prefixCls}-disabled-input`]: props.disabledInput,
+      [`${prefixCls}-error`]: mergedError.value,
+      [`${prefixCls}-focus`]: mergedFocused.value,
+      [`${prefixCls}-readonly`]: props.readonly,
+      [`${prefixCls}-has-tag`]: tags.value.length > 0,
+      [`${prefixCls}-has-prefix`]: Boolean(slots.prefix),
+      [`${prefixCls}-has-suffix`]: Boolean(slots.suffix) || showClearBtn.value || feedback.value,
+      [`${prefixCls}-has-placeholder`]: !computedValue.value.length
+    }]);
+    const wrapperAttrs = computed(() => omit(attrs, INPUT_EVENTS));
+    const inputAttrs = computed(() => pick(attrs, INPUT_EVENTS));
+    const render2 = () => {
+      var _a;
+      return createVNode("span", mergeProps({
+        "class": cls.value,
+        "onMousedown": handleMousedown
+      }, wrapperAttrs.value), [createVNode(ResizeObserver$1, {
+        "onResize": handleResize
+      }, {
+        default: () => [createVNode("span", {
+          "ref": mirrorRef,
+          "class": `${prefixCls}-mirror`
+        }, [tags.value.length > 0 ? compositionValue.value || computedInputValue.value : compositionValue.value || computedInputValue.value || props.placeholder])]
+      }), slots.prefix && createVNode("span", {
+        "class": `${prefixCls}-prefix`
+      }, [slots.prefix()]), createVNode(TransitionGroup, {
+        "tag": "span",
+        "name": "input-tag-zoom",
+        "class": `${prefixCls}-inner`
+      }, {
+        default: () => [tags.value.map((item, index2) => createVNode(Tag, mergeProps({
+          "key": `tag-${item.value}`,
+          "class": `${prefixCls}-tag`,
+          "closable": !mergedDisabled.value && !props.readonly && item.closable,
+          "visible": true
+        }, item.tagProps, {
+          "onClose": (ev) => handleRemove(item.value, index2, ev)
+        }), {
+          default: () => {
+            var _a2, _b, _c, _d;
+            return [(_d = (_c = (_a2 = slots.tag) == null ? void 0 : _a2.call(slots, {
+              data: item.raw
+            })) != null ? _c : (_b = props.formatTag) == null ? void 0 : _b.call(props, item.raw)) != null ? _d : item.label];
+          }
+        })), createVNode("input", mergeProps(inputAttrs.value, {
+          "ref": inputRef,
+          "key": "input-tag-input",
+          "class": `${prefixCls}-input`,
+          "style": inputStyle,
+          "placeholder": tags.value.length === 0 ? props.placeholder : void 0,
+          "disabled": mergedDisabled.value,
+          "readonly": props.readonly || props.disabledInput,
+          "onInput": handleInput,
+          "onKeydown": handleKeyDown,
+          "onFocus": handleFocus,
+          "onBlur": handleBlur,
+          "onCompositionstart": handleComposition,
+          "onCompositionupdate": handleComposition,
+          "onCompositionend": handleComposition
+        }), null)]
+      }), showClearBtn.value && createVNode(IconHover, {
+        "class": `${prefixCls}-clear-btn`,
+        "onClick": handleClear,
+        "onMousedown": (e) => e.stopPropagation()
+      }, {
+        default: () => [createVNode(IconClose, null, null)]
+      }), (slots.suffix || Boolean(feedback.value)) && createVNode("span", {
+        "class": `${prefixCls}-suffix`
+      }, [(_a = slots.suffix) == null ? void 0 : _a.call(slots), Boolean(feedback.value) && createVNode(FeedbackIcon, {
+        "type": feedback.value
+      }, null)])]);
+    };
+    return {
+      inputRef,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+const InputTag = Object.assign(_InputTag, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _InputTag.name, _InputTag);
+  }
+});
+const _sfc_main$n = defineComponent({
+  name: "IconExpand",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-expand`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$a = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$9 = /* @__PURE__ */ createElementVNode("path", { d: "M7 26v14c0 .552.444 1 .996 1H22m19-19V8c0-.552-.444-1-.996-1H26" }, null, -1);
+const _hoisted_3$9 = [
+  _hoisted_2$9
+];
+function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$9, 14, _hoisted_1$a);
+}
+var _IconExpand = /* @__PURE__ */ _export_sfc$1(_sfc_main$n, [["render", _sfc_render$h]]);
+const IconExpand = Object.assign(_IconExpand, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconExpand.name, _IconExpand);
+  }
+});
+var SelectView = defineComponent({
+  name: "SelectView",
+  props: {
+    modelValue: {
+      type: Array,
+      required: true
+    },
+    inputValue: String,
+    placeholder: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    opened: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String
+    },
+    bordered: {
+      type: Boolean,
+      default: true
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    allowClear: {
+      type: Boolean,
+      default: false
+    },
+    allowCreate: {
+      type: Boolean,
+      default: false
+    },
+    allowSearch: {
+      type: Boolean,
+      default: (props) => isArray(props.modelValue)
+    },
+    maxTagCount: {
+      type: Number,
+      default: 0
+    },
+    retainInputValue: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["remove", "clear", "focus", "blur"],
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const {
+      size,
+      disabled,
+      error
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("select-view");
+    const {
+      feedback,
+      eventHandlers,
+      mergedDisabled,
+      mergedSize: _mergedSize,
+      mergedError
+    } = useFormItem({
+      size,
+      disabled,
+      error
+    });
+    const {
+      mergedSize
+    } = useSize(_mergedSize);
+    const {
+      opened
+    } = toRefs(props);
+    const componentRef = ref();
+    const inputRef = computed(() => {
+      var _a;
+      return (_a = componentRef.value) == null ? void 0 : _a.inputRef;
+    });
+    const isEmptyValue = computed(() => props.modelValue.length === 0);
+    const enabledInput = computed(() => props.allowSearch || props.allowCreate);
+    const showClearBtn = computed(() => props.allowClear && !props.disabled && !isEmptyValue.value);
+    const handleFocus = (ev) => {
+      var _a, _b;
+      emit("focus", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onFocus) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleBlur = (ev) => {
+      var _a, _b;
+      emit("blur", ev);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onBlur) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleRemove = (tag) => {
+      emit("remove", tag);
+    };
+    const handleClear = (ev) => {
+      emit("clear", ev);
+    };
+    const renderIcon = () => {
+      var _a, _b, _c, _d;
+      if (props.loading) {
+        return (_b = (_a = slots["loading-icon"]) == null ? void 0 : _a.call(slots)) != null ? _b : createVNode(IconLoading, null, null);
+      }
+      if (props.allowSearch && props.opened) {
+        return (_d = (_c = slots["search-icon"]) == null ? void 0 : _c.call(slots)) != null ? _d : createVNode(IconSearch, null, null);
+      }
+      if (slots["arrow-icon"]) {
+        return slots["arrow-icon"]();
+      }
+      if (props.multiple || enabledInput.value) {
+        return createVNode(IconExpand, {
+          "style": {
+            transform: "rotate(-45deg)"
+          }
+        }, null);
+      }
+      return createVNode(IconDown, {
+        "class": `${prefixCls}-arrow-icon`
+      }, null);
+    };
+    const renderSuffix = () => createVNode(Fragment, null, [showClearBtn.value && createVNode(IconHover, {
+      "class": `${prefixCls}-clear-btn`,
+      "onClick": handleClear,
+      "onMousedown": (ev) => ev.stopPropagation()
+    }, {
+      default: () => [createVNode(IconClose, null, null)]
+    }), createVNode("span", {
+      "class": `${prefixCls}-icon`
+    }, [renderIcon()]), Boolean(feedback.value) && createVNode(FeedbackIcon, {
+      "type": feedback.value
+    }, null)]);
+    watch(opened, (opened2) => {
+      if (!opened2 && inputRef.value && inputRef.value.isSameNode(document.activeElement)) {
+        inputRef.value.blur();
+      }
+    });
+    const cls = computed(() => [`${prefixCls}-${props.multiple ? "multiple" : "single"}`, {
+      [`${prefixCls}-opened`]: props.opened,
+      [`${prefixCls}-borderless`]: !props.bordered
+    }]);
+    const render2 = () => {
+      if (props.multiple) {
+        return createVNode(InputTag, {
+          "ref": componentRef,
+          "baseCls": prefixCls,
+          "class": cls.value,
+          "modelValue": props.modelValue,
+          "inputValue": props.inputValue,
+          "focused": props.opened,
+          "placeholder": props.placeholder,
+          "disabled": mergedDisabled.value,
+          "size": mergedSize.value,
+          "error": mergedError.value,
+          "maxTagCount": props.maxTagCount,
+          "disabledInput": !props.allowSearch && !props.allowCreate,
+          "retainInputValue": true,
+          "uninjectFormItemContext": true,
+          "onRemove": handleRemove,
+          "onFocus": handleFocus,
+          "onBlur": handleBlur
+        }, {
+          prefix: slots.prefix,
+          suffix: renderSuffix,
+          tag: slots.label
+        });
+      }
+      return createVNode(InputLabel, {
+        "ref": componentRef,
+        "baseCls": prefixCls,
+        "class": cls.value,
+        "modelValue": props.modelValue[0],
+        "inputValue": props.inputValue,
+        "focused": props.opened,
+        "placeholder": props.placeholder,
+        "disabled": mergedDisabled.value,
+        "size": mergedSize.value,
+        "error": mergedError.value,
+        "enabledInput": enabledInput.value,
+        "uninjectFormItemContext": true,
+        "onFocus": handleFocus,
+        "onBlur": handleBlur
+      }, {
+        default: slots.label,
+        prefix: slots.prefix,
+        suffix: renderSuffix
+      });
+    };
+    return {
+      inputRef,
+      handleFocus,
+      handleBlur,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      if (this.inputRef) {
+        this.inputRef.focus();
+      }
+    },
+    blur() {
+      if (this.inputRef) {
+        this.inputRef.blur();
+      }
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+const radioGroupKey = Symbol("RadioGroup");
+var _Radio = defineComponent({
+  name: "Radio",
+  components: {
+    IconHover
+  },
+  props: {
+    modelValue: {
+      type: [String, Number, Boolean],
+      default: void 0
+    },
+    defaultChecked: {
+      type: Boolean,
+      default: false
+    },
+    value: {
+      type: [String, Number, Boolean],
+      default: true
+    },
+    type: {
+      type: String,
+      default: "radio"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    uninjectGroupContext: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "change": (value, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const prefixCls = getPrefixCls("radio");
+    const radioGroupCtx = !props.uninjectGroupContext ? inject(radioGroupKey, void 0) : void 0;
+    const {
+      mergedDisabled: _mergedDisabled,
+      eventHandlers
+    } = useFormItem({
+      disabled: toRef(props, "disabled")
+    });
+    const inputRef = ref(null);
+    const _checked = ref(props.defaultChecked);
+    const isGroup = computed(() => (radioGroupCtx == null ? void 0 : radioGroupCtx.name) === "ArcoRadioGroup");
+    const mergedType = computed(() => {
+      var _a;
+      return (_a = radioGroupCtx == null ? void 0 : radioGroupCtx.type) != null ? _a : props.type;
+    });
+    const mergedDisabled = computed(() => (radioGroupCtx == null ? void 0 : radioGroupCtx.disabled) || _mergedDisabled.value);
+    const computedChecked = computed(() => {
+      var _a, _b;
+      if (isGroup.value) {
+        return (radioGroupCtx == null ? void 0 : radioGroupCtx.value) === ((_a = props.value) != null ? _a : true);
+      }
+      if (!isUndefined(props.modelValue)) {
+        return props.modelValue === ((_b = props.value) != null ? _b : true);
+      }
+      return _checked.value;
+    });
+    watch(computedChecked, (curValue, preValue) => {
+      if (curValue !== preValue) {
+        _checked.value = curValue;
+        if (inputRef.value) {
+          inputRef.value.checked = curValue;
+        }
+      }
+    });
+    const handleFocus = (ev) => {
+      var _a, _b;
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onFocus) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleBlur = (ev) => {
+      var _a, _b;
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onBlur) == null ? void 0 : _b.call(_a, ev);
+    };
+    const handleClick = (ev) => {
+      ev.stopPropagation();
+    };
+    const handleChange = (e) => {
+      var _a, _b, _c, _d, _e;
+      _checked.value = true;
+      if (isGroup.value) {
+        radioGroupCtx == null ? void 0 : radioGroupCtx.handleChange((_a = props.value) != null ? _a : true, e);
+      } else {
+        emit("update:modelValue", (_b = props.value) != null ? _b : true);
+        emit("change", (_c = props.value) != null ? _c : true, e);
+        (_e = (_d = eventHandlers.value) == null ? void 0 : _d.onChange) == null ? void 0 : _e.call(_d, e);
+      }
+      nextTick(() => {
+        if (inputRef.value && inputRef.value.checked !== computedChecked.value) {
+          inputRef.value.checked = computedChecked.value;
+        }
+      });
+    };
+    const cls = computed(() => [`${mergedType.value === "button" ? `${prefixCls}-button` : prefixCls}`, {
+      [`${prefixCls}-checked`]: computedChecked.value,
+      [`${prefixCls}-disabled`]: mergedDisabled.value
+    }]);
+    const defaultRadio = () => createVNode(Fragment, null, [createVNode(resolveComponent("icon-hover"), {
+      "class": `${prefixCls}-icon-hover`,
+      "disabled": mergedDisabled.value || computedChecked.value
+    }, {
+      default: () => [createVNode("span", {
+        "class": `${prefixCls}-icon`
+      }, null)]
+    }), slots.default && createVNode("span", {
+      "class": `${prefixCls}-label`
+    }, [slots.default()])]);
+    return () => {
+      var _a, _b, _c, _d;
+      return createVNode("label", {
+        "class": cls.value
+      }, [createVNode("input", {
+        "ref": inputRef,
+        "type": "radio",
+        "checked": computedChecked.value,
+        "value": props.value,
+        "class": `${prefixCls}-target`,
+        "disabled": mergedDisabled.value,
+        "onClick": handleClick,
+        "onChange": handleChange,
+        "onFocus": handleFocus,
+        "onBlur": handleBlur
+      }, null), mergedType.value === "radio" ? (_d = (_c = (_b = slots.radio) != null ? _b : (_a = radioGroupCtx == null ? void 0 : radioGroupCtx.slots) == null ? void 0 : _a.radio) == null ? void 0 : _c({
+        checked: computedChecked.value,
+        disabled: mergedDisabled.value
+      })) != null ? _d : defaultRadio() : createVNode("span", {
+        "class": `${prefixCls}-button-content`
+      }, [slots.default && slots.default()])]);
+    };
+  }
+});
+var RadioGroup = defineComponent({
+  name: "RadioGroup",
+  props: {
+    modelValue: {
+      type: [String, Number, Boolean],
+      default: void 0
+    },
+    defaultValue: {
+      type: [String, Number, Boolean],
+      default: ""
+    },
+    type: {
+      type: String,
+      default: "radio"
+    },
+    size: {
+      type: String
+    },
+    options: {
+      type: Array
+    },
+    direction: {
+      type: String,
+      default: "horizontal"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "change": (value, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const prefixCls = getPrefixCls("radio-group");
+    const {
+      size,
+      type,
+      disabled
+    } = toRefs(props);
+    const {
+      mergedDisabled,
+      mergedSize,
+      eventHandlers
+    } = useFormItem({
+      size,
+      disabled
+    });
+    const _value = ref(props.defaultValue);
+    const computedValue = computed(() => {
+      var _a;
+      return (_a = props.modelValue) != null ? _a : _value.value;
+    });
+    const options = computed(() => {
+      var _a;
+      return ((_a = props.options) != null ? _a : []).map((option) => {
+        if (isString(option) || isNumber(option)) {
+          return {
+            label: option,
+            value: option
+          };
+        }
+        return option;
+      });
+    });
+    const handleChange = (value, e) => {
+      var _a, _b;
+      _value.value = value;
+      emit("update:modelValue", value);
+      emit("change", value, e);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onChange) == null ? void 0 : _b.call(_a, e);
+    };
+    provide(radioGroupKey, reactive({
+      name: "ArcoRadioGroup",
+      value: computedValue,
+      size: mergedSize,
+      type,
+      disabled: mergedDisabled,
+      slots,
+      handleChange
+    }));
+    watch(computedValue, (cur) => {
+      if (_value.value !== cur) {
+        _value.value = cur;
+      }
+    });
+    const cls = computed(() => [`${prefixCls}${props.type === "button" ? "-button" : ""}`, `${prefixCls}-size-${mergedSize.value}`, `${prefixCls}-direction-${props.direction}`, {
+      [`${prefixCls}-disabled`]: mergedDisabled.value
+    }]);
+    const renderOptions = () => {
+      return options.value.map((option) => createVNode(_Radio, {
+        "key": option.value,
+        "value": option.value,
+        "disabled": option.disabled,
+        "modelValue": computedValue.value === option.value
+      }, {
+        default: () => [slots.label ? slots.label({
+          data: option
+        }) : isFunction(option.label) ? option.label() : option.label]
+      }));
+    };
+    return () => {
+      var _a;
+      return createVNode("span", {
+        "class": cls.value
+      }, [options.value.length > 0 ? renderOptions() : (_a = slots.default) == null ? void 0 : _a.call(slots)]);
+    };
+  }
+});
+const Radio = Object.assign(_Radio, {
+  Group: RadioGroup,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Radio.name, _Radio);
+    app.component(componentPrefix + RadioGroup.name, RadioGroup);
+  }
+});
+const target = typeof window === "undefined" ? global : window;
+function debounce(callback, delay) {
+  let timer = 0;
+  return (...args) => {
+    if (timer) {
+      target.clearTimeout(timer);
+    }
+    timer = target.setTimeout(() => {
+      timer = 0;
+      callback(...args);
+    }, delay);
+  };
+}
+var RenderFunction = defineComponent({
+  name: "RenderFunction",
+  props: {
+    renderFunc: {
+      type: Function,
+      required: true
+    }
+  },
+  render() {
+    return this.renderFunc(this.$attrs);
+  }
+});
+const getValueByPath = (obj, path) => {
+  if (!obj || !path) {
+    return void 0;
+  }
+  const keys = path.split(".");
+  if (keys.length === 0) {
+    return void 0;
+  }
+  let temp = obj;
+  for (let i = 0; i < keys.length; i++) {
+    if (!isObject(temp) && !isArray(temp) || !keys[i]) {
+      return void 0;
+    }
+    if (i !== keys.length - 1) {
+      temp = temp[keys[i]];
+    } else {
+      return temp[keys[i]];
+    }
+  }
+  return void 0;
+};
+const useTrigger = ({
+  popupVisible,
+  defaultPopupVisible,
+  emit
+}) => {
+  var _a;
+  const _popupVisible = ref((_a = defaultPopupVisible == null ? void 0 : defaultPopupVisible.value) != null ? _a : false);
+  const computedPopupVisible = computed(() => {
+    var _a2;
+    return (_a2 = popupVisible == null ? void 0 : popupVisible.value) != null ? _a2 : _popupVisible.value;
+  });
+  const handlePopupVisibleChange = (visible) => {
+    if (visible !== computedPopupVisible.value) {
+      _popupVisible.value = visible;
+      emit("update:popupVisible", visible);
+      emit("popupVisibleChange", visible);
+    }
+  };
+  watch(computedPopupVisible, (visible) => {
+    if (_popupVisible.value !== visible) {
+      _popupVisible.value = visible;
+    }
+  });
+  return {
+    computedPopupVisible,
+    handlePopupVisibleChange
+  };
+};
+var __defProp$6 = Object.defineProperty;
+var __getOwnPropSymbols$7 = Object.getOwnPropertySymbols;
+var __hasOwnProp$7 = Object.prototype.hasOwnProperty;
+var __propIsEnum$7 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$6 = (obj, key, value) => key in obj ? __defProp$6(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$6 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$7.call(b, prop))
+      __defNormalProp$6(a, prop, b[prop]);
+  if (__getOwnPropSymbols$7)
+    for (var prop of __getOwnPropSymbols$7(b)) {
+      if (__propIsEnum$7.call(b, prop))
+        __defNormalProp$6(a, prop, b[prop]);
+    }
+  return a;
+};
+const _sfc_main$m = defineComponent({
+  name: "Tooltip",
+  components: {
+    Trigger
+  },
+  props: {
+    popupVisible: {
+      type: Boolean,
+      default: void 0
+    },
+    defaultPopupVisible: {
+      type: Boolean,
+      default: false
+    },
+    content: String,
+    position: {
+      type: String,
+      default: "top"
+    },
+    mini: {
+      type: Boolean,
+      default: false
+    },
+    backgroundColor: {
+      type: String
+    },
+    contentClass: {
+      type: [String, Array, Object]
+    },
+    contentStyle: {
+      type: Object
+    },
+    arrowClass: {
+      type: [String, Array, Object]
+    },
+    arrowStyle: {
+      type: Object
+    },
+    popupContainer: {
+      type: [String, Object]
+    }
+  },
+  emits: [
+    "update:popupVisible",
+    "popupVisibleChange"
+  ],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("tooltip");
+    const _popupVisible = ref(props.defaultPopupVisible);
+    const computedPopupVisible = computed(() => {
+      var _a;
+      return (_a = props.popupVisible) != null ? _a : _popupVisible.value;
+    });
+    const handlePopupVisibleChange = (visible) => {
+      _popupVisible.value = visible;
+      emit("update:popupVisible", visible);
+      emit("popupVisibleChange", visible);
+    };
+    const contentCls = computed(() => [
+      `${prefixCls}-content`,
+      props.contentClass,
+      { [`${prefixCls}-mini`]: props.mini }
+    ]);
+    const computedContentStyle = computed(() => {
+      if (props.backgroundColor || props.contentStyle) {
+        return __spreadValues$6({
+          backgroundColor: props.backgroundColor
+        }, props.contentStyle);
+      }
+      return void 0;
+    });
+    const arrowCls = computed(() => [
+      `${prefixCls}-popup-arrow`,
+      props.arrowClass
+    ]);
+    const computedArrowStyle = computed(() => {
+      if (props.backgroundColor || props.arrowStyle) {
+        return __spreadValues$6({
+          backgroundColor: props.backgroundColor
+        }, props.arrowStyle);
+      }
+      return void 0;
+    });
+    return {
+      prefixCls,
+      computedPopupVisible,
+      contentCls,
+      computedContentStyle,
+      arrowCls,
+      computedArrowStyle,
+      handlePopupVisibleChange
+    };
+  }
+});
+function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_Trigger = resolveComponent("Trigger");
+  return openBlock(), createBlock(_component_Trigger, {
+    class: normalizeClass(_ctx.prefixCls),
+    trigger: "hover",
+    position: _ctx.position,
+    "popup-visible": _ctx.computedPopupVisible,
+    "popup-offset": 10,
+    "show-arrow": "",
+    "content-class": _ctx.contentCls,
+    "content-style": _ctx.computedContentStyle,
+    "arrow-class": _ctx.arrowCls,
+    "arrow-style": _ctx.computedArrowStyle,
+    "popup-container": _ctx.popupContainer,
+    "animation-name": "zoom-in-fade-out",
+    "auto-fit-transform-origin": "",
+    onPopupVisibleChange: _ctx.handlePopupVisibleChange
+  }, {
+    content: withCtx(() => [
+      renderSlot(_ctx.$slots, "content", {}, () => [
+        createTextVNode(toDisplayString(_ctx.content), 1)
+      ])
+    ]),
+    default: withCtx(() => [
+      renderSlot(_ctx.$slots, "default")
+    ]),
+    _: 3
+  }, 8, ["class", "position", "popup-visible", "content-class", "content-style", "arrow-class", "arrow-style", "popup-container", "onPopupVisibleChange"]);
+}
+var _Tooltip = /* @__PURE__ */ _export_sfc$1(_sfc_main$m, [["render", _sfc_render$g]]);
+const Tooltip = Object.assign(_Tooltip, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Tooltip.name, _Tooltip);
+  }
+});
+function strip(num, precision) {
+  if (precision === void 0) {
+    precision = 15;
+  }
+  return +parseFloat(Number(num).toPrecision(precision));
+}
+function digitLength(num) {
+  var eSplit = num.toString().split(/[eE]/);
+  var len = (eSplit[0].split(".")[1] || "").length - +(eSplit[1] || 0);
+  return len > 0 ? len : 0;
+}
+function float2Fixed(num) {
+  if (num.toString().indexOf("e") === -1) {
+    return Number(num.toString().replace(".", ""));
+  }
+  var dLen = digitLength(num);
+  return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
+}
+function checkBoundary(num) {
+  if (_boundaryCheckingState) {
+    if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
+      console.warn(num + " is beyond boundary when transfer to integer, the results may not be accurate");
+    }
+  }
+}
+function iteratorOperation(arr, operation) {
+  var num1 = arr[0], num2 = arr[1], others = arr.slice(2);
+  var res = operation(num1, num2);
+  others.forEach(function(num) {
+    res = operation(res, num);
+  });
+  return res;
+}
+function times() {
+  var nums = [];
+  for (var _i = 0; _i < arguments.length; _i++) {
+    nums[_i] = arguments[_i];
+  }
+  if (nums.length > 2) {
+    return iteratorOperation(nums, times);
+  }
+  var num1 = nums[0], num2 = nums[1];
+  var num1Changed = float2Fixed(num1);
+  var num2Changed = float2Fixed(num2);
+  var baseNum = digitLength(num1) + digitLength(num2);
+  var leftValue = num1Changed * num2Changed;
+  checkBoundary(leftValue);
+  return leftValue / Math.pow(10, baseNum);
+}
+function plus() {
+  var nums = [];
+  for (var _i = 0; _i < arguments.length; _i++) {
+    nums[_i] = arguments[_i];
+  }
+  if (nums.length > 2) {
+    return iteratorOperation(nums, plus);
+  }
+  var num1 = nums[0], num2 = nums[1];
+  var baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
+  return (times(num1, baseNum) + times(num2, baseNum)) / baseNum;
+}
+function minus() {
+  var nums = [];
+  for (var _i = 0; _i < arguments.length; _i++) {
+    nums[_i] = arguments[_i];
+  }
+  if (nums.length > 2) {
+    return iteratorOperation(nums, minus);
+  }
+  var num1 = nums[0], num2 = nums[1];
+  var baseNum = Math.pow(10, Math.max(digitLength(num1), digitLength(num2)));
+  return (times(num1, baseNum) - times(num2, baseNum)) / baseNum;
+}
+function divide() {
+  var nums = [];
+  for (var _i = 0; _i < arguments.length; _i++) {
+    nums[_i] = arguments[_i];
+  }
+  if (nums.length > 2) {
+    return iteratorOperation(nums, divide);
+  }
+  var num1 = nums[0], num2 = nums[1];
+  var num1Changed = float2Fixed(num1);
+  var num2Changed = float2Fixed(num2);
+  checkBoundary(num1Changed);
+  checkBoundary(num2Changed);
+  return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
+}
+function round(num, ratio) {
+  var base = Math.pow(10, ratio);
+  var result = divide(Math.round(Math.abs(times(num, base))), base);
+  if (num < 0 && result !== 0) {
+    result = times(result, -1);
+  }
+  return result;
+}
+var _boundaryCheckingState = true;
+function enableBoundaryChecking(flag) {
+  if (flag === void 0) {
+    flag = true;
+  }
+  _boundaryCheckingState = flag;
+}
+var index = {
+  strip,
+  plus,
+  minus,
+  times,
+  divide,
+  round,
+  digitLength,
+  float2Fixed,
+  enableBoundaryChecking
+};
+const _sfc_main$l = defineComponent({
+  name: "IconPlus",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-plus`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$9 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$8 = /* @__PURE__ */ createElementVNode("path", { d: "M5 24h38M24 5v38" }, null, -1);
+const _hoisted_3$8 = [
+  _hoisted_2$8
+];
+function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$8, 14, _hoisted_1$9);
+}
+var _IconPlus = /* @__PURE__ */ _export_sfc$1(_sfc_main$l, [["render", _sfc_render$f]]);
+const IconPlus = Object.assign(_IconPlus, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconPlus.name, _IconPlus);
+  }
+});
+const _sfc_main$k = defineComponent({
+  name: "IconMinus",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-minus`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$8 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$7 = /* @__PURE__ */ createElementVNode("path", { d: "M5 24h38" }, null, -1);
+const _hoisted_3$7 = [
+  _hoisted_2$7
+];
+function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$7, 14, _hoisted_1$8);
+}
+var _IconMinus = /* @__PURE__ */ _export_sfc$1(_sfc_main$k, [["render", _sfc_render$e]]);
+const IconMinus = Object.assign(_IconMinus, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconMinus.name, _IconMinus);
+  }
+});
+const SPEED = 150;
+index.enableBoundaryChecking(false);
+var _InputNumber = defineComponent({
+  name: "InputNumber",
+  props: {
+    modelValue: Number,
+    defaultValue: Number,
+    mode: {
+      type: String,
+      default: "embed"
+    },
+    precision: Number,
+    step: {
+      type: Number,
+      default: 1
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    max: {
+      type: Number,
+      default: Infinity
+    },
+    min: {
+      type: Number,
+      default: -Infinity
+    },
+    formatter: {
+      type: Function
+    },
+    parser: {
+      type: Function
+    },
+    placeholder: String,
+    hideButton: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String
+    },
+    allowClear: {
+      type: Boolean,
+      default: false
+    },
+    modelEvent: {
+      type: String,
+      default: "change"
+    }
+  },
+  emits: {
+    "update:modelValue": (value) => true,
+    "change": (value, ev) => true,
+    "focus": (ev) => true,
+    "blur": (ev) => true,
+    "clear": (ev) => true,
+    "input": (value, inputValue, ev) => true
+  },
+  setup(props, {
+    emit,
+    slots
+  }) {
+    var _a;
+    const {
+      size,
+      disabled
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("input-number");
+    const inputRef = ref();
+    const {
+      mergedSize: _mergedSize,
+      mergedDisabled
+    } = useFormItem({
+      size,
+      disabled
+    });
+    const {
+      mergedSize
+    } = useSize(_mergedSize);
+    const getStringValue = (number) => {
+      var _a2, _b;
+      return isNumber(number) ? (_b = (_a2 = props.formatter) == null ? void 0 : _a2.call(props, String(number))) != null ? _b : String(number) : "";
+    };
+    const _value = ref(getStringValue((_a = props.modelValue) != null ? _a : props.defaultValue));
+    const valueNumber = computed(() => {
+      var _a2, _b;
+      if (!_value.value) {
+        return void 0;
+      }
+      const number = Number((_b = (_a2 = props.parser) == null ? void 0 : _a2.call(props, _value.value)) != null ? _b : _value.value);
+      return Number.isNaN(number) ? void 0 : number;
+    });
+    const mergedPrecision = computed(() => {
+      if (isNumber(props.precision)) {
+        const decimal = `${props.step}`.split(".")[1];
+        const stepPrecision = decimal && decimal.length || 0;
+        return Math.max(stepPrecision, props.precision);
+      }
+      return void 0;
+    });
+    const isMin = ref(isNumber(valueNumber.value) && valueNumber.value <= props.min);
+    const isMax = ref(isNumber(valueNumber.value) && valueNumber.value >= props.max);
+    let repeatTimer = 0;
+    const clearRepeatTimer = () => {
+      if (repeatTimer) {
+        window.clearTimeout(repeatTimer);
+        repeatTimer = 0;
+      }
+    };
+    const getLegalValue = (value) => {
+      if (isUndefined(value)) {
+        return void 0;
+      }
+      if (isNumber(props.min) && value < props.min) {
+        value = props.min;
+      }
+      if (isNumber(props.max) && value > props.max) {
+        value = props.max;
+      }
+      return isNumber(mergedPrecision.value) ? index.round(value, mergedPrecision.value) : value;
+    };
+    const updateNumberStatus = (number) => {
+      let _isMin = false;
+      let _isMax = false;
+      if (isNumber(number)) {
+        if (number <= props.min) {
+          _isMin = true;
+        }
+        if (number >= props.max) {
+          _isMax = true;
+        }
+      }
+      if (isMax.value !== _isMax) {
+        isMax.value = _isMax;
+      }
+      if (isMin.value !== _isMin) {
+        isMin.value = _isMin;
+      }
+    };
+    const handleStepButton = (event, method, needRepeat = false) => {
+      var _a2;
+      event.preventDefault();
+      (_a2 = inputRef.value) == null ? void 0 : _a2.focus();
+      if (mergedDisabled.value || method === "plus" && isMax.value || method === "minus" && isMin.value) {
+        return;
+      }
+      let nextValue;
+      if (isNumber(valueNumber.value)) {
+        nextValue = getLegalValue(index[method](valueNumber.value, props.step));
+      } else {
+        nextValue = props.min === -Infinity ? 0 : props.min;
+      }
+      _value.value = getStringValue(nextValue);
+      updateNumberStatus(nextValue);
+      emit("update:modelValue", nextValue);
+      emit("change", nextValue, event);
+      if (needRepeat) {
+        repeatTimer = window.setTimeout(() => event.target.dispatchEvent(event), SPEED);
+      }
+    };
+    const handleInput = (value, ev) => {
+      var _a2, _b, _c, _d;
+      value = value.trim().replace(/。/g, ".");
+      value = (_b = (_a2 = props.parser) == null ? void 0 : _a2.call(props, value)) != null ? _b : value;
+      if (isNumber(Number(value)) || /^(\.|-)$/.test(value)) {
+        _value.value = (_d = (_c = props.formatter) == null ? void 0 : _c.call(props, value)) != null ? _d : value;
+        updateNumberStatus(valueNumber.value);
+        if (props.modelEvent === "input") {
+          emit("update:modelValue", valueNumber.value);
+        }
+        emit("input", valueNumber.value, _value.value, ev);
+      }
+    };
+    const handleFocus = (ev) => {
+      emit("focus", ev);
+    };
+    const handleChange = (value, ev) => {
+      const finalValue = getLegalValue(valueNumber.value);
+      const stringValue = getStringValue(finalValue);
+      if (finalValue !== valueNumber.value || _value.value !== stringValue) {
+        _value.value = stringValue;
+        updateNumberStatus(finalValue);
+      }
+      emit("update:modelValue", finalValue);
+      emit("change", finalValue, ev);
+    };
+    const handleBlur = (ev) => {
+      emit("blur", ev);
+    };
+    const handleClear = (ev) => {
+      _value.value = "";
+      emit("update:modelValue", void 0);
+      emit("change", void 0, ev);
+      emit("clear", ev);
+    };
+    watch(() => props.modelValue, (value) => {
+      if (value !== valueNumber.value) {
+        _value.value = getStringValue(value);
+        updateNumberStatus(value);
+      }
+    });
+    const renderSuffix = () => {
+      var _a2;
+      return createVNode(Fragment, null, [(_a2 = slots.suffix) == null ? void 0 : _a2.call(slots), createVNode("div", {
+        "class": `${prefixCls}-step`
+      }, [createVNode("button", {
+        "class": [`${prefixCls}-step-button`, {
+          [`${prefixCls}-step-button-disabled`]: mergedDisabled.value || isMax.value
+        }],
+        "type": "button",
+        "disabled": mergedDisabled.value || isMax.value,
+        "onMousedown": (e) => handleStepButton(e, "plus", true),
+        "onMouseup": clearRepeatTimer,
+        "onMouseleave": clearRepeatTimer
+      }, [createVNode(IconUp, null, null)]), createVNode("button", {
+        "class": [`${prefixCls}-step-button`, {
+          [`${prefixCls}-step-button-disabled`]: mergedDisabled.value || isMin.value
+        }],
+        "type": "button",
+        "disabled": mergedDisabled.value || isMin.value,
+        "onMousedown": (e) => handleStepButton(e, "minus", true),
+        "onMouseup": clearRepeatTimer,
+        "onMouseleave": clearRepeatTimer
+      }, [createVNode(IconDown, null, null)])])]);
+    };
+    const cls = computed(() => [prefixCls, `${prefixCls}-mode-${props.mode}`, `${prefixCls}-size-${mergedSize.value}`]);
+    const renderPrependButton = () => {
+      return createVNode(Button, {
+        "size": mergedSize.value,
+        "class": `${prefixCls}-step-button`,
+        "disabled": mergedDisabled.value || isMin.value,
+        "onMousedown": (ev) => handleStepButton(ev, "minus", true),
+        "onMouseup": clearRepeatTimer,
+        "onMouseleave": clearRepeatTimer
+      }, {
+        icon: () => createVNode(IconMinus, null, null)
+      });
+    };
+    const renderAppendButton = () => {
+      return createVNode(Button, {
+        "size": mergedSize.value,
+        "class": `${prefixCls}-step-button`,
+        "disabled": mergedDisabled.value || isMax.value,
+        "onMousedown": (ev) => handleStepButton(ev, "plus", true),
+        "onMouseup": clearRepeatTimer,
+        "onMouseleave": clearRepeatTimer
+      }, {
+        icon: () => createVNode(IconPlus, null, null)
+      });
+    };
+    const render2 = () => {
+      const _slots = props.mode === "embed" ? {
+        prepend: slots.prepend,
+        prefix: slots.prefix,
+        suffix: props.hideButton ? slots.suffix : renderSuffix,
+        append: slots.append
+      } : {
+        prepend: renderPrependButton,
+        prefix: slots.prefix,
+        suffix: slots.suffix,
+        append: renderAppendButton
+      };
+      return createVNode(Input, {
+        "key": `__arco__${props.mode}`,
+        "ref": inputRef,
+        "class": cls.value,
+        "type": "text",
+        "allowClear": props.allowClear,
+        "size": mergedSize.value,
+        "modelValue": _value.value,
+        "placeholder": props.placeholder,
+        "disabled": mergedDisabled.value,
+        "error": props.error,
+        "onInput": handleInput,
+        "onFocus": handleFocus,
+        "onBlur": handleBlur,
+        "onClear": handleClear,
+        "onChange": handleChange
+      }, _slots);
+    };
+    return {
+      inputRef,
+      render: render2
+    };
+  },
+  methods: {
+    focus() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.focus();
+    },
+    blur() {
+      var _a;
+      (_a = this.inputRef) == null ? void 0 : _a.blur();
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
+const InputNumber = Object.assign(_InputNumber, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _InputNumber.name, _InputNumber);
+  }
+});
+const _sfc_main$j = defineComponent({
+  name: "IconDragDotVertical",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-drag-dot-vertical`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$7 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$6 = /* @__PURE__ */ createElementVNode("path", {
+  d: "M17 8h2v2h-2V8ZM17 23h2v2h-2v-2ZM17 38h2v2h-2v-2ZM29 8h2v2h-2V8ZM29 23h2v2h-2v-2ZM29 38h2v2h-2v-2Z",
+  fill: "currentColor",
+  stroke: "none"
+}, null, -1);
+const _hoisted_3$6 = /* @__PURE__ */ createElementVNode("path", { d: "M17 8h2v2h-2V8ZM17 23h2v2h-2v-2ZM17 38h2v2h-2v-2ZM29 8h2v2h-2V8ZM29 23h2v2h-2v-2ZM29 38h2v2h-2v-2Z" }, null, -1);
+const _hoisted_4 = [
+  _hoisted_2$6,
+  _hoisted_3$6
+];
+function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_4, 14, _hoisted_1$7);
+}
+var _IconDragDotVertical = /* @__PURE__ */ _export_sfc$1(_sfc_main$j, [["render", _sfc_render$d]]);
+const IconDragDotVertical = Object.assign(_IconDragDotVertical, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconDragDotVertical.name, _IconDragDotVertical);
+  }
+});
+const _sfc_main$i = defineComponent({
+  name: "Pager",
+  props: {
+    pageNumber: {
+      type: Number
+    },
+    current: {
+      type: Number
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    style: {
+      type: Object
+    },
+    activeStyle: {
+      type: Object
+    }
+  },
+  emits: ["click"],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("pagination-item");
+    const isActive = computed(() => props.current === props.pageNumber);
+    const handleClick = (e) => {
+      if (!props.disabled) {
+        emit("click", props.pageNumber, e);
+      }
+    };
+    const cls = computed(() => [
+      prefixCls,
+      {
+        [`${prefixCls}-active`]: isActive.value
+      }
+    ]);
+    const mergedStyle = computed(() => {
+      return isActive.value ? props.activeStyle : props.style;
+    });
+    return {
+      prefixCls,
+      cls,
+      mergedStyle,
+      handleClick
+    };
+  }
+});
+function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("li", {
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.mergedStyle),
+    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.handleClick && _ctx.handleClick(...args))
+  }, [
+    renderSlot(_ctx.$slots, "default", { page: _ctx.pageNumber }, () => [
+      createTextVNode(toDisplayString(_ctx.pageNumber), 1)
+    ])
+  ], 6);
+}
+var Pager = /* @__PURE__ */ _export_sfc$1(_sfc_main$i, [["render", _sfc_render$c]]);
+const getLegalPage = (page, { min, max }) => {
+  if (page < min) {
+    return min;
+  }
+  if (page > max) {
+    return max;
+  }
+  return page;
+};
+const _sfc_main$h = defineComponent({
+  name: "StepPager",
+  components: {
+    IconLeft,
+    IconRight
+  },
+  props: {
+    pages: {
+      type: Number,
+      required: true
+    },
+    current: {
+      type: Number,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    simple: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["click"],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("pagination-item");
+    const isNext = props.type === "next";
+    const mergedDisabled = computed(() => {
+      if (props.disabled) {
+        return props.disabled;
+      }
+      if (!props.pages) {
+        return true;
+      }
+      if (isNext && props.current === props.pages) {
+        return true;
+      }
+      return !isNext && props.current <= 1;
+    });
+    const nextPage = computed(() => getLegalPage(props.current + (isNext ? 1 : -1), {
+      min: 1,
+      max: props.pages
+    }));
+    const handleClick = (e) => {
+      if (!mergedDisabled.value) {
+        emit("click", nextPage.value);
+      }
+    };
+    const cls = computed(() => [
+      prefixCls,
+      `${prefixCls}-${props.type}`,
+      {
+        [`${prefixCls}-disabled`]: mergedDisabled.value
+      }
+    ]);
+    return {
+      prefixCls,
+      cls,
+      isNext,
+      handleClick
+    };
+  }
+});
+function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_right = resolveComponent("icon-right");
+  const _component_icon_left = resolveComponent("icon-left");
+  return openBlock(), createBlock(resolveDynamicComponent(_ctx.simple ? "span" : "li"), {
+    class: normalizeClass(_ctx.cls),
+    onClick: _ctx.handleClick
+  }, {
+    default: withCtx(() => [
+      renderSlot(_ctx.$slots, "default", {
+        type: _ctx.isNext ? "next" : "previous"
+      }, () => [
+        _ctx.isNext ? (openBlock(), createBlock(_component_icon_right, { key: 0 })) : (openBlock(), createBlock(_component_icon_left, { key: 1 }))
+      ])
+    ]),
+    _: 3
+  }, 8, ["class", "onClick"]);
+}
+var StepPager = /* @__PURE__ */ _export_sfc$1(_sfc_main$h, [["render", _sfc_render$b]]);
+const _sfc_main$g = defineComponent({
+  name: "EllipsisPager",
+  components: {
+    IconMore
+  },
+  props: {
+    current: {
+      type: Number,
+      required: true
+    },
+    step: {
+      type: Number,
+      default: 5
+    },
+    pages: {
+      type: Number,
+      required: true
+    }
+  },
+  emits: ["click"],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("pagination-item");
+    const nextPage = computed(() => getLegalPage(props.current + props.step, {
+      min: 1,
+      max: props.pages
+    }));
+    const handleClick = (e) => {
+      emit("click", nextPage.value);
+    };
+    const cls = computed(() => [prefixCls, `${prefixCls}-ellipsis`]);
+    return {
+      prefixCls,
+      cls,
+      handleClick
+    };
+  }
+});
+function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_icon_more = resolveComponent("icon-more");
+  return openBlock(), createElementBlock("li", {
+    class: normalizeClass(_ctx.cls),
+    onClick: _cache[0] || (_cache[0] = (...args) => _ctx.handleClick && _ctx.handleClick(...args))
+  }, [
+    renderSlot(_ctx.$slots, "default", {}, () => [
+      createVNode(_component_icon_more)
+    ])
+  ], 2);
+}
+var EllipsisPager = /* @__PURE__ */ _export_sfc$1(_sfc_main$g, [["render", _sfc_render$a]]);
+const _sfc_main$f = defineComponent({
+  name: "PageJumper",
+  components: {
+    InputNumber
+  },
+  props: {
+    current: {
+      type: Number,
+      required: true
+    },
+    simple: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    pages: {
+      type: Number,
+      required: true
+    },
+    size: {
+      type: String
+    },
+    onChange: {
+      type: Function
+    }
+  },
+  emits: ["change"],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("pagination-jumper");
+    const { t } = useI18n();
+    const inputValue = ref(props.simple ? props.current : void 0);
+    const handleChange = (value) => {
+      emit("change", inputValue.value);
+      nextTick(() => {
+        if (!props.simple) {
+          inputValue.value = void 0;
+        }
+      });
+    };
+    watch(() => props.current, (value) => {
+      if (props.simple && value !== inputValue.value) {
+        inputValue.value = value;
+      }
+    });
+    const cls = computed(() => [
+      prefixCls,
+      {
+        [`${prefixCls}-simple`]: props.simple
+      }
+    ]);
+    return {
+      prefixCls,
+      cls,
+      t,
+      inputValue,
+      handleChange
+    };
+  }
+});
+function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_input_number = resolveComponent("input-number");
+  return openBlock(), createElementBlock("span", {
+    class: normalizeClass(_ctx.cls)
+  }, [
+    !_ctx.simple ? (openBlock(), createElementBlock("span", {
+      key: 0,
+      class: normalizeClass([`${_ctx.prefixCls}-prepend`, `${_ctx.prefixCls}-text-goto`])
+    }, [
+      renderSlot(_ctx.$slots, "jumper-prepend", {}, () => [
+        createTextVNode(toDisplayString(_ctx.t("pagination.goto")), 1)
+      ])
+    ], 2)) : createCommentVNode("v-if", true),
+    createVNode(_component_input_number, {
+      modelValue: _ctx.inputValue,
+      "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => _ctx.inputValue = $event),
+      class: normalizeClass(`${_ctx.prefixCls}-input`),
+      min: 1,
+      max: _ctx.pages,
+      size: _ctx.size,
+      disabled: _ctx.disabled,
+      "hide-button": "",
+      onChange: _ctx.handleChange
+    }, null, 8, ["modelValue", "class", "max", "size", "disabled", "onChange"]),
+    _ctx.$slots["jumper-append"] ? (openBlock(), createElementBlock("span", {
+      key: 1,
+      class: normalizeClass(`${_ctx.prefixCls}-append`)
+    }, [
+      renderSlot(_ctx.$slots, "jumper-append")
+    ], 2)) : createCommentVNode("v-if", true),
+    _ctx.simple ? (openBlock(), createElementBlock(Fragment, { key: 2 }, [
+      createElementVNode("span", {
+        class: normalizeClass(`${_ctx.prefixCls}-separator`)
+      }, "/", 2),
+      createElementVNode("span", {
+        class: normalizeClass(`${_ctx.prefixCls}-total-page`)
+      }, toDisplayString(_ctx.pages), 3)
+    ], 64)) : createCommentVNode("v-if", true)
+  ], 2);
+}
+var PageJumper = /* @__PURE__ */ _export_sfc$1(_sfc_main$f, [["render", _sfc_render$9]]);
+const _sfc_main$e = defineComponent({
+  name: "Optgroup",
+  props: {
+    label: {
+      type: String
+    }
+  },
+  setup() {
+    const prefixCls = getPrefixCls("select-group");
+    return {
+      prefixCls
+    };
+  }
+});
+function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock(Fragment, null, [
+    createElementVNode("li", {
+      class: normalizeClass(`${_ctx.prefixCls}-title`)
+    }, [
+      renderSlot(_ctx.$slots, "label", {}, () => [
+        createTextVNode(toDisplayString(_ctx.label), 1)
+      ])
+    ], 2),
+    renderSlot(_ctx.$slots, "default")
+  ], 64);
+}
+var Optgroup = /* @__PURE__ */ _export_sfc$1(_sfc_main$e, [["render", _sfc_render$8]]);
+var __defProp$5 = Object.defineProperty;
+var __defProps$3 = Object.defineProperties;
+var __getOwnPropDescs$3 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$6 = Object.getOwnPropertySymbols;
+var __hasOwnProp$6 = Object.prototype.hasOwnProperty;
+var __propIsEnum$6 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$5 = (obj, key, value) => key in obj ? __defProp$5(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$5 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$6.call(b, prop))
+      __defNormalProp$5(a, prop, b[prop]);
+  if (__getOwnPropSymbols$6)
+    for (var prop of __getOwnPropSymbols$6(b)) {
+      if (__propIsEnum$6.call(b, prop))
+        __defNormalProp$5(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$3 = (a, b) => __defProps$3(a, __getOwnPropDescs$3(b));
+const _sfc_main$d = defineComponent({
+  name: "VirtualListFiller",
+  props: {
+    height: {
+      type: Number
+    },
+    offset: {
+      type: Number
+    },
+    disabled: {
+      type: Boolean
+    },
+    type: String,
+    outerAttrs: Object,
+    innerAttrs: Object
+  },
+  setup(props) {
+    const { height, offset } = toRefs(props);
+    const outerStyle = computed(() => offset.value !== void 0 ? {
+      height: `${height.value}px`,
+      position: "relative",
+      overflow: "hidden",
+      zIndex: 0
+    } : {});
+    const innerStyle = computed(() => {
+      const commonStyle = {
+        display: "flex",
+        flexDirection: "column"
+      };
+      return offset.value !== void 0 ? __spreadProps$3(__spreadValues$5({}, commonStyle), {
+        transform: `translateY(${offset.value}px)`,
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 0
+      }) : commonStyle;
+    });
+    return {
+      outerStyle,
+      innerStyle
+    };
+  }
+});
+function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  return _ctx.type === "table" ? (openBlock(), createElementBlock("table", mergeProps({
+    key: 0,
+    style: _ctx.outerStyle,
+    cellpadding: "0",
+    cellspacing: "0"
+  }, _ctx.outerAttrs), [
+    createElementVNode("tbody", mergeProps({ style: _ctx.innerStyle }, _ctx.innerAttrs), [
+      renderSlot(_ctx.$slots, "default")
+    ], 16)
+  ], 16)) : !_ctx.disabled ? (openBlock(), createElementBlock("div", mergeProps({
+    key: 1,
+    style: _ctx.outerStyle
+  }, _ctx.outerAttrs), [
+    createElementVNode("div", mergeProps({ style: _ctx.innerStyle }, _ctx.innerAttrs), [
+      renderSlot(_ctx.$slots, "default")
+    ], 16)
+  ], 16)) : renderSlot(_ctx.$slots, "default", { key: 2 });
+}
+var Filler = /* @__PURE__ */ _export_sfc$1(_sfc_main$d, [["render", _sfc_render$7]]);
+const DEFAULT_HEIGHT = 200;
+function useViewportHeight(props) {
+  const { height } = toRefs(props);
+  const viewportHeight = ref(DEFAULT_HEIGHT);
+  const setViewportHeight = (val) => {
+    viewportHeight.value = val;
+  };
+  watchEffect(() => {
+    if (isNumber(height.value)) {
+      viewportHeight.value = height.value;
+    }
+  });
+  return {
+    viewportHeight,
+    setViewportHeight,
+    needMeasureViewportHeight: computed(() => !isNumber(height.value))
+  };
+}
+const DEFAULT_ITEM_HEIGHT = 32;
+function useItemHeight(props) {
+  const { estimatedItemHeight: propEstimatedItemHeight, data } = toRefs(props);
+  const itemHeightCacheMap = ref({});
+  const estimatedItemHeight = ref(propEstimatedItemHeight == null ? void 0 : propEstimatedItemHeight.value);
+  const itemLength = computed(() => Object.keys(itemHeightCacheMap.value).length);
+  watch(itemLength, () => {
+    if (itemLength.value && !estimatedItemHeight.value) {
+      estimatedItemHeight.value = Object.entries(itemHeightCacheMap.value).reduce((sum, [, height]) => sum + height, 0) / itemLength.value;
+    }
+  });
+  const itemHeight = computed(() => estimatedItemHeight.value || DEFAULT_ITEM_HEIGHT);
+  const minItemHeight = computed(() => Math.min(...Object.values(itemHeightCacheMap.value), itemHeight.value));
+  const totalHeight = computed(() => data.value.reduce((sum, { key }) => sum + getItemHeightOrDefault(key), 0));
+  function setItemHeight(key, height) {
+    itemHeightCacheMap.value[key] = height;
+  }
+  function getItemHeight(key) {
+    return itemHeightCacheMap.value[key];
+  }
+  function getItemHeightOrDefault(key) {
+    return itemHeightCacheMap.value[key] || itemHeight.value;
+  }
+  function getItemHeightByIndex(index2) {
+    const { key } = data.value[index2];
+    return itemHeightCacheMap.value[key];
+  }
+  function getItemHeightOrDefaultByIndex(index2) {
+    return getItemHeightByIndex(index2) || itemHeight.value;
+  }
+  return {
+    itemHeight,
+    minItemHeight,
+    estimatedItemHeight,
+    totalHeight,
+    setItemHeight,
+    getItemHeight,
+    getItemHeightOrDefault,
+    getItemHeightByIndex,
+    getItemHeightOrDefaultByIndex
+  };
+}
+const findElement = (node) => {
+  var _a;
+  let res = (_a = node == null ? void 0 : node.$el) != null ? _a : node;
+  while (res && !res.tagName) {
+    res = res.nextSibling;
+  }
+  return res;
+};
+function useRenderChildren(props, events = {}) {
+  const {
+    internalData,
+    visibleData,
+    itemRender
+  } = toRefs(props);
+  let itemRenderCache = {};
+  const renderChildren = () => {
+    return visibleData.value.map(({
+      item,
+      index: index2,
+      key
+    }) => {
+      if (!Object.prototype.hasOwnProperty.call(itemRenderCache, key)) {
+        const [node] = itemRender.value({
+          item,
+          index: index2
+        });
+        let dom;
+        let hasMounted = false;
+        let hasUpdated = false;
+        const resizeHandler = () => {
+          var _a;
+          if (dom) {
+            (_a = events.onItemResize) == null ? void 0 : _a.call(events, dom, key);
+          }
+        };
+        itemRenderCache[key] = cloneVNode(node, {
+          key,
+          ref: (el) => {
+            if (!hasMounted) {
+              dom = findElement(el);
+              resizeHandler();
+              hasMounted = true;
+            }
+          },
+          onVnodeUpdated() {
+            if (!hasUpdated) {
+              resizeHandler();
+              hasUpdated = true;
+            }
+          }
+        });
+      }
+      return itemRenderCache[key];
+    });
+  };
+  watch([internalData, itemRender], () => {
+    itemRenderCache = {};
+  });
+  return renderChildren;
+}
+var __getOwnPropSymbols$5 = Object.getOwnPropertySymbols;
+var __hasOwnProp$5 = Object.prototype.hasOwnProperty;
+var __propIsEnum$5 = Object.prototype.propertyIsEnumerable;
+var __objRest = (source, exclude) => {
+  var target2 = {};
+  for (var prop in source)
+    if (__hasOwnProp$5.call(source, prop) && exclude.indexOf(prop) < 0)
+      target2[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols$5)
+    for (var prop of __getOwnPropSymbols$5(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum$5.call(source, prop))
+        target2[prop] = source[prop];
+    }
+  return target2;
+};
+function getValidScrollTop(scrollTop, scrollRange) {
+  return scrollTop < 0 ? 0 : scrollTop > scrollRange ? scrollRange : scrollTop;
+}
+function getScrollPercentage({
+  scrollTop,
+  scrollHeight,
+  clientHeight
+}) {
+  const scrollLength = scrollHeight - clientHeight;
+  return scrollLength ? getValidScrollTop(scrollTop, scrollLength) / scrollLength : 0;
+}
+function getLocationItem(scrollPtg, itemCount) {
+  const itemIndex = Math.floor(scrollPtg * itemCount);
+  const itemTopPtg = itemIndex / itemCount;
+  const offsetPtg = (scrollPtg - itemTopPtg) / (1 / itemCount);
+  return {
+    index: itemIndex,
+    offsetPtg: Number.isNaN(offsetPtg) ? 0 : offsetPtg
+  };
+}
+function getRangeIndex(scrollPtg, itemCount, visibleCount) {
+  const { index: index2, offsetPtg } = getLocationItem(scrollPtg, itemCount);
+  const beforeCount = Math.ceil(scrollPtg * visibleCount);
+  const afterCount = Math.ceil((1 - scrollPtg) * visibleCount);
+  return {
+    itemIndex: index2,
+    itemOffsetPtg: offsetPtg,
+    startIndex: Math.max(0, index2 - beforeCount),
+    endIndex: Math.min(itemCount - 1, index2 + afterCount)
+  };
+}
+function getItemRelativeTop({
+  itemHeight,
+  itemOffsetPtg,
+  scrollPtg,
+  clientHeight
+}) {
+  if (scrollPtg === 1)
+    return clientHeight - itemHeight;
+  return Math.floor(clientHeight * scrollPtg - itemHeight * itemOffsetPtg);
+}
+function getItemAbsoluteTop(_a) {
+  var _b = _a, { scrollTop } = _b, rest = __objRest(_b, ["scrollTop"]);
+  return scrollTop + getItemRelativeTop(rest);
+}
+function getCompareItemRelativeTop({
+  locatedItemRelativeTop,
+  locatedItemIndex,
+  compareItemIndex,
+  startIndex,
+  endIndex,
+  getItemKeyByIndex,
+  getItemHeightOrDefault
+}) {
+  let compareItemTop = locatedItemRelativeTop;
+  const compareItemKey = getItemKeyByIndex(compareItemIndex);
+  if (compareItemIndex <= locatedItemIndex) {
+    for (let index2 = locatedItemIndex; index2 >= startIndex; index2 -= 1) {
+      const key = getItemKeyByIndex(index2);
+      if (key === compareItemKey) {
+        break;
+      }
+      const prevItemKey = getItemKeyByIndex(index2 - 1);
+      compareItemTop -= getItemHeightOrDefault(prevItemKey);
+    }
+  } else {
+    for (let index2 = locatedItemIndex; index2 <= endIndex; index2 += 1) {
+      const key = getItemKeyByIndex(index2);
+      if (key === compareItemKey) {
+        break;
+      }
+      compareItemTop += getItemHeightOrDefault(key);
+    }
+  }
+  return compareItemTop;
+}
+function useRangeState(props) {
+  const { viewportRef, visibleCount, itemCount } = toRefs(props);
+  const rangeState = reactive({
+    itemIndex: 0,
+    itemOffsetPtg: 0,
+    startIndex: 0,
+    endIndex: visibleCount.value
+  });
+  const updateRangeState = () => {
+    if (!viewportRef.value)
+      return;
+    const {
+      scrollTop: rawScrollTop,
+      clientHeight,
+      scrollHeight
+    } = viewportRef.value;
+    const scrollPtg = getScrollPercentage({
+      scrollTop: rawScrollTop,
+      clientHeight,
+      scrollHeight
+    });
+    const { itemIndex, itemOffsetPtg, startIndex, endIndex } = getRangeIndex(scrollPtg, itemCount.value, visibleCount.value);
+    rangeState.itemIndex = Math.min(itemCount.value - 1, itemIndex);
+    rangeState.itemOffsetPtg = itemOffsetPtg;
+    rangeState.startIndex = startIndex;
+    rangeState.endIndex = endIndex;
+  };
+  return {
+    rangeState,
+    updateRangeState
+  };
+}
+function getIndexByStartLoc(min, max, start, index2) {
+  const beforeCount = start - min;
+  const afterCount = max - start;
+  const balanceCount = Math.min(beforeCount, afterCount) * 2;
+  if (index2 <= balanceCount) {
+    const stepIndex = Math.floor(index2 / 2);
+    if (index2 % 2) {
+      return start + stepIndex + 1;
+    }
+    return start - stepIndex;
+  }
+  if (beforeCount > afterCount) {
+    return start - (index2 - afterCount);
+  }
+  return start + (index2 - beforeCount);
+}
+function useScrollTo(props) {
+  const {
+    isVirtual,
+    isStaticItemHeight,
+    data,
+    rangeState,
+    viewportRef,
+    scrollTop,
+    visibleCount,
+    getItemHeightOrDefault,
+    getItemHeightOrDefaultByIndex
+  } = toRefs(props);
+  const itemCount = computed(() => data.value.length);
+  const getItemKeyByIndex = (index2) => {
+    var _a;
+    return (_a = data.value[index2]) == null ? void 0 : _a.key;
+  };
+  const fixScrollTo = (relativeScroll) => {
+    if (!viewportRef.value)
+      return null;
+    const { itemIndex: compareItemIndex, relativeTop: compareItemRelativeTop } = relativeScroll;
+    const { scrollHeight, clientHeight } = viewportRef.value;
+    const originScrollTop = scrollTop.value;
+    const maxScrollTop = scrollHeight - clientHeight;
+    let bestSimilarity = Number.MAX_VALUE;
+    let bestScrollTop = -1;
+    let bestItemIndex = -1;
+    let bestItemOffsetPtg = -1;
+    let bestStartIndex = -1;
+    let bestEndIndex = -1;
+    let missSimilarity = 0;
+    for (let i = 0; i < maxScrollTop; i++) {
+      const scrollTop2 = getIndexByStartLoc(0, maxScrollTop, originScrollTop, i);
+      const scrollPtg = getScrollPercentage({
+        scrollTop: scrollTop2,
+        scrollHeight,
+        clientHeight
+      });
+      const { itemIndex, itemOffsetPtg, startIndex, endIndex } = getRangeIndex(scrollPtg, itemCount.value, visibleCount.value);
+      if (startIndex <= compareItemIndex && compareItemIndex <= endIndex) {
+        const locatedItemRelativeTop = getItemRelativeTop({
+          itemHeight: getItemHeightOrDefaultByIndex.value(itemIndex),
+          itemOffsetPtg,
+          clientHeight,
+          scrollPtg
+        });
+        const compareItemTop = getCompareItemRelativeTop({
+          locatedItemRelativeTop,
+          locatedItemIndex: itemIndex,
+          compareItemIndex,
+          startIndex,
+          endIndex,
+          getItemKeyByIndex,
+          getItemHeightOrDefault: getItemHeightOrDefault.value
+        });
+        const similarity = Math.abs(compareItemTop - compareItemRelativeTop);
+        if (similarity < bestSimilarity) {
+          bestSimilarity = similarity;
+          bestScrollTop = scrollTop2;
+          bestItemIndex = itemIndex;
+          bestItemOffsetPtg = itemOffsetPtg;
+          bestStartIndex = startIndex;
+          bestEndIndex = endIndex;
+          missSimilarity = 0;
+        } else {
+          missSimilarity += 1;
+        }
+      }
+      if (missSimilarity > 10) {
+        break;
+      }
+    }
+    return bestScrollTop === -1 ? null : {
+      scrollTop: bestScrollTop,
+      itemIndex: bestItemIndex,
+      itemOffsetPtg: bestItemOffsetPtg,
+      startIndex: bestStartIndex,
+      endIndex: bestEndIndex
+    };
+  };
+  const prepareScrollTo = (options) => {
+    if (!viewportRef.value)
+      return null;
+    if (typeof options === "number") {
+      viewportRef.value.scrollTop = options;
+      return null;
+    }
+    const index2 = "index" in options ? options.index : "key" in options ? data.value.findIndex((item2) => item2.key === options.key) : 0;
+    const item = data.value[index2];
+    if (!item) {
+      return null;
+    }
+    let align = options.align || "auto";
+    const { clientHeight, scrollTop: scrollTop2 } = viewportRef.value;
+    if (isVirtual.value && !isStaticItemHeight.value) {
+      if (align === "auto") {
+        const { itemIndex, itemOffsetPtg } = rangeState.value;
+        if (Math.abs(itemIndex - index2) < visibleCount.value) {
+          let itemTop2 = getItemRelativeTop({
+            itemHeight: getItemHeightOrDefaultByIndex.value(index2),
+            itemOffsetPtg,
+            clientHeight,
+            scrollPtg: getScrollPercentage(viewportRef.value)
+          });
+          if (index2 < itemIndex) {
+            for (let i = index2; i < itemIndex; i++) {
+              itemTop2 -= getItemHeightOrDefaultByIndex.value(i);
+            }
+          } else {
+            for (let i = itemIndex; i < index2; i++) {
+              itemTop2 += getItemHeightOrDefaultByIndex.value(i);
+            }
+          }
+          if (itemTop2 < 0 || itemTop2 > clientHeight) {
+            align = itemTop2 < 0 ? "top" : "bottom";
+          } else {
+            return null;
+          }
+        } else {
+          align = index2 < itemIndex ? "top" : "bottom";
+        }
+      }
+      return {
+        itemIndex: index2,
+        relativeTop: align === "top" ? 0 : clientHeight - getItemHeightOrDefaultByIndex.value(index2),
+        startIndex: Math.max(0, index2 - visibleCount.value),
+        endIndex: Math.min(itemCount.value - 1, index2 + visibleCount.value)
+      };
+    }
+    const indexItemHeight = getItemHeightOrDefaultByIndex.value(index2);
+    let itemTop = 0;
+    for (let i = 0; i < index2; i++) {
+      itemTop += getItemHeightOrDefaultByIndex.value(i);
+    }
+    const itemBottom = itemTop + indexItemHeight;
+    if (align === "auto") {
+      if (itemTop < scrollTop2) {
+        align = "top";
+      } else if (itemBottom > scrollTop2 + clientHeight) {
+        align = "bottom";
+      }
+    }
+    if (align === "top") {
+      viewportRef.value.scrollTop = itemTop;
+    } else if (align === "bottom") {
+      viewportRef.value.scrollTop = itemTop - (clientHeight - indexItemHeight);
+    }
+    return null;
+  };
+  return {
+    fixScrollTo,
+    prepareScrollTo
+  };
+}
+var _sfc_main$c = defineComponent({
+  name: "VirtualList",
+  components: {
+    ResizeOberver: ResizeObserver$1,
+    Filler,
+    RenderFunction
+  },
+  inheritAttrs: false,
+  props: {
+    height: {
+      type: [Number, String],
+      default: 200
+    },
+    threshold: {
+      type: [Number, Object]
+    },
+    isStaticItemHeight: {
+      type: Boolean
+    },
+    estimatedItemHeight: {
+      type: Number
+    },
+    data: {
+      type: Array,
+      default: () => []
+    },
+    itemKey: {
+      type: [String, Function],
+      default: "key"
+    },
+    component: {
+      type: String,
+      default: "div"
+    },
+    type: String,
+    outerAttrs: Object,
+    innerAttrs: Object
+  },
+  emits: ["scroll", "resize"],
+  setup(props, {
+    slots,
+    emit
+  }) {
+    const {
+      height,
+      itemKey,
+      data,
+      estimatedItemHeight: propEstimatedItemHeight,
+      isStaticItemHeight,
+      threshold
+    } = toRefs(props);
+    function getItemKey(item, index2) {
+      let result;
+      if (itemKey && itemKey.value) {
+        if (isString(itemKey.value)) {
+          result = item[itemKey.value];
+        } else if (isFunction(itemKey.value)) {
+          result = itemKey.value(item);
+        }
+      }
+      return result != null ? result : index2;
+    }
+    const internalData = computed(() => data.value.map((item, index2) => ({
+      key: getItemKey(item, index2),
+      index: index2,
+      item
+    })));
+    const viewportRef = ref();
+    const {
+      viewportHeight,
+      setViewportHeight,
+      needMeasureViewportHeight
+    } = useViewportHeight(reactive({
+      height
+    }));
+    const {
+      itemHeight,
+      minItemHeight,
+      estimatedItemHeight,
+      totalHeight,
+      setItemHeight,
+      getItemHeight,
+      getItemHeightOrDefault,
+      getItemHeightOrDefaultByIndex
+    } = useItemHeight(reactive({
+      estimatedItemHeight: propEstimatedItemHeight,
+      data: internalData
+    }));
+    const itemCount = computed(() => data.value.length);
+    const visibleCount = computed(() => Math.ceil(viewportHeight.value / minItemHeight.value));
+    const scrollTop = ref(0);
+    const startOffset = ref(0);
+    const {
+      rangeState,
+      updateRangeState
+    } = useRangeState(reactive({
+      viewportRef,
+      itemCount,
+      visibleCount
+    }));
+    const visibleData = computed(() => {
+      const start = rangeState.startIndex;
+      const end = Math.min(rangeState.endIndex + 1, itemCount.value);
+      return internalData.value.slice(start, end);
+    });
+    const isVirtual = computed(() => (threshold == null ? void 0 : threshold.value) !== null && ((threshold == null ? void 0 : threshold.value) === void 0 || itemCount.value >= threshold.value) && totalHeight.value > viewportHeight.value);
+    const scrollListPadding = computed(() => {
+      if (!isUndefined(viewportRef.value)) {
+        const viewport = viewportRef.value;
+        const getPadding = (property) => +window.getComputedStyle(viewport)[property].replace(/\D/g, "");
+        return {
+          top: getPadding("paddingTop"),
+          bottom: getPadding("paddingBottom")
+        };
+      }
+      return {
+        top: 0,
+        bottom: 0
+      };
+    });
+    const itemRender = usePickSlots(slots, "item");
+    const renderChildren = useRenderChildren(reactive({
+      internalData,
+      visibleData,
+      itemRender
+    }), {
+      onItemResize(el, key) {
+        const itemHeight2 = getItemHeight(key);
+        if (el && isUndefined(itemHeight2)) {
+          if (isStaticItemHeight.value && !isUndefined(estimatedItemHeight.value)) {
+            setItemHeight(key, estimatedItemHeight.value);
+          } else {
+            const height2 = el.offsetHeight;
+            if (height2) {
+              setItemHeight(key, height2);
+            }
+          }
+        }
+      }
+    });
+    const updateScrollOffset = () => {
+      if (!viewportRef.value || !isVirtual.value)
+        return;
+      const {
+        scrollTop: scrollTop2,
+        clientHeight,
+        scrollHeight
+      } = viewportRef.value;
+      const scrollPtg = getScrollPercentage({
+        scrollTop: scrollTop2,
+        clientHeight,
+        scrollHeight
+      });
+      let newStartOffset = getItemAbsoluteTop({
+        scrollPtg,
+        clientHeight,
+        scrollTop: scrollTop2 - (scrollListPadding.value.top + scrollListPadding.value.bottom) * scrollPtg,
+        itemHeight: getItemHeightOrDefaultByIndex(rangeState.itemIndex),
+        itemOffsetPtg: rangeState.itemOffsetPtg
+      });
+      for (let index2 = rangeState.itemIndex - 1; index2 >= rangeState.startIndex; index2--) {
+        newStartOffset -= getItemHeightOrDefaultByIndex(index2);
+      }
+      startOffset.value = newStartOffset;
+    };
+    const rafIdRef = ref();
+    onUnmounted(() => {
+      rafIdRef.value && caf(rafIdRef.value);
+    });
+    const lockScrollRef = ref(false);
+    const {
+      fixScrollTo,
+      prepareScrollTo
+    } = useScrollTo(reactive({
+      isVirtual,
+      isStaticItemHeight,
+      rangeState,
+      data: internalData,
+      viewportRef,
+      scrollTop,
+      visibleCount,
+      getItemHeightOrDefault,
+      getItemHeightOrDefaultByIndex
+    }));
+    const handleResize = (entry) => {
+      handleWrapperResize(entry);
+      emit("resize", entry);
+    };
+    const handleWrapperResize = (entry) => {
+      if (needMeasureViewportHeight.value) {
+        setViewportHeight(entry.clientHeight);
+      }
+    };
+    const handleScroll = (e) => {
+      if (!viewportRef.value)
+        return;
+      const {
+        scrollTop: rawScrollTop,
+        clientHeight,
+        scrollHeight
+      } = viewportRef.value;
+      scrollTop.value = getValidScrollTop(rawScrollTop, scrollHeight - clientHeight);
+      emit("scroll", e);
+    };
+    const scrollTo = (options) => {
+      rafIdRef.value && caf(rafIdRef.value);
+      rafIdRef.value = raf(() => {
+        const prepareScrollResult = prepareScrollTo(options);
+        if (prepareScrollResult) {
+          rangeState.startIndex = prepareScrollResult.startIndex;
+          rangeState.endIndex = prepareScrollResult.endIndex;
+          nextTick(() => {
+            if (!viewportRef.value)
+              return;
+            const fixScrollResult = fixScrollTo({
+              itemIndex: prepareScrollResult.itemIndex,
+              relativeTop: prepareScrollResult.relativeTop
+            });
+            if (fixScrollResult) {
+              lockScrollRef.value = true;
+              viewportRef.value.scrollTop = fixScrollResult.scrollTop;
+              rangeState.itemIndex = fixScrollResult.itemIndex;
+              rangeState.itemOffsetPtg = fixScrollResult.itemOffsetPtg;
+              rangeState.startIndex = fixScrollResult.startIndex;
+              rangeState.endIndex = fixScrollResult.endIndex;
+            }
+            rafIdRef.value = raf(() => {
+              lockScrollRef.value = false;
+            });
+          });
+        }
+      });
+    };
+    watch([itemHeight, visibleCount, scrollTop, data], () => {
+      if (lockScrollRef.value)
+        return;
+      updateRangeState();
+    });
+    watch(rangeState, () => {
+      nextTick(() => {
+        updateScrollOffset();
+      });
+    });
+    return {
+      viewportRef,
+      viewportHeight,
+      totalHeight,
+      startOffset,
+      isVirtual,
+      renderChildren,
+      handleResize,
+      handleScroll,
+      scrollTo
+    };
+  }
+});
+function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_RenderFunction = resolveComponent("RenderFunction");
+  const _component_Filler = resolveComponent("Filler");
+  const _component_ResizeOberver = resolveComponent("ResizeOberver");
+  return openBlock(), createBlock(_component_ResizeOberver, { onResize: _ctx.handleResize }, {
+    default: withCtx(() => [
+      (openBlock(), createBlock(resolveDynamicComponent(_ctx.component), mergeProps(_ctx.$attrs, {
+        ref: "viewportRef",
+        style: {
+          overflowY: "auto",
+          overflowAnchor: "none",
+          maxHeight: `${_ctx.viewportHeight}px`
+        },
+        onScroll: _ctx.handleScroll
+      }), {
+        default: withCtx(() => [
+          createVNode(_component_Filler, {
+            height: _ctx.totalHeight,
+            offset: _ctx.isVirtual ? _ctx.startOffset : void 0,
+            type: _ctx.type,
+            "outer-attrs": _ctx.outerAttrs,
+            "inner-attrs": _ctx.innerAttrs
+          }, {
+            default: withCtx(() => [
+              createVNode(_component_RenderFunction, { "render-func": _ctx.renderChildren }, null, 8, ["render-func"])
+            ]),
+            _: 1
+          }, 8, ["height", "offset", "type", "outer-attrs", "inner-attrs"])
+        ]),
+        _: 1
+      }, 16, ["style", "onScroll"]))
+    ]),
+    _: 1
+  }, 8, ["onResize"]);
+}
+var VirtualList = /* @__PURE__ */ _export_sfc$1(_sfc_main$c, [["render", _sfc_render$6]]);
+var __defProp$4 = Object.defineProperty;
+var __defProps$2 = Object.defineProperties;
+var __getOwnPropDescs$2 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$4 = Object.getOwnPropertySymbols;
+var __hasOwnProp$4 = Object.prototype.hasOwnProperty;
+var __propIsEnum$4 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$4 = (obj, key, value) => key in obj ? __defProp$4(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$4 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$4.call(b, prop))
+      __defNormalProp$4(a, prop, b[prop]);
+  if (__getOwnPropSymbols$4)
+    for (var prop of __getOwnPropSymbols$4(b)) {
+      if (__propIsEnum$4.call(b, prop))
+        __defNormalProp$4(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps$2 = (a, b) => __defProps$2(a, __getOwnPropDescs$2(b));
+function _isSlot$5(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
+}
+var _Select = defineComponent({
+  name: "Select",
+  components: {
+    Trigger,
+    SelectView
+  },
+  inheritAttrs: false,
+  props: {
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    modelValue: {
+      type: [String, Number, Object, Array]
+    },
+    defaultValue: {
+      type: [String, Number, Object, Array],
+      default: (props) => isUndefined(props.multiple) ? "" : []
+    },
+    inputValue: {
+      type: String
+    },
+    defaultInputValue: {
+      type: String,
+      default: ""
+    },
+    size: {
+      type: String
+    },
+    placeholder: String,
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    allowClear: {
+      type: Boolean,
+      default: false
+    },
+    allowSearch: {
+      type: [Boolean, Object],
+      default: (props) => Boolean(props.multiple)
+    },
+    allowCreate: {
+      type: Boolean,
+      default: false
+    },
+    maxTagCount: {
+      type: Number,
+      default: 0
+    },
+    popupContainer: {
+      type: [String, Object]
+    },
+    bordered: {
+      type: Boolean,
+      default: true
+    },
+    defaultActiveFirstOption: {
+      type: Boolean,
+      default: true
+    },
+    popupVisible: {
+      type: Boolean,
+      default: void 0
+    },
+    defaultPopupVisible: {
+      type: Boolean,
+      default: false
+    },
+    unmountOnClose: {
+      type: Boolean,
+      default: false
+    },
+    filterOption: {
+      type: [Boolean, Function],
+      default: true
+    },
+    options: {
+      type: Array,
+      default: () => []
+    },
+    virtualListProps: {
+      type: Object
+    },
+    triggerProps: {
+      type: Object
+    },
+    formatLabel: {
+      type: Function
+    },
+    fallbackOption: {
+      type: [Boolean, Function],
+      default: true
+    },
+    showExtraOptions: {
+      type: Boolean,
+      default: true
+    },
+    valueKey: {
+      type: String,
+      default: "value"
+    },
+    searchDelay: {
+      type: Number,
+      default: 500
+    },
+    limit: {
+      type: Number,
+      default: 0
+    },
+    fieldNames: {
+      type: Object
+    },
+    onChange: {
+      type: [Function, Array]
+    },
+    onInputValueChange: {
+      type: [Function, Array]
+    },
+    onPopupVisibleChange: {
+      type: [Function, Array]
+    },
+    onClear: {
+      type: [Function, Array]
+    },
+    onRemove: {
+      type: [Function, Array]
+    },
+    onSearch: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:modelValue",
+    "update:inputValue",
+    "update:popupVisible",
+    "change",
+    "inputValueChange",
+    "popupVisibleChange",
+    "clear",
+    "remove",
+    "search",
+    "dropdownScroll",
+    "dropdownReachBottom",
+    "exceedLimit"
+  ],
+  setup(props, {
+    slots,
+    emit,
+    attrs
+  }) {
+    const {
+      size,
+      disabled,
+      error,
+      options,
+      filterOption,
+      valueKey,
+      multiple,
+      popupVisible,
+      showExtraOptions,
+      modelValue,
+      fieldNames,
+      loading
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("select");
+    const {
+      mergedSize,
+      mergedDisabled,
+      mergedError,
+      eventHandlers
+    } = useFormItem({
+      size,
+      disabled,
+      error
+    });
+    const component = computed(() => props.virtualListProps ? "div" : "li");
+    const retainInputValue = computed(() => isObject(props.allowSearch) && Boolean(props.allowSearch.retainInputValue));
+    computed(() => {
+      if (isFunction(props.formatLabel)) {
+        return (data) => {
+          const optionInfo = optionInfoMap.get(data.value);
+          return props.formatLabel(optionInfo);
+        };
+      }
+      return void 0;
+    });
+    const dropdownRef = ref();
+    const optionRefs = ref({});
+    const virtualListRef = ref();
+    const {
+      computedPopupVisible,
+      handlePopupVisibleChange
+    } = useTrigger({
+      popupVisible,
+      emit
+    });
+    const _value = ref(props.defaultValue);
+    const computedValueObjects = computed(() => {
+      var _a;
+      const mergedValue = (_a = props.modelValue) != null ? _a : _value.value;
+      const valueArray = isArray(mergedValue) ? mergedValue : mergedValue || isNumber(mergedValue) ? [mergedValue] : [];
+      return valueArray.map((value) => ({
+        value,
+        key: getKeyFromValue(value, props.valueKey)
+      }));
+    });
+    watch(modelValue, (value) => {
+      if (isUndefined(value) || isNull(value)) {
+        _value.value = multiple.value ? [] : "";
+      }
+    });
+    const computedValueKeys = computed(() => computedValueObjects.value.map((obj) => obj.key));
+    const getFallBackOption = (value) => {
+      if (isFunction(props.fallbackOption)) {
+        return props.fallbackOption(value);
+      }
+      return {
+        value,
+        label: String(isObject(value) ? value[valueKey == null ? void 0 : valueKey.value] : value)
+      };
+    };
+    const getExtraValueData = () => {
+      const valueArray = [];
+      const keyArray = [];
+      if (props.allowCreate || props.fallbackOption) {
+        for (const item of computedValueObjects.value) {
+          if (!keyArray.includes(item.key)) {
+            const optionInfo = optionInfoMap.get(item.key);
+            if (!optionInfo || optionInfo.origin === "extraOptions") {
+              valueArray.push(item);
+              keyArray.push(item.key);
+            }
+          }
+        }
+      }
+      if (props.allowCreate && computedInputValue.value) {
+        const key = getKeyFromValue(computedInputValue.value);
+        if (!keyArray.includes(key)) {
+          const optionInfo = optionInfoMap.get(key);
+          if (!optionInfo || optionInfo.origin === "extraOptions") {
+            valueArray.push({
+              value: computedInputValue.value,
+              key
+            });
+          }
+        }
+      }
+      return valueArray;
+    };
+    const extraValueObjects = ref([]);
+    const extraOptions = computed(() => extraValueObjects.value.map((obj) => getFallBackOption(obj.value)));
+    nextTick(() => {
+      watchEffect(() => {
+        var _a;
+        const valueData = getExtraValueData();
+        if (valueData.length !== extraValueObjects.value.length) {
+          extraValueObjects.value = valueData;
+        } else if (valueData.length > 0) {
+          for (let i = 0; i < valueData.length; i++) {
+            if (valueData[i].key !== ((_a = extraValueObjects.value[i]) == null ? void 0 : _a.key)) {
+              extraValueObjects.value = valueData;
+              break;
+            }
+          }
+        }
+      });
+    });
+    const _inputValue = ref("");
+    const computedInputValue = computed(() => {
+      var _a;
+      return (_a = props.inputValue) != null ? _a : _inputValue.value;
+    });
+    watch(computedPopupVisible, (visible) => {
+      if (!visible && !retainInputValue.value) {
+        updateInputValue("");
+      }
+    });
+    const getValueFromValueKeys = (valueKeys) => {
+      var _a, _b;
+      if (!props.multiple) {
+        return (_b = (_a = optionInfoMap.get(valueKeys[0])) == null ? void 0 : _a.value) != null ? _b : "";
+      }
+      return valueKeys.map((key) => {
+        var _a2, _b2;
+        return (_b2 = (_a2 = optionInfoMap.get(key)) == null ? void 0 : _a2.value) != null ? _b2 : "";
+      });
+    };
+    const updateValue = (valueKeys) => {
+      var _a, _b;
+      const value = getValueFromValueKeys(valueKeys);
+      _value.value = value;
+      emit("update:modelValue", value);
+      emit("change", value);
+      (_b = (_a = eventHandlers.value) == null ? void 0 : _a.onChange) == null ? void 0 : _b.call(_a);
+    };
+    const updateInputValue = (inputValue) => {
+      _inputValue.value = inputValue;
+      emit("update:inputValue", inputValue);
+      emit("inputValueChange", inputValue);
+    };
+    const handleSelect = (key, ev) => {
+      if (props.multiple) {
+        if (!computedValueKeys.value.includes(key)) {
+          if (enabledOptionKeys.value.includes(key)) {
+            if (props.limit > 0 && computedValueKeys.value.length >= props.limit) {
+              const info = optionInfoMap.get(key);
+              emit("exceedLimit", info == null ? void 0 : info.value, ev);
+            } else {
+              const valueKeys = computedValueKeys.value.concat(key);
+              updateValue(valueKeys);
+            }
+          }
+        } else {
+          const valueKeys = computedValueKeys.value.filter((_key) => _key !== key);
+          updateValue(valueKeys);
+        }
+        if (!retainInputValue.value) {
+          updateInputValue("");
+        }
+      } else {
+        if (key !== computedValueKeys.value[0]) {
+          updateValue([key]);
+        }
+        if (retainInputValue.value) {
+          const optionInfo = optionInfoMap.get(key);
+          if (optionInfo) {
+            updateInputValue(optionInfo.label);
+          }
+        }
+        handlePopupVisibleChange(false);
+      }
+    };
+    const handleSearch = debounce((value) => {
+      emit("search", value);
+    }, props.searchDelay);
+    const handleInputValueChange = (inputValue) => {
+      if (inputValue !== computedInputValue.value) {
+        if (!computedPopupVisible.value) {
+          handlePopupVisibleChange(true);
+        }
+        updateInputValue(inputValue);
+        if (props.allowSearch) {
+          handleSearch(inputValue);
+        }
+      }
+    };
+    const handleRemove = (key) => {
+      const optionInfo = optionInfoMap.get(key);
+      const newKeys = computedValueKeys.value.filter((_key) => _key !== key);
+      updateValue(newKeys);
+      emit("remove", optionInfo == null ? void 0 : optionInfo.value);
+    };
+    const handleClear = (e) => {
+      e == null ? void 0 : e.stopPropagation();
+      const newKeys = computedValueKeys.value.filter((key) => {
+        var _a;
+        return (_a = optionInfoMap.get(key)) == null ? void 0 : _a.disabled;
+      });
+      updateValue(newKeys);
+      updateInputValue("");
+      emit("clear");
+    };
+    const handleDropdownScroll = (e) => {
+      emit("dropdownScroll", e);
+    };
+    const handleDropdownReachBottom = (e) => {
+      emit("dropdownReachBottom", e);
+    };
+    const {
+      validOptions,
+      optionInfoMap,
+      validOptionInfos,
+      enabledOptionKeys,
+      handleKeyDown
+    } = useSelect({
+      multiple,
+      options,
+      extraOptions,
+      inputValue: computedInputValue,
+      filterOption,
+      showExtraOptions,
+      component,
+      valueKey,
+      fieldNames,
+      loading,
+      popupVisible: computedPopupVisible,
+      valueKeys: computedValueKeys,
+      dropdownRef,
+      optionRefs,
+      virtualListRef,
+      onSelect: handleSelect,
+      onPopupVisibleChange: handlePopupVisibleChange
+    });
+    const selectViewValue = computed(() => {
+      var _a;
+      const result = [];
+      for (const item of computedValueObjects.value) {
+        const optionInfo = optionInfoMap.get(item.key);
+        if (optionInfo) {
+          result.push(__spreadProps$2(__spreadValues$4({}, optionInfo), {
+            value: item.key,
+            label: (_a = optionInfo == null ? void 0 : optionInfo.label) != null ? _a : String(isObject(item.value) ? item.value[valueKey == null ? void 0 : valueKey.value] : item.value),
+            closable: !(optionInfo == null ? void 0 : optionInfo.disabled),
+            tagProps: optionInfo == null ? void 0 : optionInfo.tagProps
+          }));
+        }
+      }
+      return result;
+    });
+    const getOptionContentFunc = (optionInfo) => {
+      if (isFunction(slots.option)) {
+        const optionSlot = slots.option;
+        return () => optionSlot({
+          data: optionInfo
+        });
+      }
+      if (isFunction(optionInfo.render)) {
+        return optionInfo.render;
+      }
+      return () => optionInfo.label;
+    };
+    const renderOption = (optionInfo) => {
+      if (isGroupOptionInfo(optionInfo)) {
+        let _slot;
+        return createVNode(Optgroup, {
+          "key": optionInfo.key,
+          "label": optionInfo.label
+        }, _isSlot$5(_slot = optionInfo.options.map((child) => renderOption(child))) ? _slot : {
+          default: () => [_slot]
+        });
+      }
+      if (!isValidOption(optionInfo, {
+        inputValue: computedInputValue.value,
+        filterOption: filterOption == null ? void 0 : filterOption.value
+      })) {
+        return null;
+      }
+      return createVNode(Option, {
+        "ref": (ref2) => {
+          if (ref2 == null ? void 0 : ref2.$el) {
+            optionRefs.value[optionInfo.key] = ref2.$el;
+          }
+        },
+        "key": optionInfo.key,
+        "value": optionInfo.value,
+        "label": optionInfo.label,
+        "disabled": optionInfo.disabled,
+        "internal": true
+      }, {
+        default: getOptionContentFunc(optionInfo)
+      });
+    };
+    const renderDropDown = () => {
+      return createVNode(SelectDropdown, {
+        "ref": dropdownRef,
+        "loading": props.loading,
+        "empty": validOptionInfos.value.length === 0,
+        "virtualList": Boolean(props.virtualListProps),
+        "onScroll": handleDropdownScroll,
+        "onReachBottom": handleDropdownReachBottom
+      }, {
+        "default": () => {
+          var _a, _b;
+          return [...(_b = (_a = slots.default) == null ? void 0 : _a.call(slots)) != null ? _b : [], ...validOptions.value.map(renderOption)];
+        },
+        "virtual-list": () => createVNode(VirtualList, mergeProps(props.virtualListProps, {
+          "ref": virtualListRef,
+          "data": validOptions.value
+        }), {
+          item: ({
+            item
+          }) => renderOption(item)
+        }),
+        "empty": slots.empty,
+        "footer": slots.footer
+      });
+    };
+    const renderLabel = ({
+      data
+    }) => {
+      var _a, _b, _c;
+      if (slots.label || isFunction(props.formatLabel)) {
+        const optionInfo = optionInfoMap.get(data.value);
+        if (optionInfo == null ? void 0 : optionInfo.raw) {
+          return (_c = (_a = slots.label) == null ? void 0 : _a.call(slots, {
+            data: optionInfo.raw
+          })) != null ? _c : (_b = props.formatLabel) == null ? void 0 : _b.call(props, optionInfo.raw);
+        }
+      }
+      return data.label;
+    };
+    return () => createVNode(Trigger, mergeProps({
+      "trigger": "click",
+      "position": "bl",
+      "popupOffset": 4,
+      "animationName": "slide-dynamic-origin",
+      "hideEmpty": true,
+      "preventFocus": true,
+      "autoFitPopupWidth": true,
+      "autoFitTransformOrigin": true,
+      "disabled": mergedDisabled.value,
+      "popupVisible": computedPopupVisible.value,
+      "unmountOnClose": props.unmountOnClose,
+      "clickToClose": !(props.allowSearch || props.allowCreate),
+      "popupContainer": props.popupContainer,
+      "onPopupVisibleChange": handlePopupVisibleChange
+    }, props.triggerProps), {
+      default: () => {
+        var _a, _b;
+        return [(_b = (_a = slots.trigger) == null ? void 0 : _a.call(slots)) != null ? _b : createVNode(SelectView, mergeProps({
+          "class": prefixCls,
+          "modelValue": selectViewValue.value,
+          "inputValue": computedInputValue.value,
+          "multiple": props.multiple,
+          "disabled": mergedDisabled.value,
+          "error": mergedError.value,
+          "loading": props.loading,
+          "allowClear": props.allowClear,
+          "allowCreate": props.allowCreate,
+          "allowSearch": Boolean(props.allowSearch),
+          "opened": computedPopupVisible.value,
+          "maxTagCount": props.maxTagCount,
+          "placeholder": props.placeholder,
+          "bordered": props.bordered,
+          "size": mergedSize.value,
+          "onInputValueChange": handleInputValueChange,
+          "onRemove": handleRemove,
+          "onClear": handleClear,
+          "onKeydown": handleKeyDown
+        }, attrs), {
+          "label": renderLabel,
+          "prefix": slots.prefix,
+          "arrow-icon": slots["arrow-icon"],
+          "loading-icon": slots["loading-icon"],
+          "search-icon": slots["search-icon"]
+        })];
+      },
+      content: renderDropDown
+    });
+  }
+});
+const Select = Object.assign(_Select, {
+  Option,
+  OptGroup: Optgroup,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Select.name, _Select);
+    app.component(componentPrefix + Option.name, Option);
+    app.component(componentPrefix + Optgroup.name, Optgroup);
+  }
+});
+const _sfc_main$b = defineComponent({
+  name: "PageOptions",
+  components: {
+    ArcoSelect: Select
+  },
+  props: {
+    sizeOptions: {
+      type: Array,
+      required: true
+    },
+    pageSize: Number,
+    disabled: Boolean,
+    size: {
+      type: String
+    },
+    onChange: {
+      type: Function
+    },
+    selectProps: {
+      type: Object
+    }
+  },
+  emits: ["change"],
+  setup(props, { emit }) {
+    const prefixCls = getPrefixCls("pagination-options");
+    const { t } = useI18n();
+    const options = computed(() => props.sizeOptions.map((value) => ({
+      value,
+      label: `${value} ${t("pagination.countPerPage")}`
+    })));
+    const handleChange = (value) => {
+      emit("change", value);
+    };
+    return {
+      prefixCls,
+      options,
+      handleChange
+    };
+  }
+});
+function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_arco_select = resolveComponent("arco-select");
+  return openBlock(), createElementBlock("span", {
+    class: normalizeClass(_ctx.prefixCls)
+  }, [
+    createVNode(_component_arco_select, mergeProps({
+      "model-value": _ctx.pageSize,
+      options: _ctx.options,
+      size: _ctx.size,
+      disabled: _ctx.disabled
+    }, _ctx.selectProps, { onChange: _ctx.handleChange }), null, 16, ["model-value", "options", "size", "disabled", "onChange"])
+  ], 2);
+}
+var PageOptions = /* @__PURE__ */ _export_sfc$1(_sfc_main$b, [["render", _sfc_render$5]]);
+var _Pagination = defineComponent({
+  name: "Pagination",
+  props: {
+    total: {
+      type: Number,
+      required: true
+    },
+    current: Number,
+    defaultCurrent: {
+      type: Number,
+      default: 1
+    },
+    pageSize: Number,
+    defaultPageSize: {
+      type: Number,
+      default: 10
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    hideOnSinglePage: {
+      type: Boolean,
+      default: false
+    },
+    simple: {
+      type: Boolean,
+      default: false
+    },
+    showTotal: {
+      type: Boolean,
+      default: false
+    },
+    showMore: {
+      type: Boolean,
+      default: false
+    },
+    showJumper: {
+      type: Boolean,
+      default: false
+    },
+    showPageSize: {
+      type: Boolean,
+      default: false
+    },
+    pageSizeOptions: {
+      type: Array,
+      default: () => [10, 20, 30, 40, 50]
+    },
+    pageSizeProps: {
+      type: Object
+    },
+    size: {
+      type: String
+    },
+    pageItemStyle: {
+      type: Object
+    },
+    activePageItemStyle: {
+      type: Object
+    },
+    baseSize: {
+      type: Number,
+      default: 6
+    },
+    bufferSize: {
+      type: Number,
+      default: 2
+    },
+    onChange: {
+      type: [Function, Array]
+    },
+    onPageSizeChange: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:current",
+    "update:pageSize",
+    "change",
+    "pageSizeChange"
+  ],
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const prefixCls = getPrefixCls("pagination");
+    const {
+      t
+    } = useI18n();
+    const {
+      disabled,
+      pageItemStyle,
+      activePageItemStyle,
+      size
+    } = toRefs(props);
+    const {
+      mergedSize
+    } = useSize(size);
+    const _current = ref(props.defaultCurrent);
+    const _pageSize = ref(props.defaultPageSize);
+    const computedCurrent = computed(() => {
+      var _a;
+      return (_a = props.current) != null ? _a : _current.value;
+    });
+    const computedPageSize = computed(() => {
+      var _a;
+      return (_a = props.pageSize) != null ? _a : _pageSize.value;
+    });
+    const pages = computed(() => Math.ceil(props.total / computedPageSize.value));
+    const handleClick = (page) => {
+      if (page !== computedCurrent.value && isNumber(page) && !props.disabled) {
+        _current.value = page;
+        emit("update:current", page);
+        emit("change", page);
+      }
+    };
+    const handlePageSizeChange = (pageSize) => {
+      _pageSize.value = pageSize;
+      emit("update:pageSize", pageSize);
+      emit("pageSizeChange", pageSize);
+    };
+    const pagerProps = reactive({
+      current: computedCurrent,
+      pages,
+      disabled,
+      style: pageItemStyle,
+      activeStyle: activePageItemStyle,
+      onClick: handleClick
+    });
+    const getPageItemElement = (type, props2 = {}) => {
+      if (type === "more") {
+        return createVNode(EllipsisPager, mergeProps(props2, pagerProps), {
+          default: slots["page-item-ellipsis"]
+        });
+      }
+      if (type === "previous") {
+        return createVNode(StepPager, mergeProps({
+          "type": "previous"
+        }, props2, pagerProps), {
+          default: slots["page-item-step"]
+        });
+      }
+      if (type === "next") {
+        return createVNode(StepPager, mergeProps({
+          "type": "next"
+        }, props2, pagerProps), {
+          default: slots["page-item-step"]
+        });
+      }
+      return createVNode(Pager, mergeProps(props2, pagerProps), {
+        default: slots["page-item"]
+      });
+    };
+    const pageList = computed(() => {
+      const pageList2 = [];
+      if (pages.value < props.baseSize + props.bufferSize * 2) {
+        for (let i = 1; i <= pages.value; i++) {
+          pageList2.push(getPageItemElement("page", {
+            key: i,
+            pageNumber: i
+          }));
+        }
+      } else {
+        let left = 1;
+        let right = pages.value;
+        let hasLeftEllipsis = false;
+        let hasRightEllipsis = false;
+        if (computedCurrent.value > 2 + props.bufferSize) {
+          hasLeftEllipsis = true;
+          left = Math.min(computedCurrent.value - props.bufferSize, pages.value - 2 * props.bufferSize);
+        }
+        if (computedCurrent.value < pages.value - (props.bufferSize + 1)) {
+          hasRightEllipsis = true;
+          right = Math.max(computedCurrent.value + props.bufferSize, 2 * props.bufferSize + 1);
+        }
+        if (hasLeftEllipsis) {
+          pageList2.push(getPageItemElement("page", {
+            key: 1,
+            pageNumber: 1
+          }));
+          pageList2.push(getPageItemElement("more", {
+            key: "left-ellipsis-pager",
+            step: -(props.bufferSize * 2 + 1)
+          }));
+        }
+        for (let i = left; i <= right; i++) {
+          pageList2.push(getPageItemElement("page", {
+            key: i,
+            pageNumber: i
+          }));
+        }
+        if (hasRightEllipsis) {
+          pageList2.push(getPageItemElement("more", {
+            key: "right-ellipsis-pager",
+            step: props.bufferSize * 2 + 1
+          }));
+          pageList2.push(getPageItemElement("page", {
+            key: pages.value,
+            pageNumber: pages.value
+          }));
+        }
+      }
+      return pageList2;
+    });
+    const renderPager = () => {
+      if (props.simple) {
+        return createVNode("span", {
+          "class": `${prefixCls}-simple`
+        }, [getPageItemElement("previous", {
+          simple: true
+        }), createVNode(PageJumper, {
+          "disabled": props.disabled,
+          "current": computedCurrent.value,
+          "size": mergedSize.value,
+          "pages": pages.value,
+          "simple": true,
+          "onChange": handleClick
+        }, null), getPageItemElement("next", {
+          simple: true
+        })]);
+      }
+      return createVNode("ul", {
+        "class": `${prefixCls}-list`
+      }, [getPageItemElement("previous", {
+        simple: true
+      }), pageList.value, props.showMore && getPageItemElement("more", {
+        key: "more",
+        step: props.bufferSize * 2 + 1
+      }), getPageItemElement("next", {
+        simple: true
+      })]);
+    };
+    watch(computedPageSize, (curPageSize, prePageSize) => {
+      if (curPageSize !== prePageSize && computedCurrent.value > 1) {
+        const index2 = prePageSize * (computedCurrent.value - 1) + 1;
+        const newPage = Math.ceil(index2 / curPageSize);
+        if (newPage !== computedCurrent.value) {
+          _current.value = newPage;
+          emit("update:current", newPage);
+          emit("change", newPage);
+        }
+      }
+    });
+    const cls = computed(() => [prefixCls, `${prefixCls}-size-${mergedSize.value}`, {
+      [`${prefixCls}-simple`]: props.simple,
+      [`${prefixCls}-disabled`]: props.disabled
+    }]);
+    return () => {
+      var _a, _b;
+      if (props.hideOnSinglePage && pages.value <= 1) {
+        return null;
+      }
+      return createVNode("div", {
+        "class": cls.value
+      }, [props.showTotal && createVNode("span", {
+        "class": `${prefixCls}-total`
+      }, [(_b = (_a = slots.total) == null ? void 0 : _a.call(slots, {
+        total: props.total
+      })) != null ? _b : t("pagination.total", props.total)]), renderPager(), props.showPageSize && createVNode(PageOptions, {
+        "disabled": props.disabled,
+        "sizeOptions": props.pageSizeOptions,
+        "pageSize": computedPageSize.value,
+        "size": mergedSize.value,
+        "onChange": handlePageSizeChange,
+        "selectProps": props.pageSizeProps
+      }, null), !props.simple && props.showJumper && createVNode(PageJumper, {
+        "disabled": props.disabled,
+        "current": computedCurrent.value,
+        "pages": pages.value,
+        "size": mergedSize.value,
+        "onChange": handleClick
+      }, {
+        "jumper-prepend": slots["jumper-prepend"],
+        "jumper-append": slots["jumper-append"]
+      })]);
+    };
+  }
+});
+const Pagination = Object.assign(_Pagination, {
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Pagination.name, _Pagination);
+  }
+});
+const _sfc_main$a = defineComponent({
   name: "Message",
   components: {
     AIconHover: IconHover,
@@ -6254,7 +15248,7 @@ const _sfc_main$6 = defineComponent({
     };
   }
 });
-function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_icon_info_circle_fill = resolveComponent("icon-info-circle-fill");
   const _component_icon_check_circle_fill = resolveComponent("icon-check-circle-fill");
   const _component_icon_exclamation_circle_fill = resolveComponent("icon-exclamation-circle-fill");
@@ -6296,8 +15290,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     ], 2)) : createCommentVNode("v-if", true)
   ], 2);
 }
-var Message$1 = /* @__PURE__ */ _export_sfc$1(_sfc_main$6, [["render", _sfc_render]]);
-function _isSlot(s) {
+var Message$1 = /* @__PURE__ */ _export_sfc$1(_sfc_main$a, [["render", _sfc_render$4]]);
+function _isSlot$4(s) {
   return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
 }
 var MessageList = defineComponent({
@@ -6330,7 +15324,7 @@ var MessageList = defineComponent({
           zIndex: zIndex.value
         },
         "onAfterLeave": () => context.emit("afterClose")
-      }, _isSlot(_slot = props.messages.map((item) => {
+      }, _isSlot$4(_slot = props.messages.map((item) => {
         const slots = {
           default: getSlotFunction(item.content),
           icon: getSlotFunction(item.icon)
@@ -6349,25 +15343,25 @@ var MessageList = defineComponent({
     };
   }
 });
-var __defProp2 = Object.defineProperty;
-var __defProps2 = Object.defineProperties;
-var __getOwnPropDescs2 = Object.getOwnPropertyDescriptors;
-var __getOwnPropSymbols2 = Object.getOwnPropertySymbols;
-var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-var __propIsEnum2 = Object.prototype.propertyIsEnumerable;
-var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues2 = (a, b) => {
+var __defProp$3 = Object.defineProperty;
+var __defProps$1 = Object.defineProperties;
+var __getOwnPropDescs$1 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols$3 = Object.getOwnPropertySymbols;
+var __hasOwnProp$3 = Object.prototype.hasOwnProperty;
+var __propIsEnum$3 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$3 = (obj, key, value) => key in obj ? __defProp$3(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$3 = (a, b) => {
   for (var prop in b || (b = {}))
-    if (__hasOwnProp2.call(b, prop))
-      __defNormalProp2(a, prop, b[prop]);
-  if (__getOwnPropSymbols2)
-    for (var prop of __getOwnPropSymbols2(b)) {
-      if (__propIsEnum2.call(b, prop))
-        __defNormalProp2(a, prop, b[prop]);
+    if (__hasOwnProp$3.call(b, prop))
+      __defNormalProp$3(a, prop, b[prop]);
+  if (__getOwnPropSymbols$3)
+    for (var prop of __getOwnPropSymbols$3(b)) {
+      if (__propIsEnum$3.call(b, prop))
+        __defNormalProp$3(a, prop, b[prop]);
     }
   return a;
 };
-var __spreadProps2 = (a, b) => __defProps2(a, __getOwnPropDescs2(b));
+var __spreadProps$1 = (a, b) => __defProps$1(a, __getOwnPropDescs$1(b));
 class MessageManger {
   constructor(config, appContext) {
     this.messageCount = 0;
@@ -6378,7 +15372,7 @@ class MessageManger {
       if (this.messageIds.has(id)) {
         return this.update(id, config2);
       }
-      const message2 = reactive(__spreadValues2({ id }, config2));
+      const message2 = reactive(__spreadValues$3({ id }, config2));
       this.messages.value.push(message2);
       this.messageIds.add(id);
       return {
@@ -6389,7 +15383,7 @@ class MessageManger {
       for (let i = 0; i < this.messages.value.length; i++) {
         if (this.messages.value[i].id === id) {
           const resetOnUpdate = !isUndefined(config2.duration);
-          Object.assign(this.messages.value[i], __spreadProps2(__spreadValues2({}, config2), { id, resetOnUpdate }));
+          Object.assign(this.messages.value[i], __spreadProps$1(__spreadValues$3({}, config2), { id, resetOnUpdate }));
           break;
         }
       }
@@ -6446,7 +15440,7 @@ const message = types.reduce((pre, value) => {
     if (isString(config)) {
       config = { content: config };
     }
-    const _config = __spreadValues2({ type: value }, config);
+    const _config = __spreadValues$3({ type: value }, config);
     const { position = "top" } = _config;
     if (!messageInstance[position]) {
       messageInstance[position] = new MessageManger(_config, appContext);
@@ -6463,7 +15457,7 @@ message.clear = (position) => {
     Object.values(messageInstance).forEach((item) => item == null ? void 0 : item.clear());
   }
 };
-const Message = __spreadProps2(__spreadValues2({}, message), {
+const Message = __spreadProps$1(__spreadValues$3({}, message), {
   install: (app) => {
     const _message = {
       clear: message.clear
@@ -6475,8 +15469,2990 @@ const Message = __spreadProps2(__spreadValues2({}, message), {
   },
   _context: null
 });
+var __defProp$2 = Object.defineProperty;
+var __getOwnPropSymbols$2 = Object.getOwnPropertySymbols;
+var __hasOwnProp$2 = Object.prototype.hasOwnProperty;
+var __propIsEnum$2 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$2 = (obj, key, value) => key in obj ? __defProp$2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$2 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$2.call(b, prop))
+      __defNormalProp$2(a, prop, b[prop]);
+  if (__getOwnPropSymbols$2)
+    for (var prop of __getOwnPropSymbols$2(b)) {
+      if (__propIsEnum$2.call(b, prop))
+        __defNormalProp$2(a, prop, b[prop]);
+    }
+  return a;
+};
+const getDataColumnsNumber = (columns) => {
+  let count = 0;
+  const travelColumns = (columns2) => {
+    if (isArray(columns2) && columns2.length > 0) {
+      for (const item of columns2) {
+        if (!item.children) {
+          count += 1;
+        } else {
+          travelColumns(item.children);
+        }
+      }
+    }
+  };
+  travelColumns(columns);
+  return count;
+};
+const getTotalHeaderRows = (columns) => {
+  let count = 0;
+  if (isArray(columns) && columns.length > 0) {
+    count = 1;
+    for (const item of columns) {
+      if (item.children) {
+        const depth = getTotalHeaderRows(item.children);
+        if (depth > 0) {
+          count = Math.max(count, depth + 1);
+        }
+      }
+    }
+  }
+  return count;
+};
+const getGroupColumns = (columns, columnMap) => {
+  const totalHeaderRows = getTotalHeaderRows(columns);
+  columnMap.clear();
+  const dataColumns = [];
+  const groupColumns = [...Array(totalHeaderRows)].map(() => []);
+  let lastLeftFixedIndex;
+  let firstRightFixedIndex;
+  const travelColumns = (columns2, level = 0, fixed) => {
+    var _a;
+    for (const item of columns2) {
+      const cell = __spreadValues$2({}, item);
+      if (isArray(cell.children)) {
+        const colSpan = getDataColumnsNumber(cell.children);
+        if (colSpan > 1) {
+          cell.colSpan = colSpan;
+        }
+        groupColumns[level].push(cell);
+        travelColumns(cell.children, level + 1, cell.fixed);
+      } else {
+        const rowSpan = totalHeaderRows - level;
+        if (rowSpan > 1) {
+          cell.rowSpan = rowSpan;
+        }
+        if (fixed || cell.fixed) {
+          cell.fixed = (_a = cell.fixed) != null ? _a : fixed;
+          if (cell.fixed === "left") {
+            lastLeftFixedIndex = dataColumns.length;
+          } else if (isUndefined(firstRightFixedIndex)) {
+            firstRightFixedIndex = dataColumns.length;
+          }
+        }
+        if (isUndefined(cell.dataIndex) || isNull(cell.dataIndex)) {
+          cell.dataIndex = `__arco_data_index_${dataColumns.length}`;
+        }
+        columnMap.set(cell.dataIndex, cell);
+        dataColumns.push(cell);
+        groupColumns[level].push(cell);
+      }
+    }
+  };
+  travelColumns(columns);
+  if (!isUndefined(lastLeftFixedIndex)) {
+    dataColumns[lastLeftFixedIndex].isLastLeftFixed = true;
+  }
+  if (!isUndefined(firstRightFixedIndex)) {
+    dataColumns[firstRightFixedIndex].isFirstRightFixed = true;
+  }
+  return { dataColumns, groupColumns };
+};
+const getOperationColumnIndex = (operations, name) => {
+  for (let i = 0; i < operations.length; i++) {
+    if (operations[i].name === name) {
+      return i;
+    }
+  }
+  return -1;
+};
+const getOperationFixedNumber = (column, operations) => {
+  var _a;
+  const index2 = getOperationColumnIndex(operations, column.name);
+  if (index2 <= 0) {
+    return 0;
+  }
+  let count = 0;
+  const _operations = operations.slice(0, index2);
+  for (const item of _operations) {
+    count += (_a = item.width) != null ? _a : 0;
+  }
+  return count;
+};
+const getFixedNumber = (column, {
+  dataColumns,
+  operations
+}) => {
+  var _a;
+  let count = 0;
+  if (column.fixed === "left") {
+    for (const item of operations) {
+      count += (_a = item.width) != null ? _a : 40;
+    }
+    for (const item of dataColumns) {
+      if (column.dataIndex === item.dataIndex) {
+        break;
+      }
+      count += item.width;
+    }
+    return count;
+  }
+  for (let i = dataColumns.length - 1; i > 0; i--) {
+    const item = dataColumns[i];
+    if (column.dataIndex === item.dataIndex) {
+      break;
+    }
+    if (item.fixed === "right") {
+      count += item.width;
+    }
+  }
+  return count;
+};
+const getOperationFixedCls = (prefixCls, column) => {
+  if (column.fixed) {
+    return [
+      `${prefixCls}-col-fixed-left`,
+      {
+        [`${prefixCls}-col-fixed-left-last`]: column.isLastLeftFixed
+      }
+    ];
+  }
+  return [];
+};
+const getFixedCls = (prefixCls, column) => {
+  if (column.fixed === "left") {
+    return [
+      `${prefixCls}-col-fixed-left`,
+      {
+        [`${prefixCls}-col-fixed-left-last`]: column.isLastLeftFixed
+      }
+    ];
+  }
+  if (column.fixed === "right") {
+    return [
+      `${prefixCls}-col-fixed-right`,
+      {
+        [`${prefixCls}-col-fixed-right-first`]: column.isFirstRightFixed
+      }
+    ];
+  }
+  return [];
+};
+const getStyle = (column, {
+  dataColumns,
+  operations
+}) => {
+  if (column.fixed) {
+    const offset = `${getFixedNumber(column, { dataColumns, operations })}px`;
+    if (column.fixed === "left") {
+      return {
+        left: offset
+      };
+    }
+    return {
+      right: offset
+    };
+  }
+  return {};
+};
+const getOperationStyle = (column, operations) => {
+  if (column.fixed) {
+    return {
+      left: `${getOperationFixedNumber(column, operations)}px`
+    };
+  }
+  return {};
+};
+const spliceFromPath = (data, path, item) => {
+  var _a;
+  let parent = data;
+  for (let i = 0; i < path.length; i++) {
+    const index2 = path[i];
+    const isLast = i >= path.length - 1;
+    if (isLast) {
+      if (item) {
+        parent.splice(index2, 0, item);
+      } else {
+        return parent.splice(index2, 1)[0];
+      }
+    }
+    parent = (_a = parent[index2].children) != null ? _a : [];
+  }
+  return void 0;
+};
+const useRowSelection = ({
+  selectedKeys,
+  defaultSelectedKeys,
+  rowSelection,
+  currentAllRowKeys,
+  currentAllEnabledRowKeys,
+  emit
+}) => {
+  var _a, _b, _c;
+  const isRadio = computed(() => {
+    var _a2;
+    return ((_a2 = rowSelection.value) == null ? void 0 : _a2.type) === "radio";
+  });
+  const _selectedRowKeys = ref((_c = (_b = defaultSelectedKeys.value) != null ? _b : (_a = rowSelection.value) == null ? void 0 : _a.defaultSelectedRowKeys) != null ? _c : []);
+  const selectedRowKeys = computed(() => {
+    var _a2, _b2, _c2;
+    return (_c2 = (_b2 = selectedKeys.value) != null ? _b2 : (_a2 = rowSelection.value) == null ? void 0 : _a2.selectedRowKeys) != null ? _c2 : _selectedRowKeys.value;
+  });
+  const currentSelectedRowKeys = computed(() => selectedRowKeys.value.filter((key) => currentAllRowKeys.value.includes(key)));
+  const handleSelectAll = (checked) => {
+    const newSelectedRowKeys = new Set(selectedRowKeys.value);
+    for (const key of currentAllEnabledRowKeys.value) {
+      if (checked) {
+        newSelectedRowKeys.add(key);
+      } else {
+        newSelectedRowKeys.delete(key);
+      }
+    }
+    _selectedRowKeys.value = [...newSelectedRowKeys];
+    emit("selectAll", checked);
+    emit("selectionChange", _selectedRowKeys.value);
+    emit("update:selectedKeys", _selectedRowKeys.value);
+  };
+  const handleSelect = (values, value) => {
+    _selectedRowKeys.value = values;
+    emit("select", values, value);
+    emit("selectionChange", values);
+    emit("update:selectedKeys", values);
+  };
+  return {
+    isRadio,
+    selectedRowKeys,
+    currentSelectedRowKeys,
+    handleSelectAll,
+    handleSelect
+  };
+};
+const useExpand = ({
+  expandedKeys,
+  defaultExpandedKeys,
+  defaultExpandAllRows,
+  expandable,
+  allRowKeys,
+  emit
+}) => {
+  const getDefaultExpandedRowKeys = () => {
+    var _a, _b;
+    if (defaultExpandedKeys.value) {
+      return defaultExpandedKeys.value;
+    }
+    if ((_a = expandable.value) == null ? void 0 : _a.defaultExpandedRowKeys) {
+      return expandable.value.defaultExpandedRowKeys;
+    }
+    if (defaultExpandAllRows.value || ((_b = expandable.value) == null ? void 0 : _b.defaultExpandAllRows)) {
+      return [...allRowKeys.value];
+    }
+    return [];
+  };
+  const _expandedRowKeys = ref(getDefaultExpandedRowKeys());
+  const expandedRowKeys = computed(() => {
+    var _a, _b, _c;
+    return (_c = (_b = expandedKeys.value) != null ? _b : (_a = expandable.value) == null ? void 0 : _a.expandedRowKeys) != null ? _c : _expandedRowKeys.value;
+  });
+  const handleExpand = (rowKey) => {
+    const isExpanded = expandedRowKeys.value.includes(rowKey);
+    const newExpandedRowKeys = isExpanded ? expandedRowKeys.value.filter((key) => rowKey !== key) : expandedRowKeys.value.concat(rowKey);
+    _expandedRowKeys.value = newExpandedRowKeys;
+    emit("expand", rowKey);
+    emit("expandedChange", newExpandedRowKeys);
+    emit("update:expandedKeys", newExpandedRowKeys);
+  };
+  return {
+    expandedRowKeys,
+    handleExpand
+  };
+};
+const usePagination = (props, emit) => {
+  var _a, _b;
+  const _page = ref(isObject(props.pagination) ? (_a = props.pagination.defaultCurrent) != null ? _a : 1 : 1);
+  const _pageSize = ref(isObject(props.pagination) ? (_b = props.pagination.defaultPageSize) != null ? _b : 10 : 10);
+  const pageSize = computed(() => {
+    var _a2;
+    return isObject(props.pagination) ? (_a2 = props.pagination.pageSize) != null ? _a2 : _pageSize.value : _pageSize.value;
+  });
+  const page = computed(() => {
+    var _a2;
+    return isObject(props.pagination) ? (_a2 = props.pagination.current) != null ? _a2 : _page.value : _page.value;
+  });
+  const handlePageChange = (page2) => {
+    _page.value = page2;
+    emit("pageChange", page2);
+  };
+  const handlePageSizeChange = (pageSize2) => {
+    _pageSize.value = pageSize2;
+    emit("pageSizeChange", pageSize2);
+  };
+  return {
+    page,
+    pageSize,
+    handlePageChange,
+    handlePageSizeChange
+  };
+};
+const _sfc_main$9 = defineComponent({
+  name: "ColGroup",
+  props: {
+    dataColumns: {
+      type: Array,
+      required: true
+    },
+    operations: {
+      type: Array,
+      required: true
+    },
+    columnWidth: {
+      type: Object
+    }
+  },
+  setup() {
+    const fixedWidth = (width) => {
+      if (width) {
+        return {
+          width: `${width}px`,
+          minWidth: `${width}px`,
+          maxWidth: `${width}px`
+        };
+      }
+      return void 0;
+    };
+    return {
+      fixedWidth
+    };
+  }
+});
+function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("colgroup", null, [
+    (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.operations, (item) => {
+      return openBlock(), createElementBlock("col", {
+        key: `arco-col-${item.name}`,
+        class: normalizeClass(`arco-table-${item.name}-col`),
+        style: normalizeStyle(_ctx.fixedWidth(item.width))
+      }, null, 6);
+    }), 128)),
+    (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.dataColumns, (item) => {
+      return openBlock(), createElementBlock("col", {
+        key: `arco-col-${item.dataIndex}`,
+        style: normalizeStyle(_ctx.fixedWidth(_ctx.columnWidth[item.dataIndex] || item.width))
+      }, null, 4);
+    }), 128))
+  ]);
+}
+var ColGroup = /* @__PURE__ */ _export_sfc$1(_sfc_main$9, [["render", _sfc_render$3]]);
+var Thead = defineComponent({
+  name: "Thead",
+  setup(_, {
+    slots
+  }) {
+    return () => {
+      var _a, _b, _c;
+      return createVNode((_b = (_a = slots.thead) == null ? void 0 : _a.call(slots)[0]) != null ? _b : "thead", null, (_c = slots.default) == null ? void 0 : _c.call(slots));
+    };
+  }
+});
+var Tbody = defineComponent({
+  name: "Tbody",
+  setup(_, {
+    slots
+  }) {
+    return () => {
+      var _a, _b, _c;
+      return createVNode((_b = (_a = slots.tbody) == null ? void 0 : _a.call(slots)[0]) != null ? _b : "tbody", null, (_c = slots.default) == null ? void 0 : _c.call(slots));
+    };
+  }
+});
+var Tr = defineComponent({
+  name: "Tr",
+  props: {
+    isExpandRow: {
+      type: Boolean
+    },
+    isEmptyRow: {
+      type: Boolean
+    },
+    checked: {
+      type: Boolean
+    },
+    rowIndex: Number,
+    record: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  setup(props, {
+    slots
+  }) {
+    const prefixCls = getPrefixCls("table");
+    const cls = computed(() => [`${prefixCls}-tr`, {
+      [`${prefixCls}-tr-expand`]: props.isExpandRow,
+      [`${prefixCls}-tr-empty`]: props.isEmptyRow,
+      [`${prefixCls}-tr-checked`]: props.checked
+    }]);
+    return () => {
+      var _a, _b, _c, _d;
+      return createVNode((_c = (_b = slots.tr) == null ? void 0 : _b.call(slots, {
+        rowIndex: props.rowIndex,
+        record: (_a = props.record) == null ? void 0 : _a.raw
+      })[0]) != null ? _c : "tr", {
+        class: cls.value
+      }, (_d = slots.default) == null ? void 0 : _d.call(slots));
+    };
+  }
+});
+const _sfc_main$8 = defineComponent({
+  name: "IconCaretDown",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-caret-down`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$6 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$5 = /* @__PURE__ */ createElementVNode("path", {
+  d: "M24.938 34.829a1.2 1.2 0 0 1-1.875 0L9.56 17.949c-.628-.785-.069-1.949.937-1.949h27.007c1.006 0 1.565 1.164.937 1.95L24.937 34.829Z",
+  fill: "currentColor",
+  stroke: "none"
+}, null, -1);
+const _hoisted_3$5 = [
+  _hoisted_2$5
+];
+function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$5, 14, _hoisted_1$6);
+}
+var _IconCaretDown = /* @__PURE__ */ _export_sfc$1(_sfc_main$8, [["render", _sfc_render$2]]);
+const IconCaretDown = Object.assign(_IconCaretDown, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconCaretDown.name, _IconCaretDown);
+  }
+});
+const _sfc_main$7 = defineComponent({
+  name: "IconCaretUp",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-caret-up`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$5 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$4 = /* @__PURE__ */ createElementVNode("path", {
+  d: "M23.063 13.171a1.2 1.2 0 0 1 1.875 0l13.503 16.88c.628.785.069 1.949-.937 1.949H10.497c-1.006 0-1.565-1.164-.937-1.95l13.503-16.879Z",
+  fill: "currentColor",
+  stroke: "none"
+}, null, -1);
+const _hoisted_3$4 = [
+  _hoisted_2$4
+];
+function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$4, 14, _hoisted_1$5);
+}
+var _IconCaretUp = /* @__PURE__ */ _export_sfc$1(_sfc_main$7, [["render", _sfc_render$1]]);
+const IconCaretUp = Object.assign(_IconCaretUp, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconCaretUp.name, _IconCaretUp);
+  }
+});
+const _sfc_main$6 = defineComponent({
+  name: "IconFilter",
+  props: {
+    size: {
+      type: [Number, String]
+    },
+    strokeWidth: {
+      type: Number,
+      default: 4
+    },
+    strokeLinecap: {
+      type: String,
+      default: "butt",
+      validator: (value) => {
+        return ["butt", "round", "square"].includes(value);
+      }
+    },
+    strokeLinejoin: {
+      type: String,
+      default: "miter",
+      validator: (value) => {
+        return ["arcs", "bevel", "miter", "miter-clip", "round"].includes(value);
+      }
+    },
+    spin: Boolean
+  },
+  setup(props) {
+    const prefixCls = getPrefixCls("icon");
+    const cls = computed(() => [prefixCls, `${prefixCls}-filter`, { [`${prefixCls}-spin`]: props.spin }]);
+    const sizeStyle = computed(() => {
+      if (props.size) {
+        return {
+          fontSize: isNumber(props.size) ? `${props.size}px` : props.size
+        };
+      }
+      return void 0;
+    });
+    return {
+      cls,
+      sizeStyle
+    };
+  }
+});
+const _hoisted_1$4 = ["stroke-width", "stroke-linecap", "stroke-linejoin"];
+const _hoisted_2$3 = /* @__PURE__ */ createElementVNode("path", { d: "M30 42V22.549a1 1 0 0 1 .463-.844l10.074-6.41A1 1 0 0 0 41 14.45V8a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6.451a1 1 0 0 0 .463.844l10.074 6.41a1 1 0 0 1 .463.844V37" }, null, -1);
+const _hoisted_3$3 = [
+  _hoisted_2$3
+];
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  return openBlock(), createElementBlock("svg", {
+    viewBox: "0 0 48 48",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    stroke: "currentColor",
+    class: normalizeClass(_ctx.cls),
+    style: normalizeStyle(_ctx.sizeStyle),
+    "stroke-width": _ctx.strokeWidth,
+    "stroke-linecap": _ctx.strokeLinecap,
+    "stroke-linejoin": _ctx.strokeLinejoin
+  }, _hoisted_3$3, 14, _hoisted_1$4);
+}
+var _IconFilter = /* @__PURE__ */ _export_sfc$1(_sfc_main$6, [["render", _sfc_render]]);
+const IconFilter = Object.assign(_IconFilter, {
+  install: (app, options) => {
+    var _a;
+    const iconPrefix = (_a = options == null ? void 0 : options.iconPrefix) != null ? _a : "";
+    app.component(iconPrefix + _IconFilter.name, _IconFilter);
+  }
+});
+const useColumnSorter = ({
+  column,
+  tableCtx
+}) => {
+  const sortOrder = computed(() => {
+    var _a;
+    if (column.value.dataIndex && column.value.dataIndex === ((_a = tableCtx.sorter) == null ? void 0 : _a.field)) {
+      return tableCtx.sorter.direction;
+    }
+    return void 0;
+  });
+  const sortDirections = computed(() => {
+    var _a, _b, _c;
+    return (_c = (_b = (_a = column.value) == null ? void 0 : _a.sortable) == null ? void 0 : _b.sortDirections) != null ? _c : [];
+  });
+  const hasSorter = computed(() => sortDirections.value.length > 0);
+  const hasAscendBtn = computed(() => sortDirections.value.includes("ascend"));
+  const hasDescendBtn = computed(() => sortDirections.value.includes("descend"));
+  const nextSortOrder = computed(() => {
+    var _a, _b;
+    if (!sortOrder.value) {
+      return (_a = sortDirections.value[0]) != null ? _a : "";
+    }
+    if (sortOrder.value === sortDirections.value[0]) {
+      return (_b = sortDirections.value[1]) != null ? _b : "";
+    }
+    return "";
+  });
+  const handleClickSorter = (ev) => {
+    var _a;
+    if (column.value.dataIndex) {
+      (_a = tableCtx.onSorterChange) == null ? void 0 : _a.call(tableCtx, column.value.dataIndex, nextSortOrder.value, ev);
+    }
+  };
+  return {
+    sortOrder,
+    hasSorter,
+    hasAscendBtn,
+    hasDescendBtn,
+    nextSortOrder,
+    handleClickSorter
+  };
+};
+const useColumnFilter = ({
+  column,
+  tableCtx
+}) => {
+  const filterValue = computed(() => {
+    var _a;
+    if (column.value.dataIndex && ((_a = tableCtx.filters) == null ? void 0 : _a[column.value.dataIndex])) {
+      return tableCtx.filters[column.value.dataIndex];
+    }
+    return [];
+  });
+  const filterPopupVisible = ref(false);
+  const isFilterActive = computed(() => filterValue.value.length > 0);
+  const isMultipleFilter = computed(() => {
+    var _a;
+    return Boolean((_a = column.value.filterable) == null ? void 0 : _a.multiple);
+  });
+  const columnFilterValue = ref(filterValue.value);
+  watch(filterValue, (value) => {
+    if (isArray(value) && String(value) !== String(columnFilterValue.value)) {
+      columnFilterValue.value = value;
+    }
+  });
+  const handleFilterPopupVisibleChange = (value) => {
+    filterPopupVisible.value = value;
+  };
+  const setFilterValue = (filterValue2) => {
+    columnFilterValue.value = filterValue2;
+  };
+  const handleCheckboxFilterChange = (values) => {
+    setFilterValue(values);
+  };
+  const handleRadioFilterChange = (value) => {
+    setFilterValue([value]);
+  };
+  const handleFilterConfirm = (ev) => {
+    var _a;
+    if (column.value.dataIndex) {
+      (_a = tableCtx.onFilterChange) == null ? void 0 : _a.call(tableCtx, column.value.dataIndex, columnFilterValue.value, ev);
+    }
+    handleFilterPopupVisibleChange(false);
+  };
+  const handleFilterReset = (ev) => {
+    var _a;
+    setFilterValue([]);
+    if (column.value.dataIndex) {
+      (_a = tableCtx.onFilterChange) == null ? void 0 : _a.call(tableCtx, column.value.dataIndex, columnFilterValue.value, ev);
+    }
+    handleFilterPopupVisibleChange(false);
+  };
+  return {
+    filterPopupVisible,
+    isFilterActive,
+    isMultipleFilter,
+    columnFilterValue,
+    handleFilterPopupVisibleChange,
+    setFilterValue,
+    handleCheckboxFilterChange,
+    handleRadioFilterChange,
+    handleFilterConfirm,
+    handleFilterReset
+  };
+};
 const tableInjectionKey = Symbol("ArcoTable");
 const tableColumnInjectionKey = Symbol("ArcoTableColumn");
+function _isSlot$3(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
+}
+var AutoTooltip = defineComponent({
+  name: "AutoTooltip",
+  inheritAttrs: false,
+  props: {
+    tooltipProps: {
+      type: Object
+    }
+  },
+  setup(props, {
+    attrs,
+    slots
+  }) {
+    const prefix = getPrefixCls("auto-tooltip");
+    const containerRef = ref();
+    const contentRef = ref();
+    const text = ref("");
+    const showTooltip = ref(false);
+    const calTooltip = () => {
+      if (containerRef.value && contentRef.value) {
+        const _show = contentRef.value.offsetWidth > containerRef.value.offsetWidth;
+        if (_show !== showTooltip.value) {
+          showTooltip.value = _show;
+        }
+      }
+    };
+    const getText = () => {
+      var _a;
+      if (((_a = contentRef.value) == null ? void 0 : _a.textContent) && contentRef.value.textContent !== text.value) {
+        text.value = contentRef.value.textContent;
+      }
+    };
+    const onResize = () => {
+      getText();
+      calTooltip();
+    };
+    onMounted(() => {
+      getText();
+      calTooltip();
+    });
+    const renderContent = () => {
+      return createVNode("span", mergeProps({
+        "ref": containerRef,
+        "class": prefix
+      }, attrs), [createVNode(ResizeObserver, {
+        "onResize": onResize
+      }, {
+        default: () => {
+          var _a;
+          return [createVNode("span", {
+            "ref": contentRef,
+            "class": `${prefix}-content`
+          }, [(_a = slots.default) == null ? void 0 : _a.call(slots)])];
+        }
+      })]);
+    };
+    return () => {
+      let _slot2;
+      if (showTooltip.value) {
+        let _slot;
+        return createVNode(Tooltip, mergeProps({
+          "content": text.value,
+          "onResize": onResize
+        }, props.tooltipProps), _isSlot$3(_slot = renderContent()) ? _slot : {
+          default: () => [_slot]
+        });
+      }
+      return createVNode(ResizeObserver, {
+        "onResize": onResize
+      }, _isSlot$3(_slot2 = renderContent()) ? _slot2 : {
+        default: () => [_slot2]
+      });
+    };
+  }
+});
+function _isSlot$2(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
+}
+var Th = defineComponent({
+  name: "Th",
+  props: {
+    column: {
+      type: Object,
+      default: () => ({})
+    },
+    operations: {
+      type: Array,
+      default: () => []
+    },
+    dataColumns: {
+      type: Array,
+      default: () => []
+    },
+    resizable: Boolean
+  },
+  setup(props, {
+    slots
+  }) {
+    const {
+      column
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("table");
+    const {
+      t
+    } = useI18n();
+    const tableCtx = inject(tableInjectionKey, {});
+    const resizing = computed(() => {
+      var _a;
+      return ((_a = props.column) == null ? void 0 : _a.dataIndex) && tableCtx.resizingColumn === props.column.dataIndex;
+    });
+    const tooltipProps = computed(() => {
+      var _a;
+      if (isObject((_a = props.column) == null ? void 0 : _a.tooltip)) {
+        return props.column.tooltip;
+      }
+      return void 0;
+    });
+    const filterIconAlignLeft = computed(() => {
+      var _a;
+      if (((_a = props.column) == null ? void 0 : _a.filterable) && isBoolean(props.column.filterable.alignLeft)) {
+        return props.column.filterable.alignLeft;
+      }
+      return tableCtx.filterIconAlignLeft;
+    });
+    const {
+      sortOrder,
+      hasSorter,
+      hasAscendBtn,
+      hasDescendBtn,
+      nextSortOrder,
+      handleClickSorter
+    } = useColumnSorter({
+      column,
+      tableCtx
+    });
+    const {
+      filterPopupVisible,
+      isFilterActive,
+      isMultipleFilter,
+      columnFilterValue,
+      handleFilterPopupVisibleChange,
+      setFilterValue,
+      handleCheckboxFilterChange,
+      handleRadioFilterChange,
+      handleFilterConfirm,
+      handleFilterReset
+    } = useColumnFilter({
+      column,
+      tableCtx
+    });
+    const renderFilterContent = () => {
+      var _a, _b, _c, _d, _e;
+      let _slot, _slot2;
+      const {
+        filterable
+      } = props.column;
+      if ((_a = props.column.slots) == null ? void 0 : _a["filter-content"]) {
+        return (_b = props.column.slots) == null ? void 0 : _b["filter-content"]({
+          filterValue: columnFilterValue.value,
+          setFilterValue,
+          handleFilterConfirm,
+          handleFilterReset
+        });
+      }
+      if (filterable == null ? void 0 : filterable.slotName) {
+        return (_d = (_c = tableCtx == null ? void 0 : tableCtx.slots) == null ? void 0 : _c[filterable == null ? void 0 : filterable.slotName]) == null ? void 0 : _d.call(_c, {
+          filterValue: columnFilterValue.value,
+          setFilterValue,
+          handleFilterConfirm,
+          handleFilterReset
+        });
+      }
+      if (filterable == null ? void 0 : filterable.renderContent) {
+        return filterable.renderContent({
+          filterValue: columnFilterValue.value,
+          setFilterValue,
+          handleFilterConfirm,
+          handleFilterReset
+        });
+      }
+      return createVNode("div", {
+        "class": `${prefixCls}-filters-content`
+      }, [createVNode("ul", {
+        "class": `${prefixCls}-filters-list`
+      }, [(_e = filterable == null ? void 0 : filterable.filters) == null ? void 0 : _e.map((item, index2) => {
+        var _a2;
+        return createVNode("li", {
+          "class": `${prefixCls}-filters-item`,
+          "key": index2
+        }, [isMultipleFilter.value ? createVNode(Checkbox, {
+          "value": item.value,
+          "modelValue": columnFilterValue.value,
+          "uninjectGroupContext": true,
+          "onChange": handleCheckboxFilterChange
+        }, {
+          default: () => [item.text]
+        }) : createVNode(Radio, {
+          "value": item.value,
+          "modelValue": (_a2 = columnFilterValue.value[0]) != null ? _a2 : "",
+          "uninjectGroupContext": true,
+          "onChange": handleRadioFilterChange
+        }, {
+          default: () => [item.text]
+        })]);
+      })]), createVNode("div", {
+        "class": `${prefixCls}-filters-bottom`
+      }, [createVNode(Button, {
+        "size": "mini",
+        "onClick": handleFilterReset
+      }, _isSlot$2(_slot = t("table.resetText")) ? _slot : {
+        default: () => [_slot]
+      }), createVNode(Button, {
+        "type": "primary",
+        "size": "mini",
+        "onClick": handleFilterConfirm
+      }, _isSlot$2(_slot2 = t("table.okText")) ? _slot2 : {
+        default: () => [_slot2]
+      })])]);
+    };
+    const renderFilter = () => {
+      const {
+        filterable
+      } = props.column;
+      if (!filterable) {
+        return null;
+      }
+      return createVNode(Trigger, mergeProps({
+        "popupVisible": filterPopupVisible.value,
+        "trigger": "click",
+        "autoFitPosition": true,
+        "popupOffset": filterIconAlignLeft.value ? 4 : 0,
+        "onPopupVisibleChange": handleFilterPopupVisibleChange
+      }, filterable.triggerProps), {
+        default: () => [createVNode(IconHover, {
+          "class": [`${prefixCls}-filters`, {
+            [`${prefixCls}-filters-active`]: isFilterActive.value,
+            [`${prefixCls}-filters-open`]: filterPopupVisible.value,
+            [`${prefixCls}-filters-align-left`]: filterIconAlignLeft.value
+          }],
+          "disabled": !filterIconAlignLeft.value,
+          "onClick": (ev) => ev.stopPropagation()
+        }, {
+          default: () => {
+            var _a, _b, _c, _d, _e;
+            return [(_e = (_d = (_b = (_a = props.column.slots) == null ? void 0 : _a["filter-icon"]) == null ? void 0 : _b.call(_a)) != null ? _d : (_c = filterable.icon) == null ? void 0 : _c.call(filterable)) != null ? _e : createVNode(IconFilter, null, null)];
+          }
+        })],
+        content: renderFilterContent
+      });
+    };
+    const cellCls = computed(() => {
+      var _a, _b;
+      const cls2 = [`${prefixCls}-cell`, {
+        [`${prefixCls}-cell-text-ellipsis`]: ((_a = props.column) == null ? void 0 : _a.ellipsis) && !((_b = props.column) == null ? void 0 : _b.tooltip)
+      }];
+      if (hasSorter.value) {
+        cls2.push(`${prefixCls}-cell-with-sorter`, {
+          [`${prefixCls}-cell-next-ascend`]: nextSortOrder.value === "ascend",
+          [`${prefixCls}-cell-next-descend`]: nextSortOrder.value === "descend"
+        });
+      }
+      if (filterIconAlignLeft.value) {
+        cls2.push(`${prefixCls}-cell-with-filter`);
+      }
+      return cls2;
+    });
+    const renderTitle = () => {
+      var _a, _b, _c, _d, _e, _f;
+      if (slots.default) {
+        return slots.default();
+      }
+      if (((_a = props.column) == null ? void 0 : _a.titleSlotName) && ((_b = tableCtx.slots) == null ? void 0 : _b[props.column.titleSlotName])) {
+        return (_d = (_c = tableCtx.slots)[props.column.titleSlotName]) == null ? void 0 : _d.call(_c);
+      }
+      if ((_f = (_e = props.column) == null ? void 0 : _e.slots) == null ? void 0 : _f.title) {
+        return props.column.slots.title();
+      }
+      if (isFunction(props.column.title)) {
+        return props.column.title();
+      }
+      return props.column.title;
+    };
+    const renderCell = () => {
+      var _a, _b, _c;
+      let _slot3;
+      return createVNode("span", {
+        "class": cellCls.value,
+        "style": (_a = props.column) == null ? void 0 : _a.cellStyle,
+        "onClick": hasSorter.value ? handleClickSorter : void 0
+      }, [((_b = props.column) == null ? void 0 : _b.ellipsis) && ((_c = props.column) == null ? void 0 : _c.tooltip) ? createVNode(AutoTooltip, {
+        "class": `${prefixCls}-th-title`,
+        "tooltipProps": tooltipProps.value
+      }, _isSlot$2(_slot3 = renderTitle()) ? _slot3 : {
+        default: () => [_slot3]
+      }) : createVNode("span", {
+        "class": `${prefixCls}-th-title`
+      }, [renderTitle()]), hasSorter.value && createVNode("span", {
+        "class": `${prefixCls}-sorter`
+      }, [hasAscendBtn.value && createVNode("div", {
+        "class": [`${prefixCls}-sorter-icon`, {
+          [`${prefixCls}-sorter-icon-active`]: sortOrder.value === "ascend"
+        }]
+      }, [createVNode(IconCaretUp, null, null)]), hasDescendBtn.value && createVNode("div", {
+        "class": [`${prefixCls}-sorter-icon`, {
+          [`${prefixCls}-sorter-icon-active`]: sortOrder.value === "descend"
+        }]
+      }, [createVNode(IconCaretDown, null, null)])]), filterIconAlignLeft.value && renderFilter()]);
+    };
+    const style = computed(() => getStyle(props.column, {
+      dataColumns: props.dataColumns,
+      operations: props.operations
+    }));
+    const cls = computed(() => {
+      var _a, _b;
+      return [`${prefixCls}-th`, `${prefixCls}-th-align-${(_b = (_a = props.column) == null ? void 0 : _a.align) != null ? _b : "left"}`, {
+        [`${prefixCls}-col-sorted`]: Boolean(sortOrder.value),
+        [`${prefixCls}-th-resizing`]: resizing.value
+      }, ...getFixedCls(prefixCls, props.column)];
+    });
+    const handleMouseDown = (ev) => {
+      var _a, _b, _c;
+      if ((_a = props.column) == null ? void 0 : _a.dataIndex) {
+        (_c = tableCtx.onThMouseDown) == null ? void 0 : _c.call(tableCtx, (_b = props.column) == null ? void 0 : _b.dataIndex, ev);
+      }
+    };
+    return () => {
+      var _a, _b, _c, _d;
+      const colSpan = (_a = props.column.colSpan) != null ? _a : 1;
+      const rowSpan = (_b = props.column.rowSpan) != null ? _b : 1;
+      return createVNode((_d = (_c = slots.th) == null ? void 0 : _c.call(slots, {
+        column: props.column
+      })[0]) != null ? _d : "th", {
+        class: cls.value,
+        style: style.value,
+        colspan: colSpan > 1 ? colSpan : void 0,
+        rowspan: rowSpan > 1 ? rowSpan : void 0
+      }, [renderCell(), !filterIconAlignLeft.value && renderFilter(), props.resizable && createVNode("span", {
+        "class": `${prefixCls}-column-handle`,
+        "onMousedown": handleMouseDown
+      }, null)]);
+    };
+  }
+});
+var __defProp$1 = Object.defineProperty;
+var __getOwnPropSymbols$1 = Object.getOwnPropertySymbols;
+var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
+var __propIsEnum$1 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$1 = (obj, key, value) => key in obj ? __defProp$1(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$1 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$1.call(b, prop))
+      __defNormalProp$1(a, prop, b[prop]);
+  if (__getOwnPropSymbols$1)
+    for (var prop of __getOwnPropSymbols$1(b)) {
+      if (__propIsEnum$1.call(b, prop))
+        __defNormalProp$1(a, prop, b[prop]);
+    }
+  return a;
+};
+function _isSlot$1(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
+}
+var Td = defineComponent({
+  name: "Td",
+  props: {
+    rowIndex: Number,
+    record: {
+      type: Object,
+      default: () => ({})
+    },
+    column: {
+      type: Object,
+      default: () => ({})
+    },
+    type: {
+      type: String,
+      default: "normal"
+    },
+    operations: {
+      type: Array,
+      default: () => []
+    },
+    dataColumns: {
+      type: Array,
+      default: () => []
+    },
+    colSpan: {
+      type: Number,
+      default: 1
+    },
+    rowSpan: {
+      type: Number,
+      default: 1
+    },
+    isFixedExpand: {
+      type: Boolean,
+      default: false
+    },
+    containerWidth: {
+      type: Number
+    },
+    showExpandBtn: {
+      type: Boolean,
+      default: false
+    },
+    indentSize: {
+      type: Number,
+      default: 0
+    },
+    renderExpandBtn: {
+      type: Function
+    }
+  },
+  setup(props, {
+    slots
+  }) {
+    const prefixCls = getPrefixCls("table");
+    const style = computed(() => getStyle(props.column, {
+      dataColumns: props.dataColumns,
+      operations: props.operations
+    }));
+    const tooltipProps = computed(() => {
+      var _a;
+      if (isObject((_a = props.column) == null ? void 0 : _a.tooltip)) {
+        return props.column.tooltip;
+      }
+      return void 0;
+    });
+    const isSorted = computed(() => {
+      var _a, _b;
+      return ((_a = props.column) == null ? void 0 : _a.dataIndex) && ((_b = tableCtx.sorter) == null ? void 0 : _b.field) === props.column.dataIndex;
+    });
+    const resizing = computed(() => {
+      var _a;
+      return ((_a = props.column) == null ? void 0 : _a.dataIndex) && tableCtx.resizingColumn === props.column.dataIndex;
+    });
+    const cls = computed(() => {
+      var _a, _b;
+      return [`${prefixCls}-td`, `${prefixCls}-td-align-${(_b = (_a = props.column) == null ? void 0 : _a.align) != null ? _b : "left"}`, {
+        [`${prefixCls}-col-sorted`]: isSorted.value,
+        [`${prefixCls}-td-resizing`]: resizing.value
+      }, ...getFixedCls(prefixCls, props.column)];
+    });
+    const cellStyle = computed(() => {
+      var _a, _b;
+      if (props.isFixedExpand && props.containerWidth) {
+        return __spreadValues$1({
+          width: `${props.containerWidth}px`
+        }, (_a = props.column) == null ? void 0 : _a.cellStyle);
+      }
+      return (_b = props.column) == null ? void 0 : _b.cellStyle;
+    });
+    const tableCtx = inject(tableInjectionKey, {});
+    const renderContent = () => {
+      var _a, _b, _c, _d, _e, _f, _g, _h;
+      if (slots.default) {
+        return slots.default();
+      }
+      const data = {
+        record: (_a = props.record) == null ? void 0 : _a.raw,
+        column: props.column,
+        rowIndex: (_b = props.rowIndex) != null ? _b : -1
+      };
+      if (slots.cell) {
+        return slots.cell(data);
+      }
+      if ((_c = props.column.slots) == null ? void 0 : _c.cell) {
+        return props.column.slots.cell(data);
+      }
+      if (props.column.render) {
+        return props.column.render(data);
+      }
+      if (props.column.slotName && ((_d = tableCtx.slots) == null ? void 0 : _d[props.column.slotName])) {
+        return (_f = (_e = tableCtx.slots)[props.column.slotName]) == null ? void 0 : _f.call(_e, data);
+      }
+      return String((_h = getValueByPath((_g = props.record) == null ? void 0 : _g.raw, props.column.dataIndex)) != null ? _h : "");
+    };
+    const isLoading = ref(false);
+    const handleClick = (ev) => {
+      var _a, _b;
+      if (isFunction(tableCtx.loadMore) && !((_a = props.record) == null ? void 0 : _a.isLeaf) && !((_b = props.record) == null ? void 0 : _b.children)) {
+        isLoading.value = true;
+        new Promise((resolve) => {
+          var _a2;
+          (_a2 = tableCtx.loadMore) == null ? void 0 : _a2.call(tableCtx, props.record.raw, resolve);
+        }).then((children) => {
+          var _a2;
+          (_a2 = tableCtx.addLazyLoadData) == null ? void 0 : _a2.call(tableCtx, children, props.record);
+          isLoading.value = false;
+        });
+      }
+      ev.stopPropagation();
+    };
+    const renderCell = () => {
+      var _a, _b, _c, _d, _e;
+      let _slot;
+      return createVNode("span", {
+        "class": [`${prefixCls}-cell`, {
+          [`${prefixCls}-cell-fixed-expand`]: props.isFixedExpand,
+          [`${prefixCls}-cell-expand-icon`]: props.showExpandBtn,
+          [`${prefixCls}-cell-text-ellipsis`]: ((_a = props.column) == null ? void 0 : _a.ellipsis) && !((_b = props.column) == null ? void 0 : _b.tooltip)
+        }],
+        "style": cellStyle.value
+      }, [props.indentSize > 0 && createVNode("span", {
+        "style": {
+          paddingLeft: `${props.indentSize}px`
+        }
+      }, null), props.showExpandBtn && createVNode("span", {
+        "class": `${prefixCls}-cell-inline-icon`,
+        "onClick": handleClick
+      }, [isLoading.value ? createVNode(IconLoading, null, null) : (_c = props.renderExpandBtn) == null ? void 0 : _c.call(props, props.record, false)]), ((_d = props.column) == null ? void 0 : _d.ellipsis) && ((_e = props.column) == null ? void 0 : _e.tooltip) ? createVNode(AutoTooltip, {
+        "tooltipProps": tooltipProps.value
+      }, _isSlot$1(_slot = renderContent()) ? _slot : {
+        default: () => [_slot]
+      }) : renderContent()]);
+    };
+    return () => {
+      var _a, _b, _c, _d;
+      return createVNode((_d = (_c = slots.td) == null ? void 0 : _c.call(slots, {
+        record: (_a = props.record) == null ? void 0 : _a.raw,
+        column: props.column,
+        rowIndex: (_b = props.rowIndex) != null ? _b : -1
+      })[0]) != null ? _d : "td", {
+        class: cls.value,
+        style: style.value,
+        rowspan: props.rowSpan > 1 ? props.rowSpan : void 0,
+        colspan: props.colSpan > 1 ? props.colSpan : void 0
+      }, [renderCell()]);
+    };
+  }
+});
+var OperationTh = defineComponent({
+  name: "OperationTh",
+  props: {
+    operationColumn: {
+      type: Object,
+      required: true
+    },
+    operations: {
+      type: Array,
+      required: true
+    },
+    rowSpan: {
+      type: Number,
+      default: 1
+    },
+    selectAll: {
+      type: Boolean,
+      default: false
+    },
+    selectedNumber: {
+      type: Number,
+      default: 0
+    },
+    totalEnabledNumber: {
+      type: Number,
+      default: 0
+    }
+  },
+  emits: ["selectAll"],
+  setup(props, {
+    emit
+  }) {
+    const prefixCls = getPrefixCls("table");
+    const checked = computed(() => props.totalEnabledNumber > 0 && props.selectedNumber >= props.totalEnabledNumber);
+    const indeterminate = computed(() => props.selectedNumber > 0 && props.selectedNumber < props.totalEnabledNumber);
+    const renderContent = () => {
+      if (props.selectAll) {
+        return createVNode(Checkbox, {
+          "modelValue": checked.value,
+          "indeterminate": indeterminate.value,
+          "uninjectGroupContext": true,
+          "onChange": (value) => emit("selectAll", value)
+        }, {
+          default: isFunction(props.operationColumn.title) ? props.operationColumn.title() : props.operationColumn.title
+        });
+      }
+      if (props.operationColumn.title) {
+        return isFunction(props.operationColumn.title) ? props.operationColumn.title() : props.operationColumn.title;
+      }
+      return null;
+    };
+    const style = computed(() => getOperationStyle(props.operationColumn, props.operations));
+    const cls = computed(() => [`${prefixCls}-th`, `${prefixCls}-operation`, {
+      [`${prefixCls}-checkbox`]: props.selectAll
+    }, ...getOperationFixedCls(prefixCls, props.operationColumn)]);
+    return () => createVNode("th", {
+      "class": cls.value,
+      "style": style.value,
+      "rowspan": props.rowSpan > 1 ? props.rowSpan : void 0
+    }, [createVNode("span", {
+      "class": `${prefixCls}-cell`
+    }, [renderContent()])]);
+  }
+});
+var OperationTd = defineComponent({
+  name: "OperationTd",
+  components: {
+    Checkbox,
+    Radio,
+    IconPlus,
+    IconMinus
+  },
+  props: {
+    operationColumn: {
+      type: Object,
+      required: true
+    },
+    operations: {
+      type: Array,
+      required: true
+    },
+    record: {
+      type: Object,
+      required: true
+    },
+    rowKey: {
+      type: String,
+      default: "key"
+    },
+    hasExpand: {
+      type: Boolean,
+      default: false
+    },
+    selectedRowKeys: {
+      type: Array
+    },
+    renderExpandBtn: {
+      type: Function
+    },
+    colSpan: {
+      type: Number,
+      default: 1
+    },
+    rowSpan: {
+      type: Number,
+      default: 1
+    },
+    summary: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["select", "expand"],
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const prefixCls = getPrefixCls("table");
+    const style = computed(() => getOperationStyle(props.operationColumn, props.operations));
+    const cls = computed(() => [`${prefixCls}-td`, `${prefixCls}-operation`, {
+      [`${prefixCls}-checkbox`]: props.operationColumn.name === "selection-checkbox",
+      [`${prefixCls}-radio`]: props.operationColumn.name === "selection-radio",
+      [`${prefixCls}-expand`]: props.operationColumn.name === "expand",
+      [`${prefixCls}-drag-handle`]: props.operationColumn.name === "drag-handle"
+    }, ...getOperationFixedCls(prefixCls, props.operationColumn)]);
+    const renderContent = () => {
+      var _a, _b, _c, _d, _e;
+      if (props.summary) {
+        return null;
+      }
+      if (props.operationColumn.render) {
+        return props.operationColumn.render(props.record.raw);
+      }
+      if (props.operationColumn.name === "selection-checkbox") {
+        const value = props.record.key;
+        return createVNode(Checkbox, {
+          "value": value,
+          "modelValue": (_a = props.selectedRowKeys) != null ? _a : [],
+          "disabled": Boolean(props.record.disabled),
+          "uninjectGroupContext": true,
+          "onChange": (values) => emit("select", values, value),
+          "onClick": (ev) => ev.stopPropagation()
+        }, null);
+      }
+      if (props.operationColumn.name === "selection-radio") {
+        const value = props.record.key;
+        return createVNode(Radio, {
+          "value": value,
+          "modelValue": (_c = (_b = props.selectedRowKeys) == null ? void 0 : _b[0]) != null ? _c : "",
+          "disabled": Boolean(props.record.disabled),
+          "uninjectGroupContext": true,
+          "onChange": (value2) => emit("select", [value2], value2),
+          "onClick": (ev) => ev.stopPropagation()
+        }, null);
+      }
+      if (props.operationColumn.name === "expand") {
+        if (props.hasExpand && props.renderExpandBtn) {
+          return props.renderExpandBtn(props.record);
+        }
+        return null;
+      }
+      if (props.operationColumn.name === "drag-handle") {
+        return (_e = (_d = slots["drag-handle-icon"]) == null ? void 0 : _d.call(slots)) != null ? _e : createVNode(IconDragDotVertical, null, null);
+      }
+      return null;
+    };
+    return () => createVNode("td", {
+      "class": cls.value,
+      "style": style.value,
+      "rowspan": props.rowSpan > 1 ? props.rowSpan : void 0,
+      "colspan": props.colSpan > 1 ? props.colSpan : void 0
+    }, [createVNode("span", {
+      "class": `${prefixCls}-cell`
+    }, [renderContent()])]);
+  }
+});
+const useDrag = () => {
+  const dragState = reactive({
+    dragging: false,
+    sourceKey: "",
+    sourcePath: [],
+    targetPath: [],
+    data: {}
+  });
+  const clearDragState = () => {
+    dragState.dragging = false;
+    dragState.sourceKey = "";
+    dragState.sourcePath = [];
+    dragState.targetPath = [];
+    dragState.data = {};
+  };
+  const handleDragStart = (ev, targetKey, targetPath, data) => {
+    if (ev.dataTransfer) {
+      ev.dataTransfer.effectAllowed = "move";
+      if (ev.target && ev.target.tagName === "TD") {
+        const { parentElement } = ev.target;
+        if (parentElement && parentElement.tagName === "TR") {
+          ev.dataTransfer.setDragImage(parentElement, 0, 0);
+        }
+      }
+    }
+    dragState.dragging = true;
+    dragState.sourceKey = targetKey;
+    dragState.sourcePath = targetPath;
+    dragState.data = data;
+  };
+  const handleDragEnter = (ev, sourcePath) => {
+    if (ev.dataTransfer) {
+      ev.dataTransfer.dropEffect = "move";
+    }
+    dragState.targetPath = sourcePath;
+    ev.preventDefault();
+  };
+  const handleDragLeave = (ev) => {
+  };
+  const handleDragover = (ev) => {
+    if (ev.dataTransfer) {
+      ev.dataTransfer.dropEffect = "move";
+    }
+    ev.preventDefault();
+  };
+  const handleDragEnd = (ev) => {
+    var _a;
+    if (((_a = ev.dataTransfer) == null ? void 0 : _a.dropEffect) === "none") {
+      clearDragState();
+    }
+  };
+  const handleDrop = (ev) => {
+    clearDragState();
+    ev.preventDefault();
+  };
+  return {
+    dragState,
+    handleDragStart,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragover,
+    handleDragEnd,
+    handleDrop
+  };
+};
+const useColumnResize = (thRefs) => {
+  const resizingColumn = ref("");
+  const columnWidth = reactive({});
+  const handleThMouseDown = (dataIndex, ev) => {
+    ev.preventDefault();
+    resizingColumn.value = dataIndex;
+    on(window, "mousemove", handleThMouseMoving);
+    on(window, "mouseup", handleThMouseUp);
+    on(window, "contextmenu", handleThMouseUp);
+  };
+  const handleThMouseUp = () => {
+    resizingColumn.value = "";
+    off(window, "mousemove", handleThMouseMoving);
+    off(window, "mouseup", handleThMouseUp);
+    off(window, "contextmenu", handleThMouseUp);
+  };
+  const handleThMouseMoving = (ev) => {
+    const element = thRefs.value[resizingColumn.value];
+    if (element) {
+      const { clientX } = ev;
+      const { x } = element.getBoundingClientRect();
+      let width = Math.ceil(clientX - x);
+      if (width < 40) {
+        width = 40;
+      }
+      columnWidth[resizingColumn.value] = width;
+    }
+  };
+  return {
+    resizingColumn,
+    columnWidth,
+    handleThMouseDown,
+    handleThMouseUp
+  };
+};
+const useFilter = ({ columns }) => {
+  const _filters = ref(getDefaultFilters(columns.value));
+  const computedFilters = computed(() => {
+    var _a, _b;
+    const filters = {};
+    for (const item of columns.value) {
+      if (item.dataIndex) {
+        const value = (_b = (_a = item.filterable) == null ? void 0 : _a.filteredValue) != null ? _b : _filters.value[item.dataIndex];
+        if (value) {
+          filters[item.dataIndex] = value;
+        }
+      }
+    }
+    return filters;
+  });
+  return {
+    _filters,
+    computedFilters
+  };
+};
+const getDefaultFilters = (columns) => {
+  var _a;
+  const filters = {};
+  for (const item of columns) {
+    if (item.dataIndex && ((_a = item.filterable) == null ? void 0 : _a.defaultFilteredValue)) {
+      filters[item.dataIndex] = item.filterable.defaultFilteredValue;
+    }
+  }
+  return filters;
+};
+const useSorter = ({ columns }) => {
+  const _sorter = ref(getDefaultSorter(columns.value));
+  const computedSorter = computed(() => {
+    var _a;
+    for (const item of columns.value) {
+      if (item.dataIndex && item.sortable) {
+        const direction = isString(item.sortable.sortOrder) ? item.sortable.sortOrder : ((_a = _sorter.value) == null ? void 0 : _a.field) === item.dataIndex ? _sorter.value.direction : "";
+        if (direction) {
+          return {
+            field: item.dataIndex,
+            direction
+          };
+        }
+      }
+    }
+    return void 0;
+  });
+  return {
+    _sorter,
+    computedSorter
+  };
+};
+const getDefaultSorter = (columns) => {
+  var _a;
+  for (const item of columns) {
+    if (item.dataIndex && ((_a = item.sortable) == null ? void 0 : _a.defaultSortOrder)) {
+      return {
+        field: item.dataIndex,
+        direction: item.sortable.defaultSortOrder
+      };
+    }
+  }
+  return void 0;
+};
+const useSpan = ({
+  spanMethod,
+  data,
+  columns
+}) => {
+  const tableSpan = computed(() => {
+    const span = {};
+    if (spanMethod.value) {
+      data.value.forEach((record, rowIndex) => {
+        columns.value.forEach((column, columnIndex) => {
+          var _a, _b;
+          const { rowspan = 1, colspan = 1 } = (_b = (_a = spanMethod.value) == null ? void 0 : _a.call(spanMethod, {
+            record: record.raw,
+            column,
+            rowIndex,
+            columnIndex
+          })) != null ? _b : {};
+          if (rowspan > 1 || colspan > 1) {
+            span[`${rowIndex}-${columnIndex}`] = [rowspan, colspan];
+          }
+        });
+      });
+    }
+    return span;
+  });
+  const removedCells = computed(() => {
+    const data2 = [];
+    for (const indexKey of Object.keys(tableSpan.value)) {
+      const indexArray = indexKey.split("-").map((item) => Number(item));
+      const span = tableSpan.value[indexKey];
+      for (let i = 1; i < span[0]; i++) {
+        data2.push(`${indexArray[0] + i}-${indexArray[1]}`);
+        for (let j = 1; j < span[1]; j++) {
+          data2.push(`${indexArray[0] + i}-${indexArray[1] + j}`);
+        }
+      }
+      for (let i = 1; i < span[1]; i++) {
+        data2.push(`${indexArray[0]}-${indexArray[1] + i}`);
+      }
+    }
+    return data2;
+  });
+  return {
+    tableSpan,
+    removedCells
+  };
+};
+var __defProp2 = Object.defineProperty;
+var __defProps2 = Object.defineProperties;
+var __getOwnPropDescs2 = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols2 = Object.getOwnPropertySymbols;
+var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+var __propIsEnum2 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp2 = (obj, key, value) => key in obj ? __defProp2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues2 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp2.call(b, prop))
+      __defNormalProp2(a, prop, b[prop]);
+  if (__getOwnPropSymbols2)
+    for (var prop of __getOwnPropSymbols2(b)) {
+      if (__propIsEnum2.call(b, prop))
+        __defNormalProp2(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps2 = (a, b) => __defProps2(a, __getOwnPropDescs2(b));
+function _isSlot(s) {
+  return typeof s === "function" || Object.prototype.toString.call(s) === "[object Object]" && !isVNode(s);
+}
+const DEFAULT_BORDERED = {
+  wrapper: true,
+  cell: false,
+  headerCell: false,
+  bodyCell: false
+};
+var _Table = defineComponent({
+  name: "Table",
+  props: {
+    columns: {
+      type: Array,
+      default: () => []
+    },
+    data: {
+      type: Array,
+      default: () => []
+    },
+    bordered: {
+      type: [Boolean, Object],
+      default: true
+    },
+    hoverable: {
+      type: Boolean,
+      default: true
+    },
+    stripe: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String,
+      default: () => {
+        var _a, _b;
+        return (_b = (_a = inject(configProviderInjectionKey, void 0)) == null ? void 0 : _a.size) != null ? _b : "large";
+      }
+    },
+    tableLayoutFixed: {
+      type: Boolean,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    hideHeader: {
+      type: Boolean,
+      default: false
+    },
+    rowSelection: {
+      type: Object
+    },
+    expandable: {
+      type: Object
+    },
+    scroll: {
+      type: Object
+    },
+    pagination: {
+      type: [Boolean, Object],
+      default: true
+    },
+    pagePosition: {
+      type: String,
+      default: "br"
+    },
+    indentSize: {
+      type: Number,
+      default: 16
+    },
+    rowKey: {
+      type: String,
+      default: "key"
+    },
+    showHeader: {
+      type: Boolean,
+      default: true
+    },
+    virtualListProps: {
+      type: Object
+    },
+    spanMethod: {
+      type: Function
+    },
+    spanAll: {
+      type: Boolean,
+      default: false
+    },
+    components: {
+      type: Object
+    },
+    loadMore: {
+      type: Function
+    },
+    filterIconAlignLeft: {
+      type: Boolean,
+      default: false
+    },
+    hideExpandButtonOnEmpty: {
+      type: Boolean,
+      default: false
+    },
+    rowClass: {
+      type: [String, Array, Object]
+    },
+    draggable: {
+      type: Object
+    },
+    rowNumber: {
+      type: [Boolean, Object]
+    },
+    columnResizable: {
+      type: Boolean
+    },
+    summary: {
+      type: [Boolean, Function]
+    },
+    summaryText: {
+      type: String,
+      default: "Summary"
+    },
+    summarySpanMethod: {
+      type: Function
+    },
+    selectedKeys: {
+      type: Array
+    },
+    defaultSelectedKeys: {
+      type: Array
+    },
+    expandedKeys: {
+      type: Array
+    },
+    defaultExpandedKeys: {
+      type: Array
+    },
+    defaultExpandAllRows: {
+      type: Boolean,
+      default: false
+    },
+    onExpand: {
+      type: [Function, Array]
+    },
+    onExpandedChange: {
+      type: [Function, Array]
+    },
+    onSelect: {
+      type: [Function, Array]
+    },
+    onSelectAll: {
+      type: [Function, Array]
+    },
+    onSelectionChange: {
+      type: [Function, Array]
+    },
+    onSorterChange: {
+      type: [Function, Array]
+    },
+    onFilterChange: {
+      type: [Function, Array]
+    },
+    onPageChange: {
+      type: [Function, Array]
+    },
+    onPageSizeChange: {
+      type: [Function, Array]
+    },
+    onCellClick: {
+      type: [Function, Array]
+    },
+    onRowClick: {
+      type: [Function, Array]
+    },
+    onHeaderClick: {
+      type: [Function, Array]
+    }
+  },
+  emits: [
+    "update:selectedKeys",
+    "update:expandedKeys",
+    "expand",
+    "expandedChange",
+    "select",
+    "selectAll",
+    "selectionChange",
+    "sorterChange",
+    "filterChange",
+    "pageChange",
+    "pageSizeChange",
+    "change",
+    "cellClick",
+    "rowClick",
+    "headerClick"
+  ],
+  setup(props, {
+    emit,
+    slots
+  }) {
+    const {
+      columns,
+      rowKey,
+      rowSelection,
+      expandable,
+      loadMore,
+      filterIconAlignLeft,
+      selectedKeys,
+      defaultSelectedKeys,
+      expandedKeys,
+      defaultExpandedKeys,
+      defaultExpandAllRows,
+      spanMethod,
+      summarySpanMethod
+    } = toRefs(props);
+    const prefixCls = getPrefixCls("table");
+    const bordered = computed(() => {
+      if (isObject(props.bordered)) {
+        return __spreadValues2(__spreadValues2({}, DEFAULT_BORDERED), props.bordered);
+      }
+      return __spreadProps2(__spreadValues2({}, DEFAULT_BORDERED), {
+        wrapper: props.bordered
+      });
+    });
+    const {
+      children,
+      components
+    } = useChildrenComponents("TableColumn");
+    const isScroll = computed(() => {
+      var _a, _b, _c, _d;
+      const x = Boolean(((_a = props.scroll) == null ? void 0 : _a.x) || ((_b = props.scroll) == null ? void 0 : _b.minWidth));
+      const y = Boolean(((_c = props.scroll) == null ? void 0 : _c.y) || ((_d = props.scroll) == null ? void 0 : _d.maxHeight));
+      return {
+        x,
+        y
+      };
+    });
+    const theadRef = ref();
+    const tbodyRef = ref();
+    const summaryRef = ref();
+    const thRefs = ref({});
+    const handleBodyScroll = () => {
+      if (theadRef.value && tbodyRef.value) {
+        theadRef.value.scrollLeft = tbodyRef.value.scrollLeft;
+      }
+    };
+    onMounted(() => {
+      watch(isScroll, ({
+        y
+      }, _, onInvalidate) => {
+        onInvalidate(() => {
+          if (tbodyRef.value) {
+            off(tbodyRef.value, "scroll", handleBodyScroll);
+          }
+        });
+        if (y && tbodyRef.value && theadRef.value) {
+          on(tbodyRef.value, "scroll", handleBodyScroll);
+        }
+      });
+    });
+    const slotColumnMap = reactive(/* @__PURE__ */ new Map());
+    const slotColumns = ref();
+    watch([components, slotColumnMap], ([components2, slotColumnMap2]) => {
+      if (components2.length > 0) {
+        const columns2 = [];
+        components2.forEach((id) => {
+          const column = slotColumnMap2.get(id);
+          if (column)
+            columns2.push(column);
+        });
+        slotColumns.value = columns2;
+      } else {
+        slotColumns.value = void 0;
+      }
+    });
+    const dataColumnMap = /* @__PURE__ */ new Map();
+    const dataColumns = ref([]);
+    const groupColumns = ref([]);
+    watch([columns, slotColumns], ([columns2, slotColumns2]) => {
+      var _a;
+      const result = getGroupColumns((_a = slotColumns2 != null ? slotColumns2 : columns2) != null ? _a : [], dataColumnMap);
+      dataColumns.value = result.dataColumns;
+      groupColumns.value = result.groupColumns;
+    }, {
+      immediate: true
+    });
+    const isPaginationTop = computed(() => ["tl", "top", "tr"].includes(props.pagePosition));
+    const hasLeftFixedColumn = ref(false);
+    const hasRightFixedColumn = ref(false);
+    watchEffect(() => {
+      var _a, _b, _c;
+      let _hasLeftFixedColumn = false;
+      let _hasRightFixedColumn = false;
+      if (((_a = props.rowSelection) == null ? void 0 : _a.fixed) || ((_b = props.expandable) == null ? void 0 : _b.fixed) || ((_c = props.draggable) == null ? void 0 : _c.fixed)) {
+        _hasLeftFixedColumn = true;
+      }
+      for (const column of dataColumns.value) {
+        if (column.fixed === "left") {
+          _hasLeftFixedColumn = true;
+        } else if (column.fixed === "right") {
+          _hasRightFixedColumn = true;
+        }
+      }
+      if (_hasLeftFixedColumn !== hasLeftFixedColumn.value) {
+        hasLeftFixedColumn.value = _hasLeftFixedColumn;
+      }
+      if (_hasRightFixedColumn !== hasRightFixedColumn.value) {
+        hasRightFixedColumn.value = _hasRightFixedColumn;
+      }
+    });
+    const hasEllipsis = computed(() => {
+      for (const col of dataColumns.value) {
+        if (col.ellipsis) {
+          return true;
+        }
+      }
+      return false;
+    });
+    const {
+      _filters,
+      computedFilters
+    } = useFilter({
+      columns: dataColumns
+    });
+    const {
+      _sorter,
+      computedSorter
+    } = useSorter({
+      columns: dataColumns
+    });
+    const handleChange = (type) => {
+      const extra = {
+        type,
+        page: page.value,
+        pageSize: pageSize.value,
+        sorter: computedSorter.value,
+        filters: computedFilters.value,
+        dragTarget: type === "drag" ? dragState.data : void 0
+      };
+      emit("change", flattenRawData.value, extra);
+    };
+    const handleFilterChange = (dataIndex, filteredValues) => {
+      _filters.value = __spreadProps2(__spreadValues2({}, computedFilters.value), {
+        [dataIndex]: filteredValues
+      });
+      emit("filterChange", dataIndex, filteredValues);
+      handleChange("filter");
+    };
+    const handleSorterChange = (dataIndex, direction) => {
+      _sorter.value = direction ? {
+        field: dataIndex,
+        direction
+      } : void 0;
+      emit("sorterChange", dataIndex, direction);
+      handleChange("sorter");
+    };
+    const disabledKeys = /* @__PURE__ */ new Set();
+    const allRowKeys = computed(() => {
+      const allRowKeys2 = [];
+      disabledKeys.clear();
+      const travelData = (data) => {
+        if (isArray(data) && data.length > 0) {
+          for (const record of data) {
+            allRowKeys2.push(record[rowKey.value]);
+            if (record.disabled) {
+              disabledKeys.add(record[rowKey.value]);
+            }
+            if (record.children) {
+              travelData(record.children);
+            }
+          }
+        }
+      };
+      travelData(props.data);
+      return allRowKeys2;
+    });
+    const currentAllRowKeys = computed(() => {
+      const keys = [];
+      const travel = (data) => {
+        for (const record of data) {
+          keys.push(record.key);
+          if (record.children) {
+            travel(record.children);
+          }
+        }
+      };
+      travel(flattenData.value);
+      return keys;
+    });
+    const currentAllEnabledRowKeys = computed(() => {
+      const keys = [];
+      const travel = (data) => {
+        for (const record of data) {
+          if (!record.disabled) {
+            keys.push(record.key);
+          }
+          if (record.children) {
+            travel(record.children);
+          }
+        }
+      };
+      travel(flattenData.value);
+      return keys;
+    });
+    const {
+      isRadio,
+      selectedRowKeys,
+      currentSelectedRowKeys,
+      handleSelect,
+      handleSelectAll
+    } = useRowSelection({
+      selectedKeys,
+      defaultSelectedKeys,
+      rowSelection,
+      currentAllRowKeys,
+      currentAllEnabledRowKeys,
+      emit
+    });
+    const {
+      expandedRowKeys,
+      handleExpand
+    } = useExpand({
+      expandedKeys,
+      defaultExpandedKeys,
+      defaultExpandAllRows,
+      expandable,
+      allRowKeys,
+      emit
+    });
+    const lazyLoadData = reactive({});
+    const addLazyLoadData = (children2, record) => {
+      if (children2) {
+        lazyLoadData[record.key] = children2;
+      }
+    };
+    const isValidRecord = (record) => {
+      var _a, _b;
+      for (const field of Object.keys(computedFilters.value)) {
+        const filteredValues = computedFilters.value[field];
+        const column = dataColumnMap.get(field);
+        if (column && ((_a = column.filterable) == null ? void 0 : _a.filter) && filteredValues.length > 0) {
+          const result = (_b = column.filterable) == null ? void 0 : _b.filter(filteredValues, record.raw);
+          if (!result) {
+            return result;
+          }
+        }
+      }
+      return true;
+    };
+    const {
+      dragState,
+      handleDragStart,
+      handleDragEnter,
+      handleDragLeave,
+      handleDragover,
+      handleDragEnd,
+      handleDrop
+    } = useDrag();
+    const {
+      resizingColumn,
+      columnWidth,
+      handleThMouseDown
+    } = useColumnResize(thRefs);
+    const processedData = computed(() => {
+      var _a;
+      const travel = (data) => {
+        const result = [];
+        for (const _record of data) {
+          const record = {
+            raw: _record,
+            key: _record[props.rowKey],
+            disabled: _record.disabled,
+            expand: _record.expand,
+            isLeaf: _record.isLeaf
+          };
+          if (props.loadMore && !_record.isLeaf && !_record.children && lazyLoadData[record.key]) {
+            record.children = travel(lazyLoadData[record.key]);
+          } else if (_record.children) {
+            record.children = travel(_record.children);
+          }
+          record.hasSubtree = Boolean(record.children ? props.hideExpandButtonOnEmpty ? record.children.length > 0 : true : props.loadMore && !record.isLeaf);
+          result.push(record);
+        }
+        return result;
+      };
+      return travel((_a = props.data) != null ? _a : []);
+    });
+    const validData = computed(() => {
+      const travel = (data) => data.filter((record) => {
+        if (isValidRecord(record)) {
+          if (record.children) {
+            record.children = travel(record.children);
+          }
+          return true;
+        }
+        return false;
+      });
+      return Object.keys(computedFilters.value).length > 0 ? travel(processedData.value) : processedData.value;
+    });
+    const sortedData = computed(() => {
+      var _a, _b;
+      const data = [...validData.value];
+      if (data.length > 0) {
+        if ((_a = computedSorter.value) == null ? void 0 : _a.field) {
+          const column = dataColumnMap.get(computedSorter.value.field);
+          if (column && ((_b = column.sortable) == null ? void 0 : _b.sorter) !== true) {
+            const {
+              field,
+              direction
+            } = computedSorter.value;
+            data.sort((a, b) => {
+              var _a2;
+              const valueA = a.raw[field];
+              const valueB = b.raw[field];
+              if (((_a2 = column.sortable) == null ? void 0 : _a2.sorter) && isFunction(column.sortable.sorter)) {
+                return column.sortable.sorter(a.raw, b.raw, {
+                  dataIndex: field,
+                  direction
+                });
+              }
+              const result = valueA > valueB ? 1 : -1;
+              return direction === "descend" ? -result : result;
+            });
+          }
+        }
+        if (dragState.dragging && dragState.targetPath.length > 0) {
+          const target2 = spliceFromPath(data, dragState.sourcePath);
+          spliceFromPath(data, dragState.targetPath, target2);
+        }
+      }
+      return data;
+    });
+    const {
+      page,
+      pageSize,
+      handlePageChange,
+      handlePageSizeChange
+    } = usePagination(props, emit);
+    const flattenData = computed(() => {
+      if (props.pagination && sortedData.value.length > pageSize.value) {
+        return sortedData.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value);
+      }
+      return sortedData.value;
+    });
+    const flattenRawData = computed(() => flattenData.value.map((item) => item.raw));
+    const getSummaryData = () => {
+      return dataColumns.value.reduce((per, column, index2) => {
+        if (column.dataIndex) {
+          if (index2 === 0) {
+            per[column.dataIndex] = props.summaryText;
+          } else {
+            let count = 0;
+            let isNotNumber = false;
+            flattenData.value.forEach((data) => {
+              if (column.dataIndex) {
+                if (isNumber(data.raw[column.dataIndex])) {
+                  count += data.raw[column.dataIndex];
+                } else if (!isUndefined(data.raw[column.dataIndex]) && !isNull(data.raw[column.dataIndex])) {
+                  isNotNumber = true;
+                }
+              }
+            });
+            per[column.dataIndex] = isNotNumber ? "" : count;
+          }
+        }
+        return per;
+      }, {});
+    };
+    const getTableDataWithRaw = (data) => {
+      if (data && data.length > 0) {
+        return data.map((raw) => {
+          return {
+            raw,
+            key: raw[props.rowKey]
+          };
+        });
+      }
+      return void 0;
+    };
+    const summaryData = computed(() => {
+      if (props.summary) {
+        if (isFunction(props.summary)) {
+          return getTableDataWithRaw(props.summary({
+            columns: dataColumns.value,
+            data: flattenRawData.value
+          }));
+        }
+        return getTableDataWithRaw([getSummaryData()]);
+      }
+      return void 0;
+    });
+    const containerRef = ref();
+    const containerScrollLeft = ref(0);
+    const alignLeft = ref(true);
+    const alignRight = ref(true);
+    const setAlignPosition = () => {
+      let _alignLeft = true;
+      let _alignRight = true;
+      const scrollContainer = isScroll.value.y ? tbodyRef.value : containerRef.value;
+      if (scrollContainer) {
+        _alignLeft = containerScrollLeft.value === 0;
+        _alignRight = containerScrollLeft.value + scrollContainer.offsetWidth >= scrollContainer.scrollWidth;
+      }
+      if (_alignLeft !== alignLeft.value) {
+        alignLeft.value = _alignLeft;
+      }
+      if (_alignRight !== alignRight.value) {
+        alignRight.value = _alignRight;
+      }
+    };
+    const getTableScrollCls = () => {
+      if (alignLeft.value && alignRight.value) {
+        return `${prefixCls}-scroll-position-both`;
+      }
+      if (alignLeft.value) {
+        return `${prefixCls}-scroll-position-left`;
+      }
+      if (alignRight.value) {
+        return `${prefixCls}-scroll-position-right`;
+      }
+      return `${prefixCls}-scroll-position-middle`;
+    };
+    const getTableFixedCls = () => {
+      const cls2 = [];
+      if (hasLeftFixedColumn.value) {
+        cls2.push(`${prefixCls}-has-fixed-col-left`);
+      }
+      if (hasRightFixedColumn.value) {
+        cls2.push(`${prefixCls}-has-fixed-col-right`);
+      }
+      return cls2;
+    };
+    const handleScroll = (e) => {
+      const target2 = e.target;
+      if (target2.scrollLeft !== containerScrollLeft.value) {
+        containerScrollLeft.value = target2.scrollLeft;
+      }
+      if (isScroll.value.y || props.virtualListProps) {
+        if (theadRef.value) {
+          theadRef.value.scrollLeft = target2.scrollLeft;
+        }
+        if (summaryRef.value) {
+          summaryRef.value.scrollLeft = target2.scrollLeft;
+        }
+      }
+      setAlignPosition();
+    };
+    const handleRowClick = (record, ev) => {
+      emit("rowClick", record.raw, ev);
+    };
+    const handleCellClick = (record, column, ev) => {
+      emit("cellClick", record.raw, column, ev);
+    };
+    const handleHeaderClick = (column, ev) => {
+      emit("headerClick", column, ev);
+    };
+    const operations = computed(() => {
+      var _a, _b;
+      const operations2 = [];
+      const hasFixedColumn = hasLeftFixedColumn.value || hasRightFixedColumn.value;
+      let dragHandle;
+      let expand;
+      let selection;
+      if (((_a = props.draggable) == null ? void 0 : _a.type) === "handle") {
+        dragHandle = {
+          name: "drag-handle",
+          title: props.draggable.title,
+          width: props.draggable.width,
+          fixed: props.draggable.fixed || hasFixedColumn
+        };
+        operations2.push(dragHandle);
+      }
+      if (props.expandable) {
+        expand = {
+          name: "expand",
+          title: props.expandable.title,
+          width: props.expandable.width,
+          fixed: props.expandable.fixed || hasFixedColumn
+        };
+        operations2.push(expand);
+      }
+      if (props.rowSelection) {
+        selection = {
+          name: props.rowSelection.type === "radio" ? "selection-radio" : "selection-checkbox",
+          title: props.rowSelection.title,
+          width: props.rowSelection.width,
+          fixed: props.rowSelection.fixed || hasFixedColumn
+        };
+        operations2.push(selection);
+      }
+      const operationsFn = (_b = props.components) == null ? void 0 : _b.operations;
+      return isFunction(operationsFn) ? operationsFn({
+        dragHandle,
+        expand,
+        selection
+      }) : operations2;
+    });
+    const headerStyle = computed(() => {
+      var _a, _b, _c, _d;
+      if (isScroll.value.x) {
+        const style2 = {
+          width: isNumber((_a = props.scroll) == null ? void 0 : _a.x) ? `${(_b = props.scroll) == null ? void 0 : _b.x}px` : (_c = props.scroll) == null ? void 0 : _c.x
+        };
+        if ((_d = props.scroll) == null ? void 0 : _d.minWidth) {
+          style2.minWidth = isNumber(props.scroll.minWidth) ? `${props.scroll.minWidth}px` : props.scroll.minWidth;
+        }
+        return style2;
+      }
+      return void 0;
+    });
+    const contentStyle = computed(() => {
+      var _a, _b, _c, _d;
+      if (isScroll.value.x && flattenData.value.length > 0) {
+        const style2 = {
+          width: isNumber((_a = props.scroll) == null ? void 0 : _a.x) ? `${(_b = props.scroll) == null ? void 0 : _b.x}px` : (_c = props.scroll) == null ? void 0 : _c.x
+        };
+        if ((_d = props.scroll) == null ? void 0 : _d.minWidth) {
+          style2.minWidth = isNumber(props.scroll.minWidth) ? `${props.scroll.minWidth}px` : props.scroll.minWidth;
+        }
+        return style2;
+      }
+      return void 0;
+    });
+    const addColumn = (id, column) => {
+      slotColumnMap.set(id, column);
+    };
+    const removeColumn = (id) => {
+      slotColumnMap.delete(id);
+    };
+    provide(tableInjectionKey, reactive({
+      loadMore,
+      addLazyLoadData,
+      slots,
+      sorter: computedSorter,
+      filters: computedFilters,
+      filterIconAlignLeft,
+      resizingColumn,
+      addColumn,
+      removeColumn,
+      onSorterChange: handleSorterChange,
+      onFilterChange: handleFilterChange,
+      onThMouseDown: handleThMouseDown
+    }));
+    const cls = computed(() => [prefixCls, `${prefixCls}-size-${props.size}`, {
+      [`${prefixCls}-border`]: bordered.value.wrapper,
+      [`${prefixCls}-border-cell`]: bordered.value.cell,
+      [`${prefixCls}-border-header-cell`]: !bordered.value.cell && bordered.value.headerCell,
+      [`${prefixCls}-border-body-cell`]: !bordered.value.cell && bordered.value.bodyCell,
+      [`${prefixCls}-stripe`]: props.stripe,
+      [`${prefixCls}-hover`]: props.hoverable,
+      [`${prefixCls}-dragging`]: dragState.dragging,
+      [`${prefixCls}-type-selection`]: props.rowSelection,
+      [`${prefixCls}-empty`]: props.data && flattenData.value.length === 0,
+      [`${prefixCls}-layout-fixed`]: props.tableLayoutFixed || isScroll.value.x || isScroll.value.y || hasEllipsis.value
+    }]);
+    const paginationCls = computed(() => [`${prefixCls}-pagination`, {
+      [`${prefixCls}-pagination-left`]: props.pagePosition === "tl" || props.pagePosition === "bl",
+      [`${prefixCls}-pagination-center`]: props.pagePosition === "top" || props.pagePosition === "bottom",
+      [`${prefixCls}-pagination-right`]: props.pagePosition === "tr" || props.pagePosition === "br",
+      [`${prefixCls}-pagination-top`]: isPaginationTop.value
+    }]);
+    const tableCls = computed(() => {
+      const cls2 = getTableFixedCls();
+      if (isScroll.value.x) {
+        cls2.push(getTableScrollCls());
+      }
+      if (isScroll.value.y || isVirtualList.value) {
+        cls2.push(`${prefixCls}-scroll-y`);
+      }
+      return cls2;
+    });
+    const isVirtualList = computed(() => Boolean(props.virtualListProps));
+    const thWidth = ref({});
+    const getThWidth = () => {
+      const width = {};
+      for (const key of Object.keys(thRefs.value)) {
+        width[key] = thRefs.value[key].offsetWidth;
+      }
+      thWidth.value = width;
+    };
+    const hasScrollBar = ref(false);
+    const isTbodyHasScrollBar = () => {
+      if (tbodyRef.value) {
+        return tbodyRef.value.offsetWidth > tbodyRef.value.clientWidth;
+      }
+      return false;
+    };
+    const handleTbodyResize = () => {
+      const _hasScrollBar = isTbodyHasScrollBar();
+      if (hasScrollBar.value !== _hasScrollBar) {
+        hasScrollBar.value = _hasScrollBar;
+      }
+      setAlignPosition();
+      getThWidth();
+    };
+    onMounted(() => {
+      hasScrollBar.value = isTbodyHasScrollBar();
+      getThWidth();
+    });
+    const spinProps = computed(() => isObject(props.loading) ? props.loading : {
+      loading: props.loading
+    });
+    const renderEmpty = () => {
+      return createVNode(Tr, {
+        "isEmptyRow": true
+      }, {
+        default: () => [createVNode(Td, {
+          "colSpan": dataColumns.value.length + operations.value.length
+        }, {
+          default: () => {
+            var _a, _b;
+            return [(_b = (_a = slots.empty) == null ? void 0 : _a.call(slots)) != null ? _b : createVNode(Empty, null, null)];
+          }
+        })]
+      });
+    };
+    const renderExpandContent = (record) => {
+      var _a;
+      if (record.expand) {
+        return isFunction(record.expand) ? record.expand() : record.expand;
+      }
+      if (slots["expand-row"]) {
+        return slots["expand-row"]({
+          record: record.raw
+        });
+      }
+      if ((_a = props.expandable) == null ? void 0 : _a.expandedRowRender) {
+        return props.expandable.expandedRowRender(record.raw);
+      }
+      return void 0;
+    };
+    const allColumns = computed(() => [].concat(operations.value, dataColumns.value));
+    const spanColumns = computed(() => props.spanAll ? allColumns.value : dataColumns.value);
+    const {
+      tableSpan,
+      removedCells
+    } = useSpan({
+      spanMethod,
+      data: flattenData,
+      columns: spanColumns
+    });
+    const {
+      tableSpan: tableSummarySpan,
+      removedCells: removedSummaryCells
+    } = useSpan({
+      spanMethod: summarySpanMethod,
+      data: flattenData,
+      columns: allColumns
+    });
+    const renderSummaryRow = (record, rowIndex) => {
+      return createVNode(Tr, {
+        "class": [props.rowClass, `${prefixCls}-tr-summary`],
+        "key": `table-summary-${rowIndex}`,
+        "onClick": (ev) => handleRowClick(record, ev)
+      }, {
+        default: () => [operations.value.map((operation, index2) => {
+          var _a;
+          const cellId = `${rowIndex}-${index2}`;
+          const [rowspan, colspan] = (_a = tableSummarySpan.value[cellId]) != null ? _a : [1, 1];
+          if (removedSummaryCells.value.includes(cellId)) {
+            return null;
+          }
+          const style2 = isVirtualList.value && operation.name && thWidth.value[operation.name] ? {
+            width: `${thWidth.value[operation.name]}px`
+          } : void 0;
+          return createVNode(OperationTd, {
+            "style": style2,
+            "operationColumn": operation,
+            "operations": operations.value,
+            "record": record,
+            "rowSpan": rowspan,
+            "colSpan": colspan,
+            "summary": true
+          }, null);
+        }), dataColumns.value.map((column, index2) => {
+          var _a;
+          const cellId = `${rowIndex}-${operations.value.length + index2}`;
+          const [rowspan, colspan] = (_a = tableSummarySpan.value[cellId]) != null ? _a : [1, 1];
+          if (removedSummaryCells.value.includes(cellId)) {
+            return null;
+          }
+          const style2 = isVirtualList.value && column.dataIndex && thWidth.value[column.dataIndex] ? {
+            width: `${thWidth.value[column.dataIndex]}px`
+          } : void 0;
+          return createVNode(Td, {
+            "key": `td-${cellId}`,
+            "style": style2,
+            "rowIndex": rowIndex,
+            "record": record,
+            "column": column,
+            "operations": operations.value,
+            "dataColumns": dataColumns.value,
+            "rowSpan": rowspan,
+            "colSpan": colspan,
+            "onClick": (ev) => handleCellClick(record, column, ev)
+          }, {
+            td: slots.td,
+            cell: slots["summary-cell"]
+          });
+        })],
+        tr: slots.tr
+      });
+    };
+    const renderSummary = () => {
+      if (summaryData.value) {
+        return summaryData.value.map((data, index2) => renderSummaryRow(data, index2));
+      }
+      return null;
+    };
+    const virtualListRef = ref();
+    watch(virtualListRef, (instance) => {
+      tbodyRef.value = instance.$el;
+    });
+    const renderVirtualListBody = () => {
+      return createVNode(ClientOnly, null, {
+        default: () => [createVNode(VirtualList, mergeProps({
+          "ref": virtualListRef,
+          "class": `${prefixCls}-body`,
+          "itemKey": "_key",
+          "type": "table"
+        }, props.virtualListProps, {
+          "data": flattenData.value,
+          "onResize": () => {
+            handleTbodyResize();
+          },
+          "onScroll": handleScroll,
+          "outerAttrs": {
+            class: `${prefixCls}-element`,
+            style: contentStyle.value
+          }
+        }), {
+          item: ({
+            item,
+            index: index2
+          }) => renderRecord(item, index2)
+        })]
+      });
+    };
+    const renderExpandBtn = (record, stopPropagation = true) => {
+      var _a, _b, _c, _d, _e;
+      const currentKey = record.key;
+      const expanded = expandedRowKeys.value.includes(currentKey);
+      return createVNode("button", {
+        "type": "button",
+        "class": `${prefixCls}-expand-btn`,
+        "onClick": (ev) => {
+          handleExpand(currentKey);
+          if (stopPropagation) {
+            ev.stopPropagation();
+          }
+        }
+      }, [(_e = (_d = (_a = slots["expand-icon"]) == null ? void 0 : _a.call(slots, {
+        expanded,
+        record: record.raw
+      })) != null ? _d : (_c = (_b = props.expandable) == null ? void 0 : _b.icon) == null ? void 0 : _c.call(_b, expanded, record.raw)) != null ? _e : expanded ? createVNode(IconMinus, null, null) : createVNode(IconPlus, null, null)]);
+    };
+    const dragType = computed(() => {
+      var _a;
+      if (props.draggable) {
+        if (((_a = props.draggable) == null ? void 0 : _a.type) === "handle") {
+          return "handle";
+        }
+        return "row";
+      }
+      return "none";
+    });
+    const renderRecord = (record, rowIndex, {
+      indentSize = 0,
+      indexPath,
+      allowDrag = true
+    } = {}) => {
+      var _a, _b;
+      const currentKey = record.key;
+      const currentPath = (indexPath != null ? indexPath : []).concat(rowIndex);
+      const expandContent = renderExpandContent(record);
+      const showExpand = expandedRowKeys.value.includes(currentKey);
+      const scrollContainer = isScroll.value.y ? tbodyRef.value : containerRef.value;
+      const isDragTarget = dragState.sourceKey === record.key;
+      const dragSourceEvent = dragType.value !== "none" && allowDrag ? {
+        draggable: true,
+        onDragstart: (ev) => handleDragStart(ev, record.key, currentPath, record.raw),
+        onDragend: (ev) => handleDragEnd(ev)
+      } : {};
+      const dragTargetEvent = dragType.value !== "none" && allowDrag ? {
+        onDragenter: (ev) => handleDragEnter(ev, currentPath),
+        onDragleave: (ev) => handleDragLeave(ev),
+        onDragover: (ev) => handleDragover(ev),
+        onDrop: (ev) => {
+          handleChange("drag");
+          handleDrop(ev);
+        }
+      } : {};
+      return createVNode(Fragment, null, [createVNode(Tr, mergeProps(dragType.value === "row" ? dragSourceEvent : {}, dragTargetEvent, {
+        "class": [{
+          [`${prefixCls}-tr-draggable`]: dragType.value === "row",
+          [`${prefixCls}-tr-drag`]: isDragTarget
+        }, props.rowClass],
+        "rowIndex": rowIndex,
+        "record": record,
+        "key": currentKey,
+        "checked": (_a = selectedRowKeys.value) == null ? void 0 : _a.includes(currentKey),
+        "onClick": (ev) => handleRowClick(record, ev)
+      }), {
+        default: () => [operations.value.map((operation, index2) => {
+          var _a2;
+          const cellId = `${rowIndex}-${index2}`;
+          const [rowspan, colspan] = props.spanAll ? (_a2 = tableSpan.value[cellId]) != null ? _a2 : [1, 1] : [1, 1];
+          if (props.spanAll && removedCells.value.includes(cellId)) {
+            return null;
+          }
+          const style2 = isVirtualList.value && operation.name && thWidth.value[operation.name] ? {
+            width: `${thWidth.value[operation.name]}px`
+          } : void 0;
+          return createVNode(OperationTd, mergeProps({
+            "key": `operation-td-${index2}`,
+            "style": style2,
+            "operationColumn": operation,
+            "operations": operations.value,
+            "record": record,
+            "rowKey": rowKey.value,
+            "hasExpand": Boolean(expandContent),
+            "selectedRowKeys": selectedRowKeys.value,
+            "rowSpan": rowspan,
+            "colSpan": colspan,
+            "renderExpandBtn": renderExpandBtn,
+            "onSelect": handleSelect,
+            "onExpand": handleExpand
+          }, dragType.value === "handle" ? dragSourceEvent : {}), {
+            "drag-handle-icon": slots["drag-handle-icon"]
+          });
+        }), dataColumns.value.map((column, index2) => {
+          var _a2;
+          const cellId = `${rowIndex}-${props.spanAll ? operations.value.length + index2 : index2}`;
+          const [rowspan, colspan] = (_a2 = tableSpan.value[cellId]) != null ? _a2 : [1, 1];
+          if (removedCells.value.includes(cellId)) {
+            return null;
+          }
+          const extraProps = index2 === 0 ? {
+            showExpandBtn: record.hasSubtree,
+            indentSize: record.hasSubtree ? indentSize - 20 : indentSize
+          } : {};
+          const style2 = isVirtualList.value && column.dataIndex && thWidth.value[column.dataIndex] ? {
+            width: `${thWidth.value[column.dataIndex]}px`
+          } : void 0;
+          return createVNode(Td, mergeProps({
+            "key": `td-${index2}`,
+            "style": style2,
+            "rowIndex": rowIndex,
+            "record": record,
+            "column": column,
+            "operations": operations.value,
+            "dataColumns": dataColumns.value,
+            "rowSpan": rowspan,
+            "renderExpandBtn": renderExpandBtn,
+            "colSpan": colspan
+          }, extraProps, {
+            "onClick": (ev) => handleCellClick(record, column, ev)
+          }), {
+            td: slots.td
+          });
+        })],
+        tr: slots.tr
+      }), showExpand && (record.hasSubtree ? (_b = record.children) == null ? void 0 : _b.map((item, index2) => renderRecord(item, index2, {
+        indentSize: indentSize + props.indentSize,
+        indexPath: currentPath,
+        allowDrag: allowDrag && !isDragTarget
+      })) : Boolean(expandContent) && createVNode(Tr, {
+        "isExpandRow": true,
+        "key": `${currentKey}-expand`
+      }, {
+        default: () => [createVNode(Td, {
+          "isFixedExpand": hasLeftFixedColumn.value || hasRightFixedColumn.value,
+          "containerWidth": scrollContainer == null ? void 0 : scrollContainer.clientWidth,
+          "colSpan": dataColumns.value.length + operations.value.length
+        }, _isSlot(expandContent) ? expandContent : {
+          default: () => [expandContent]
+        })]
+      }))]);
+    };
+    const renderFooter = () => {
+      return createVNode("tfoot", null, [renderSummary()]);
+    };
+    const renderBody = () => {
+      const hasSubData = flattenData.value.some((record) => Boolean(record.children));
+      return createVNode(Tbody, null, {
+        default: () => [flattenData.value.length > 0 ? flattenData.value.map((record, index2) => renderRecord(record, index2, {
+          indentSize: hasSubData ? 20 : 0
+        })) : renderEmpty()],
+        tbody: slots.tbody
+      });
+    };
+    const renderHeader = () => createVNode(Thead, null, {
+      default: () => [groupColumns.value.map((row, index2) => createVNode(Tr, {
+        "key": `header-row-${index2}`
+      }, {
+        default: () => [index2 === 0 && operations.value.map((operation, index22) => {
+          var _a;
+          return createVNode(OperationTh, {
+            "ref": (ins) => {
+              if ((ins == null ? void 0 : ins.$el) && operation.name) {
+                thRefs.value[operation.name] = ins.$el;
+              }
+            },
+            "key": `operation-th-${index22}`,
+            "operationColumn": operation,
+            "operations": operations.value,
+            "selectAll": Boolean(operation.name === "selection-checkbox" && ((_a = props.rowSelection) == null ? void 0 : _a.showCheckedAll)),
+            "rowSpan": groupColumns.value.length,
+            "selectedNumber": currentSelectedRowKeys.value.length,
+            "totalNumber": currentAllRowKeys.value.length,
+            "totalEnabledNumber": currentAllEnabledRowKeys.value.length,
+            "onSelectAll": handleSelectAll
+          }, null);
+        }), row.map((column, index22) => {
+          const resizable = props.columnResizable && Boolean(column.dataIndex) && index22 < row.length - 1;
+          return createVNode(Th, {
+            "key": `th-${index22}`,
+            "ref": (ins) => {
+              if ((ins == null ? void 0 : ins.$el) && column.dataIndex) {
+                thRefs.value[column.dataIndex] = ins.$el;
+              }
+            },
+            "column": column,
+            "operations": operations.value,
+            "dataColumns": dataColumns.value,
+            "resizable": resizable,
+            "onClick": (ev) => handleHeaderClick(column, ev)
+          }, {
+            th: slots.th
+          });
+        })]
+      }))],
+      thead: slots.thead
+    });
+    const renderContent = () => {
+      if (isScroll.value.y || isVirtualList.value || isScroll.value.x && flattenData.value.length === 0) {
+        const style2 = {
+          overflowY: hasScrollBar.value ? "scroll" : "hidden"
+        };
+        return createVNode(Fragment, null, [props.showHeader && createVNode("div", {
+          "ref": theadRef,
+          "class": `${prefixCls}-header`,
+          "style": style2
+        }, [createVNode("table", {
+          "cellpadding": 0,
+          "cellspacing": 0,
+          "class": `${prefixCls}-element`,
+          "style": headerStyle.value
+        }, [createVNode(ColGroup, {
+          "dataColumns": dataColumns.value,
+          "operations": operations.value,
+          "columnWidth": columnWidth
+        }, null), renderHeader()])]), isVirtualList.value ? renderVirtualListBody() : createVNode(ResizeObserver$1, {
+          "onResize": handleTbodyResize
+        }, {
+          default: () => {
+            var _a, _b;
+            return [createVNode("div", {
+              "ref": tbodyRef,
+              "class": `${prefixCls}-body`,
+              "style": {
+                maxHeight: isNumber((_a = props.scroll) == null ? void 0 : _a.y) ? `${(_b = props.scroll) == null ? void 0 : _b.y}px` : "100%"
+              },
+              "onScroll": handleScroll
+            }, [createVNode("table", {
+              "cellpadding": 0,
+              "cellspacing": 0,
+              "class": `${prefixCls}-element`,
+              "style": contentStyle.value
+            }, [flattenData.value.length !== 0 && createVNode(ColGroup, {
+              "dataColumns": dataColumns.value,
+              "operations": operations.value,
+              "columnWidth": columnWidth
+            }, null), renderBody()])])];
+          }
+        }), summaryData.value && summaryData.value.length && createVNode("div", {
+          "ref": summaryRef,
+          "class": `${prefixCls}-tfoot`,
+          "style": style2
+        }, [createVNode("table", {
+          "cellpadding": 0,
+          "cellspacing": 0,
+          "class": `${prefixCls}-element`,
+          "style": contentStyle.value
+        }, [createVNode(ColGroup, {
+          "dataColumns": dataColumns.value,
+          "operations": operations.value,
+          "columnWidth": columnWidth
+        }, null), renderFooter()])])]);
+      }
+      return createVNode(ResizeObserver$1, {
+        "onResize": () => setAlignPosition()
+      }, {
+        default: () => [createVNode("table", {
+          "class": `${prefixCls}-element`,
+          "cellpadding": 0,
+          "cellspacing": 0,
+          "style": contentStyle.value
+        }, [createVNode(ColGroup, {
+          "dataColumns": dataColumns.value,
+          "operations": operations.value,
+          "columnWidth": columnWidth
+        }, null), props.showHeader && renderHeader(), renderBody(), summaryData.value && summaryData.value.length && renderFooter()])]
+      });
+    };
+    const renderTable = (content) => {
+      var _a;
+      const style2 = ((_a = props.scroll) == null ? void 0 : _a.maxHeight) ? {
+        maxHeight: props.scroll.maxHeight
+      } : void 0;
+      return createVNode(Fragment, null, [createVNode("div", {
+        "ref": containerRef,
+        "class": [`${prefixCls}-container`, tableCls.value],
+        "style": style2,
+        "onScroll": handleScroll
+      }, [createVNode("div", {
+        "class": `${prefixCls}-content`
+      }, [content ? createVNode("table", {
+        "class": `${prefixCls}-element`,
+        "cellpadding": 0,
+        "cellspacing": 0
+      }, [content()]) : renderContent()])]), slots.footer && createVNode("div", {
+        "class": `${prefixCls}-footer`
+      }, [slots.footer()])]);
+    };
+    const renderPagination = () => {
+      var _a, _b;
+      const paginationProps = isObject(props.pagination) ? omit(props.pagination, ["current", "pageSize", "defaultCurrent", "defaultPageSize"]) : {};
+      return createVNode("div", {
+        "class": paginationCls.value
+      }, [(_a = slots["pagination-left"]) == null ? void 0 : _a.call(slots), createVNode(Pagination, mergeProps({
+        "total": validData.value.length,
+        "current": page.value,
+        "pageSize": pageSize.value,
+        "onChange": (page2) => {
+          handlePageChange(page2);
+          handleChange("pagination");
+        },
+        "onPageSizeChange": (pageSize2) => {
+          handlePageSizeChange(pageSize2);
+          handleChange("pagination");
+        }
+      }, paginationProps), null), (_b = slots["pagination-right"]) == null ? void 0 : _b.call(slots)]);
+    };
+    const style = computed(() => {
+      var _a, _b;
+      if (isString((_a = props.scroll) == null ? void 0 : _a.y)) {
+        return {
+          height: (_b = props.scroll) == null ? void 0 : _b.y
+        };
+      }
+      return void 0;
+    });
+    const render2 = () => {
+      var _a;
+      if (slots.default) {
+        return createVNode("div", {
+          "class": cls.value
+        }, [renderTable(slots.default)]);
+      }
+      children.value = (_a = slots.columns) == null ? void 0 : _a.call(slots);
+      return createVNode("div", {
+        "class": cls.value,
+        "style": style.value
+      }, [children.value, createVNode(Spin, spinProps.value, {
+        default: () => [props.pagination !== false && flattenData.value.length > 0 && isPaginationTop.value && renderPagination(), renderTable(), props.pagination !== false && flattenData.value.length > 0 && !isPaginationTop.value && renderPagination()]
+      })]);
+    };
+    return {
+      render: render2,
+      handleSelectAll
+    };
+  },
+  methods: {
+    selectAll(checked) {
+      return this.handleSelectAll(checked);
+    }
+  },
+  render() {
+    return this.render();
+  }
+});
 var TableColumn = defineComponent({
   name: "TableColumn",
   props: {
@@ -6527,7 +18503,7 @@ var TableColumn = defineComponent({
       filterable: _filterable,
       cellStyle: _cellStyle,
       tooltip: _tooltip,
-      index
+      index: index2
     } = toRefs(props);
     const sortable = ref(_sortable.value);
     watch(_sortable, (cur, pre) => {
@@ -6599,7 +18575,7 @@ var TableColumn = defineComponent({
       sortable,
       filterable,
       cellStyle,
-      index,
+      index: index2,
       tooltip,
       children: childrenColumns,
       slots
@@ -6626,6 +18602,25 @@ var TableColumn = defineComponent({
       children.value = (_a2 = slots.default) == null ? void 0 : _a2.call(slots);
       return children.value;
     };
+  }
+});
+const Table = Object.assign(_Table, {
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Column: TableColumn,
+  install: (app, options) => {
+    setGlobalConfig(app, options);
+    const componentPrefix = getComponentPrefix(options);
+    app.component(componentPrefix + _Table.name, _Table);
+    app.component(componentPrefix + Thead.name, Thead);
+    app.component(componentPrefix + Tbody.name, Tbody);
+    app.component(componentPrefix + Tr.name, Tr);
+    app.component(componentPrefix + Th.name, Th);
+    app.component(componentPrefix + Td.name, Td);
+    app.component(componentPrefix + TableColumn.name, TableColumn);
   }
 });
 const clearAndUpper = (text) => text.replace(/-/, "").toUpperCase();
@@ -7055,11 +19050,11 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
 });
 var toolbar_vue_vue_type_style_index_0_scoped_true_lang = "";
 var _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
+  const target2 = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
-    target[key] = val;
+    target2[key] = val;
   }
-  return target;
+  return target2;
 };
 const _hoisted_1$1 = { class: "table-toolbar" };
 const _hoisted_2$1 = /* @__PURE__ */ createTextVNode(" \u65B0\u589E ");
@@ -7304,17 +19299,16 @@ const setSelectedRowKeys = (config, value) => {
     }
   }
 };
-var _sfc_main$1 = /* @__PURE__ */ defineComponent({
+var _sfc_main$1 = defineComponent({
   props: {
-    config: Object
+    config: {
+      type: Object
+    }
   },
-  emits: ["update", "deleteData", "get"],
-  setup(__props, {
-    expose,
+  setup(props, {
     emit
   }) {
     var _a, _b, _c;
-    const props = __props;
     const components = {
       operations: _sfc_main$2
     };
@@ -7419,7 +19413,7 @@ var _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const resize = () => {
       tableHeight.value = getTableHeight();
     };
-    const renderColumns = (columns2) => {
+    const RenderColumns = (columns2) => {
       return columns2.map((column) => {
         const slot = {};
         if (column.titleRender)
@@ -7447,13 +19441,10 @@ var _sfc_main$1 = /* @__PURE__ */ defineComponent({
         }, column, {
           "key": column.dataIndex
         }), __spreadValues({
-          default: () => [column.children && renderColumns(column.children)]
+          default: () => [column.children && RenderColumns(column.children)]
         }, slot));
       });
     };
-    expose({
-      getTableHeight
-    });
     onMounted(() => {
       if (config == null ? void 0 : config.value) {
         if (!config.value.batchDelete)
@@ -7467,44 +19458,34 @@ var _sfc_main$1 = /* @__PURE__ */ defineComponent({
     onUnmounted(() => {
       window.removeEventListener("resize", resize);
     });
-    return (_ctx, _cache) => {
-      var _a2;
-      const _component_a_table = resolveComponent("a-table");
-      return openBlock(), createElementBlock("div", null, [createVNode(_component_a_table, mergeProps((_a2 = unref(config)) == null ? void 0 : _a2.table, {
-        ref_key: "table",
-        ref: table,
-        class: "v-table-content",
-        scroll: {
+    return () => {
+      var _a2, _b2, _c2;
+      return createVNode("div", null, [createVNode(Table, mergeProps((_a2 = config.value) == null ? void 0 : _a2.table, {
+        "class": "v-table-content",
+        "onPageChange": pageChange,
+        "onPageSizeChange": pageSizeChange,
+        "onSelectionChange": selectionChange,
+        "ref": table,
+        "scroll": {
           y: tableHeight.value
-        },
-        onPageChange: pageChange,
-        onPageSizeChange: pageSizeChange,
-        onSelectionChange: selectionChange
+        }
       }), {
-        columns: withCtx(() => {
-          var _a3;
-          return [(openBlock(true), createElementBlock(Fragment, null, renderList(renderColumns(((_a3 = unref(columns)) == null ? void 0 : _a3.filter((item) => !item.hidden)) || []), (item) => {
-            return openBlock(), createBlock(resolveDynamicComponent(item));
-          }), 256))];
-        }),
-        _: 1
-      }, 16, ["scroll"]), unref(operationsRender) ? (openBlock(), createBlock(_sfc_main$4, {
-        key: 0,
-        ref_key: "modalForm",
-        ref: modalForm,
-        visible: visible.value,
-        "onUpdate:visible": _cache[0] || (_cache[0] = ($event) => visible.value = $event),
-        title: "\u7F16\u8F91",
-        type: "Update",
-        "render-params": renderParams.value,
-        onOkEvent: _cache[1] || (_cache[1] = (data) => emit("update", data))
-      }, null, 8, ["visible", "render-params"])) : createCommentVNode("", true)]);
+        columns: RenderColumns(((_b2 = columns.value) == null ? void 0 : _b2.filter((item) => !item.hidden)) || [])
+      }), operationsRender.value && createVNode(_sfc_main$4, mergeProps((_c2 = config.value) == null ? void 0 : _c2.table, {
+        "ref": modalForm,
+        "title": "\u7F16\u8F91",
+        "onUpdate:visible": (v) => visible.value = v,
+        "visible": visible.value,
+        "type": "Update",
+        "renderParams": renderParams.value,
+        "onOkEvent": (data) => emit("update", data)
+      }), null)]);
     };
   }
 });
 var index_vue_vue_type_style_index_0_lang$1 = "";
 var index_vue_vue_type_style_index_1_scoped_true_lang = "";
-var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-77740ef4"]]);
+var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-00e31054"]]);
 var index_vue_vue_type_style_index_0_lang = "";
 const __default__ = defineComponent({
   name: "VTable"
@@ -7612,9 +19593,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({
       var _a2, _b2;
       const rowKey = params[(_b2 = (_a2 = config == null ? void 0 : config.value) == null ? void 0 : _a2.table) == null ? void 0 : _b2.rowKey] || null;
       crud("delete", [rowKey, params]).then(() => {
-        const index = selectedRowKeys.value.indexOf(rowKey);
-        if (index !== -1) {
-          selectedRowKeys.value.splice(index, 1);
+        const index2 = selectedRowKeys.value.indexOf(rowKey);
+        if (index2 !== -1) {
+          selectedRowKeys.value.splice(index2, 1);
         }
       });
     };

@@ -1,85 +1,47 @@
-import { CellRenderFN, OperationsButtonConfig, TableConfig } from '../../../../../components/v-table/typings';
+import { CellRenderFN, OperationsButtonConfig, TableConfig } from '@/components/v-table/typings';
 import { BaseObj } from '../../../../../types/global';
 import { TableColumnData } from '@arco-design/web-vue';
-interface ColumnData {
+export interface ColumnData {
     record: BaseObj;
     column: TableColumnData;
     rowIndex: number;
 }
-declare const _sfc_main: import("vue").DefineComponent<{
-    config: {
-        type: null;
-        required: true;
-    };
-    columnData: {
-        type: ObjectConstructor;
-        required: true;
-    };
-    extend: {
-        type: null;
-        required: false;
-    };
-    extendPostion: {
-        type: StringConstructor;
-        required: false;
-        default: string;
-    };
-    updateButton: {
-        type: null;
-        required: false;
-    };
-    deleteButton: {
-        type: null;
-        required: false;
-    };
-}, {
-    props: {
-        config: TableConfig;
-        columnData: ColumnData;
-        extend?: CellRenderFN<BaseObj> | undefined;
-        extendPostion: 'center' | 'left' | 'right';
-        updateButton?: OperationsButtonConfig | undefined;
-        deleteButton?: OperationsButtonConfig | undefined;
-    };
-    emit: (event: "deleteData" | "updateData", ...args: any[]) => void;
-    config: import("vue").Ref<TableConfig<BaseObj>>;
-    columnData: import("vue").Ref<ColumnData>;
-    extend: import("vue").Ref<CellRenderFN<BaseObj> | undefined> | undefined;
-    extendRender: import("vue").ComputedRef<false | (() => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
-        [key: string]: any;
-    }>)>;
-    updateData: () => Promise<void>;
-    deleteData: () => Promise<void>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("deleteData" | "updateData")[], "deleteData" | "updateData", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    config: {
-        type: null;
-        required: true;
-    };
-    columnData: {
-        type: ObjectConstructor;
-        required: true;
-    };
-    extend: {
-        type: null;
-        required: false;
-    };
-    extendPostion: {
-        type: StringConstructor;
-        required: false;
-        default: string;
-    };
-    updateButton: {
-        type: null;
-        required: false;
-    };
-    deleteButton: {
-        type: null;
-        required: false;
-    };
-}>> & {
-    onDeleteData?: ((...args: any[]) => any) | undefined;
-    onUpdateData?: ((...args: any[]) => any) | undefined;
-}, {
+declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
+    config: TableConfig;
+    columnData: ColumnData;
+    extend?: CellRenderFN<BaseObj> | undefined;
+    extendPostion?: "right" | "left" | "center" | undefined;
+    updateButton?: OperationsButtonConfig | undefined;
+    deleteButton?: OperationsButtonConfig | undefined;
+}>, {
     extendPostion: string;
+}>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("updateData" | "deleteData")[], "updateData" | "deleteData", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
+    config: TableConfig;
+    columnData: ColumnData;
+    extend?: CellRenderFN<BaseObj> | undefined;
+    extendPostion?: "right" | "left" | "center" | undefined;
+    updateButton?: OperationsButtonConfig | undefined;
+    deleteButton?: OperationsButtonConfig | undefined;
+}>, {
+    extendPostion: string;
+}>>> & {
+    onUpdateData?: ((...args: any[]) => any) | undefined;
+    onDeleteData?: ((...args: any[]) => any) | undefined;
+}, {
+    extendPostion: "right" | "left" | "center";
 }>;
-export default _sfc_main;
+export default _default;
+declare type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
+declare type __VLS_TypePropsToRuntimeProps<T> = {
+    [K in keyof T]-?: {} extends Pick<T, K> ? {
+        type: import('vue').PropType<__VLS_NonUndefinedable<T[K]>>;
+    } : {
+        type: import('vue').PropType<T[K]>;
+        required: true;
+    };
+};
+declare type __VLS_WithDefaults<P, D> = {
+    [K in keyof Pick<P, keyof P>]: K extends keyof D ? P[K] & {
+        default: D[K];
+    } : P[K];
+};
