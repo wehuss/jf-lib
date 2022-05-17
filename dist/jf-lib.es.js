@@ -17,7 +17,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { getCurrentInstance, inject, defineComponent, openBlock, createElementBlock, normalizeClass, renderSlot, computed, normalizeStyle, createElementVNode, ref, watch, onMounted, onBeforeUnmount, onUpdated, onUnmounted, resolveComponent, createBlock, createCommentVNode, createVNode, withCtx, TransitionGroup, isVNode, reactive, render, h, toRefs, watchEffect, unref, Fragment, renderList, resolveDynamicComponent, createTextVNode, isRef, toDisplayString, mergeProps, createSlots, provide } from "vue";
+import { getCurrentInstance, inject, defineComponent, openBlock, createElementBlock, normalizeClass, renderSlot, computed, normalizeStyle, createElementVNode, ref, watch, onMounted, onBeforeUnmount, onUpdated, onUnmounted, resolveComponent, createBlock, createCommentVNode, createVNode, withCtx, TransitionGroup, isVNode, reactive, render, toRefs, provide, h, watchEffect, unref, Fragment, renderList, resolveDynamicComponent, createTextVNode, isRef, toDisplayString, mergeProps } from "vue";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var lodash = { exports: {} };
 /**
@@ -740,13 +740,13 @@ var lodash = { exports: {} };
       }();
       var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout, ctxNow = Date2 && Date2.now !== root.Date.now && Date2.now, ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
       var nativeCeil = Math2.ceil, nativeFloor = Math2.floor, nativeGetSymbols = Object2.getOwnPropertySymbols, nativeIsBuffer = Buffer2 ? Buffer2.isBuffer : undefined$1, nativeIsFinite = context.isFinite, nativeJoin = arrayProto.join, nativeKeys = overArg(Object2.keys, Object2), nativeMax = Math2.max, nativeMin = Math2.min, nativeNow = Date2.now, nativeParseInt = context.parseInt, nativeRandom = Math2.random, nativeReverse = arrayProto.reverse;
-      var DataView = getNative(context, "DataView"), Map = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
+      var DataView = getNative(context, "DataView"), Map2 = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
       var metaMap = WeakMap && new WeakMap();
       var realNames = {};
-      var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap);
+      var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap);
       var symbolProto = Symbol2 ? Symbol2.prototype : undefined$1, symbolValueOf = symbolProto ? symbolProto.valueOf : undefined$1, symbolToString = symbolProto ? symbolProto.toString : undefined$1;
       function lodash2(value) {
-        if (isObjectLike(value) && !isArray(value) && !(value instanceof LazyWrapper)) {
+        if (isObjectLike(value) && !isArray2(value) && !(value instanceof LazyWrapper)) {
           if (value instanceof LodashWrapper) {
             return value;
           }
@@ -760,7 +760,7 @@ var lodash = { exports: {} };
         function object() {
         }
         return function(proto) {
-          if (!isObject(proto)) {
+          if (!isObject2(proto)) {
             return {};
           }
           if (objectCreate) {
@@ -825,7 +825,7 @@ var lodash = { exports: {} };
         return result2;
       }
       function lazyValue() {
-        var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
+        var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray2(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
         if (!isArr || !isRight && arrLength == length && takeCount == length) {
           return baseWrapperValue(array, this.__actions__);
         }
@@ -952,7 +952,7 @@ var lodash = { exports: {} };
         this.size = 0;
         this.__data__ = {
           "hash": new Hash(),
-          "map": new (Map || ListCache)(),
+          "map": new (Map2 || ListCache)(),
           "string": new Hash()
         };
       }
@@ -1017,7 +1017,7 @@ var lodash = { exports: {} };
         var data = this.__data__;
         if (data instanceof ListCache) {
           var pairs = data.__data__;
-          if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
+          if (!Map2 || pairs.length < LARGE_ARRAY_SIZE - 1) {
             pairs.push([key, value]);
             this.size = ++data.size;
             return this;
@@ -1034,7 +1034,7 @@ var lodash = { exports: {} };
       Stack.prototype.has = stackHas;
       Stack.prototype.set = stackSet;
       function arrayLikeKeys(value, inherited) {
-        var isArr = isArray(value), isArg = !isArr && isArguments(value), isBuff = !isArr && !isArg && isBuffer(value), isType = !isArr && !isArg && !isBuff && isTypedArray(value), skipIndexes = isArr || isArg || isBuff || isType, result2 = skipIndexes ? baseTimes(value.length, String2) : [], length = result2.length;
+        var isArr = isArray2(value), isArg = !isArr && isArguments(value), isBuff = !isArr && !isArg && isBuffer(value), isType = !isArr && !isArg && !isBuff && isTypedArray(value), skipIndexes = isArr || isArg || isBuff || isType, result2 = skipIndexes ? baseTimes(value.length, String2) : [], length = result2.length;
         for (var key in value) {
           if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == "length" || isBuff && (key == "offset" || key == "parent") || isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || isIndex(key, length)))) {
             result2.push(key);
@@ -1122,10 +1122,10 @@ var lodash = { exports: {} };
         if (result2 !== undefined$1) {
           return result2;
         }
-        if (!isObject(value)) {
+        if (!isObject2(value)) {
           return value;
         }
-        var isArr = isArray(value);
+        var isArr = isArray2(value);
         if (isArr) {
           result2 = initCloneArray(value);
           if (!isDeep) {
@@ -1322,7 +1322,7 @@ var lodash = { exports: {} };
       }
       function baseGetAllKeys(object, keysFunc, symbolsFunc) {
         var result2 = keysFunc(object);
-        return isArray(object) ? result2 : arrayPush(result2, symbolsFunc(object));
+        return isArray2(object) ? result2 : arrayPush(result2, symbolsFunc(object));
       }
       function baseGetTag(value) {
         if (value == null) {
@@ -1405,7 +1405,7 @@ var lodash = { exports: {} };
         return baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
       }
       function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
-        var objIsArr = isArray(object), othIsArr = isArray(other), objTag = objIsArr ? arrayTag : getTag(object), othTag = othIsArr ? arrayTag : getTag(other);
+        var objIsArr = isArray2(object), othIsArr = isArray2(other), objTag = objIsArr ? arrayTag : getTag(object), othTag = othIsArr ? arrayTag : getTag(other);
         objTag = objTag == argsTag ? objectTag : objTag;
         othTag = othTag == argsTag ? objectTag : othTag;
         var objIsObj = objTag == objectTag, othIsObj = othTag == objectTag, isSameTag = objTag == othTag;
@@ -1469,7 +1469,7 @@ var lodash = { exports: {} };
         return true;
       }
       function baseIsNative(value) {
-        if (!isObject(value) || isMasked(value)) {
+        if (!isObject2(value) || isMasked(value)) {
           return false;
         }
         var pattern = isFunction2(value) ? reIsNative : reIsHostCtor;
@@ -1492,7 +1492,7 @@ var lodash = { exports: {} };
           return identity;
         }
         if (typeof value == "object") {
-          return isArray(value) ? baseMatchesProperty(value[0], value[1]) : baseMatches(value);
+          return isArray2(value) ? baseMatchesProperty(value[0], value[1]) : baseMatches(value);
         }
         return property(value);
       }
@@ -1509,7 +1509,7 @@ var lodash = { exports: {} };
         return result2;
       }
       function baseKeysIn(object) {
-        if (!isObject(object)) {
+        if (!isObject2(object)) {
           return nativeKeysIn(object);
         }
         var isProto = isPrototype(object), result2 = [];
@@ -1554,7 +1554,7 @@ var lodash = { exports: {} };
         }
         baseFor(source, function(srcValue, key) {
           stack || (stack = new Stack());
-          if (isObject(srcValue)) {
+          if (isObject2(srcValue)) {
             baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
           } else {
             var newValue = customizer ? customizer(safeGet(object, key), srcValue, key + "", object, source, stack) : undefined$1;
@@ -1574,10 +1574,10 @@ var lodash = { exports: {} };
         var newValue = customizer ? customizer(objValue, srcValue, key + "", object, source, stack) : undefined$1;
         var isCommon = newValue === undefined$1;
         if (isCommon) {
-          var isArr = isArray(srcValue), isBuff = !isArr && isBuffer(srcValue), isTyped = !isArr && !isBuff && isTypedArray(srcValue);
+          var isArr = isArray2(srcValue), isBuff = !isArr && isBuffer(srcValue), isTyped = !isArr && !isBuff && isTypedArray(srcValue);
           newValue = srcValue;
           if (isArr || isBuff || isTyped) {
-            if (isArray(objValue)) {
+            if (isArray2(objValue)) {
               newValue = objValue;
             } else if (isArrayLikeObject(objValue)) {
               newValue = copyArray(objValue);
@@ -1594,7 +1594,7 @@ var lodash = { exports: {} };
             newValue = objValue;
             if (isArguments(objValue)) {
               newValue = toPlainObject(objValue);
-            } else if (!isObject(objValue) || isFunction2(objValue)) {
+            } else if (!isObject2(objValue) || isFunction2(objValue)) {
               newValue = initCloneObject(srcValue);
             }
           } else {
@@ -1619,7 +1619,7 @@ var lodash = { exports: {} };
       function baseOrderBy(collection, iteratees, orders) {
         if (iteratees.length) {
           iteratees = arrayMap(iteratees, function(iteratee2) {
-            if (isArray(iteratee2)) {
+            if (isArray2(iteratee2)) {
               return function(value) {
                 return baseGet(value, iteratee2.length === 1 ? iteratee2[0] : iteratee2);
               };
@@ -1733,7 +1733,7 @@ var lodash = { exports: {} };
         return shuffleSelf(array, baseClamp(n, 0, array.length));
       }
       function baseSet(object, path, value, customizer) {
-        if (!isObject(object)) {
+        if (!isObject2(object)) {
           return object;
         }
         path = castPath(path, object);
@@ -1747,7 +1747,7 @@ var lodash = { exports: {} };
             var objValue = nested[key];
             newValue = customizer ? customizer(objValue, key, nested) : undefined$1;
             if (newValue === undefined$1) {
-              newValue = isObject(objValue) ? objValue : isIndex(path[index + 1]) ? [] : {};
+              newValue = isObject2(objValue) ? objValue : isIndex(path[index + 1]) ? [] : {};
             }
           }
           assignValue(nested, key, newValue);
@@ -1864,7 +1864,7 @@ var lodash = { exports: {} };
         if (typeof value == "string") {
           return value;
         }
-        if (isArray(value)) {
+        if (isArray2(value)) {
           return arrayMap(value, baseToString) + "";
         }
         if (isSymbol(value)) {
@@ -1967,7 +1967,7 @@ var lodash = { exports: {} };
         return typeof value == "function" ? value : identity;
       }
       function castPath(value, object) {
-        if (isArray(value)) {
+        if (isArray2(value)) {
           return value;
         }
         return isKey(value, object) ? [value] : stringToPath(toString(value));
@@ -2102,7 +2102,7 @@ var lodash = { exports: {} };
       }
       function createAggregator(setter, initializer) {
         return function(collection, iteratee2) {
-          var func = isArray(collection) ? arrayAggregator : baseAggregator, accumulator = initializer ? initializer() : {};
+          var func = isArray2(collection) ? arrayAggregator : baseAggregator, accumulator = initializer ? initializer() : {};
           return func(collection, setter, getIteratee(iteratee2, 2), accumulator);
         };
       }
@@ -2197,7 +2197,7 @@ var lodash = { exports: {} };
               return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
           }
           var thisBinding = baseCreate(Ctor.prototype), result2 = Ctor.apply(thisBinding, args);
-          return isObject(result2) ? result2 : thisBinding;
+          return isObject2(result2) ? result2 : thisBinding;
         };
       }
       function createCurry(func, bitmask, arity) {
@@ -2258,7 +2258,7 @@ var lodash = { exports: {} };
           }
           return function() {
             var args = arguments, value = args[0];
-            if (wrapper && args.length == 1 && isArray(value)) {
+            if (wrapper && args.length == 1 && isArray2(value)) {
               return wrapper.plant(value).value();
             }
             var index2 = 0, result2 = length ? funcs[index2].apply(this, args) : value;
@@ -2511,7 +2511,7 @@ var lodash = { exports: {} };
         return objValue;
       }
       function customDefaultsMerge(objValue, srcValue, key, object, source, stack) {
-        if (isObject(objValue) && isObject(srcValue)) {
+        if (isObject2(objValue) && isObject2(srcValue)) {
           stack.set(srcValue, objValue);
           baseMerge(objValue, srcValue, undefined$1, customDefaultsMerge, stack);
           stack["delete"](srcValue);
@@ -2735,7 +2735,7 @@ var lodash = { exports: {} };
         return result2;
       };
       var getTag = baseGetTag;
-      if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
+      if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
         getTag = function(value) {
           var result2 = baseGetTag(value), Ctor = result2 == objectTag ? value.constructor : undefined$1, ctorString = Ctor ? toSource(Ctor) : "";
           if (ctorString) {
@@ -2794,7 +2794,7 @@ var lodash = { exports: {} };
           return result2;
         }
         length = object == null ? 0 : object.length;
-        return !!length && isLength(length) && isIndex(key, length) && (isArray(object) || isArguments(object));
+        return !!length && isLength(length) && isIndex(key, length) && (isArray2(object) || isArguments(object));
       }
       function initCloneArray(array) {
         var length = array.length, result2 = new array.constructor(length);
@@ -2851,7 +2851,7 @@ var lodash = { exports: {} };
         return source.replace(reWrapComment, "{\n/* [wrapped with " + details + "] */\n");
       }
       function isFlattenable(value) {
-        return isArray(value) || isArguments(value) || !!(spreadableSymbol && value && value[spreadableSymbol]);
+        return isArray2(value) || isArguments(value) || !!(spreadableSymbol && value && value[spreadableSymbol]);
       }
       function isIndex(value, length) {
         var type = typeof value;
@@ -2859,7 +2859,7 @@ var lodash = { exports: {} };
         return !!length && (type == "number" || type != "symbol" && reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
       }
       function isIterateeCall(value, index, object) {
-        if (!isObject(object)) {
+        if (!isObject2(object)) {
           return false;
         }
         var type = typeof index;
@@ -2869,7 +2869,7 @@ var lodash = { exports: {} };
         return false;
       }
       function isKey(value, object) {
-        if (isArray(value)) {
+        if (isArray2(value)) {
           return false;
         }
         var type = typeof value;
@@ -2902,7 +2902,7 @@ var lodash = { exports: {} };
         return value === proto;
       }
       function isStrictComparable(value) {
-        return value === value && !isObject(value);
+        return value === value && !isObject2(value);
       }
       function matchesStrictComparable(key, srcValue) {
         return function(object) {
@@ -3125,7 +3125,7 @@ var lodash = { exports: {} };
         while (index--) {
           args[index - 1] = arguments[index];
         }
-        return arrayPush(isArray(array) ? copyArray(array) : [array], baseFlatten(args, 1));
+        return arrayPush(isArray2(array) ? copyArray(array) : [array], baseFlatten(args, 1));
       }
       var difference = baseRest(function(array, values2) {
         return isArrayLikeObject(array) ? baseDifference(array, baseFlatten(values2, 1, isArrayLikeObject, true)) : [];
@@ -3576,14 +3576,14 @@ var lodash = { exports: {} };
         }
       });
       function every(collection, predicate, guard) {
-        var func = isArray(collection) ? arrayEvery : baseEvery;
+        var func = isArray2(collection) ? arrayEvery : baseEvery;
         if (guard && isIterateeCall(collection, predicate, guard)) {
           predicate = undefined$1;
         }
         return func(collection, getIteratee(predicate, 3));
       }
       function filter(collection, predicate) {
-        var func = isArray(collection) ? arrayFilter : baseFilter;
+        var func = isArray2(collection) ? arrayFilter : baseFilter;
         return func(collection, getIteratee(predicate, 3));
       }
       var find = createFind(findIndex);
@@ -3599,11 +3599,11 @@ var lodash = { exports: {} };
         return baseFlatten(map(collection, iteratee2), depth);
       }
       function forEach(collection, iteratee2) {
-        var func = isArray(collection) ? arrayEach : baseEach;
+        var func = isArray2(collection) ? arrayEach : baseEach;
         return func(collection, getIteratee(iteratee2, 3));
       }
       function forEachRight(collection, iteratee2) {
-        var func = isArray(collection) ? arrayEachRight : baseEachRight;
+        var func = isArray2(collection) ? arrayEachRight : baseEachRight;
         return func(collection, getIteratee(iteratee2, 3));
       }
       var groupBy = createAggregator(function(result2, value, key) {
@@ -3633,18 +3633,18 @@ var lodash = { exports: {} };
         baseAssignValue(result2, key, value);
       });
       function map(collection, iteratee2) {
-        var func = isArray(collection) ? arrayMap : baseMap;
+        var func = isArray2(collection) ? arrayMap : baseMap;
         return func(collection, getIteratee(iteratee2, 3));
       }
       function orderBy(collection, iteratees, orders, guard) {
         if (collection == null) {
           return [];
         }
-        if (!isArray(iteratees)) {
+        if (!isArray2(iteratees)) {
           iteratees = iteratees == null ? [] : [iteratees];
         }
         orders = guard ? undefined$1 : orders;
-        if (!isArray(orders)) {
+        if (!isArray2(orders)) {
           orders = orders == null ? [] : [orders];
         }
         return baseOrderBy(collection, iteratees, orders);
@@ -3655,19 +3655,19 @@ var lodash = { exports: {} };
         return [[], []];
       });
       function reduce(collection, iteratee2, accumulator) {
-        var func = isArray(collection) ? arrayReduce : baseReduce, initAccum = arguments.length < 3;
+        var func = isArray2(collection) ? arrayReduce : baseReduce, initAccum = arguments.length < 3;
         return func(collection, getIteratee(iteratee2, 4), accumulator, initAccum, baseEach);
       }
       function reduceRight(collection, iteratee2, accumulator) {
-        var func = isArray(collection) ? arrayReduceRight : baseReduce, initAccum = arguments.length < 3;
+        var func = isArray2(collection) ? arrayReduceRight : baseReduce, initAccum = arguments.length < 3;
         return func(collection, getIteratee(iteratee2, 4), accumulator, initAccum, baseEachRight);
       }
       function reject(collection, predicate) {
-        var func = isArray(collection) ? arrayFilter : baseFilter;
+        var func = isArray2(collection) ? arrayFilter : baseFilter;
         return func(collection, negate(getIteratee(predicate, 3)));
       }
       function sample(collection) {
-        var func = isArray(collection) ? arraySample : baseSample;
+        var func = isArray2(collection) ? arraySample : baseSample;
         return func(collection);
       }
       function sampleSize(collection, n, guard) {
@@ -3676,11 +3676,11 @@ var lodash = { exports: {} };
         } else {
           n = toInteger(n);
         }
-        var func = isArray(collection) ? arraySampleSize : baseSampleSize;
+        var func = isArray2(collection) ? arraySampleSize : baseSampleSize;
         return func(collection, n);
       }
       function shuffle(collection) {
-        var func = isArray(collection) ? arrayShuffle : baseShuffle;
+        var func = isArray2(collection) ? arrayShuffle : baseShuffle;
         return func(collection);
       }
       function size(collection) {
@@ -3697,7 +3697,7 @@ var lodash = { exports: {} };
         return baseKeys(collection).length;
       }
       function some(collection, predicate, guard) {
-        var func = isArray(collection) ? arraySome : baseSome;
+        var func = isArray2(collection) ? arraySome : baseSome;
         if (guard && isIterateeCall(collection, predicate, guard)) {
           predicate = undefined$1;
         }
@@ -3784,7 +3784,7 @@ var lodash = { exports: {} };
           throw new TypeError2(FUNC_ERROR_TEXT);
         }
         wait = toNumber(wait) || 0;
-        if (isObject(options)) {
+        if (isObject2(options)) {
           leading = !!options.leading;
           maxing = "maxWait" in options;
           maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
@@ -3908,7 +3908,7 @@ var lodash = { exports: {} };
         return before(2, func);
       }
       var overArgs = castRest(function(func, transforms) {
-        transforms = transforms.length == 1 && isArray(transforms[0]) ? arrayMap(transforms[0], baseUnary(getIteratee())) : arrayMap(baseFlatten(transforms, 1), baseUnary(getIteratee()));
+        transforms = transforms.length == 1 && isArray2(transforms[0]) ? arrayMap(transforms[0], baseUnary(getIteratee())) : arrayMap(baseFlatten(transforms, 1), baseUnary(getIteratee()));
         var funcsLength = transforms.length;
         return baseRest(function(args) {
           var index = -1, length = nativeMin(args.length, funcsLength);
@@ -3954,7 +3954,7 @@ var lodash = { exports: {} };
         if (typeof func != "function") {
           throw new TypeError2(FUNC_ERROR_TEXT);
         }
-        if (isObject(options)) {
+        if (isObject2(options)) {
           leading = "leading" in options ? !!options.leading : leading;
           trailing = "trailing" in options ? !!options.trailing : trailing;
         }
@@ -3975,7 +3975,7 @@ var lodash = { exports: {} };
           return [];
         }
         var value = arguments[0];
-        return isArray(value) ? value : [value];
+        return isArray2(value) ? value : [value];
       }
       function clone(value) {
         return baseClone(value, CLONE_SYMBOLS_FLAG);
@@ -4006,7 +4006,7 @@ var lodash = { exports: {} };
       }()) ? baseIsArguments : function(value) {
         return isObjectLike(value) && hasOwnProperty.call(value, "callee") && !propertyIsEnumerable.call(value, "callee");
       };
-      var isArray = Array2.isArray;
+      var isArray2 = Array2.isArray;
       var isArrayBuffer = nodeIsArrayBuffer ? baseUnary(nodeIsArrayBuffer) : baseIsArrayBuffer;
       function isArrayLike(value) {
         return value != null && isLength(value.length) && !isFunction2(value);
@@ -4026,7 +4026,7 @@ var lodash = { exports: {} };
         if (value == null) {
           return true;
         }
-        if (isArrayLike(value) && (isArray(value) || typeof value == "string" || typeof value.splice == "function" || isBuffer(value) || isTypedArray(value) || isArguments(value))) {
+        if (isArrayLike(value) && (isArray2(value) || typeof value == "string" || typeof value.splice == "function" || isBuffer(value) || isTypedArray(value) || isArguments(value))) {
           return !value.length;
         }
         var tag = getTag(value);
@@ -4043,7 +4043,7 @@ var lodash = { exports: {} };
         }
         return true;
       }
-      function isEqual(value, other) {
+      function isEqual2(value, other) {
         return baseIsEqual(value, other);
       }
       function isEqualWith(value, other, customizer) {
@@ -4062,7 +4062,7 @@ var lodash = { exports: {} };
         return typeof value == "number" && nativeIsFinite(value);
       }
       function isFunction2(value) {
-        if (!isObject(value)) {
+        if (!isObject2(value)) {
           return false;
         }
         var tag = baseGetTag(value);
@@ -4074,7 +4074,7 @@ var lodash = { exports: {} };
       function isLength(value) {
         return typeof value == "number" && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
       }
-      function isObject(value) {
+      function isObject2(value) {
         var type = typeof value;
         return value != null && (type == "object" || type == "function");
       }
@@ -4124,7 +4124,7 @@ var lodash = { exports: {} };
       }
       var isSet = nodeIsSet ? baseUnary(nodeIsSet) : baseIsSet;
       function isString2(value) {
-        return typeof value == "string" || !isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag;
+        return typeof value == "string" || !isArray2(value) && isObjectLike(value) && baseGetTag(value) == stringTag;
       }
       function isSymbol(value) {
         return typeof value == "symbol" || isObjectLike(value) && baseGetTag(value) == symbolTag;
@@ -4181,9 +4181,9 @@ var lodash = { exports: {} };
         if (isSymbol(value)) {
           return NAN;
         }
-        if (isObject(value)) {
+        if (isObject2(value)) {
           var other = typeof value.valueOf == "function" ? value.valueOf() : value;
-          value = isObject(other) ? other + "" : other;
+          value = isObject2(other) ? other + "" : other;
         }
         if (typeof value != "string") {
           return value === 0 ? value : +value;
@@ -4398,13 +4398,13 @@ var lodash = { exports: {} };
       var toPairs = createToPairs(keys);
       var toPairsIn = createToPairs(keysIn);
       function transform(object, iteratee2, accumulator) {
-        var isArr = isArray(object), isArrLike = isArr || isBuffer(object) || isTypedArray(object);
+        var isArr = isArray2(object), isArrLike = isArr || isBuffer(object) || isTypedArray(object);
         iteratee2 = getIteratee(iteratee2, 4);
         if (accumulator == null) {
           var Ctor = object && object.constructor;
           if (isArrLike) {
             accumulator = isArr ? new Ctor() : [];
-          } else if (isObject(object)) {
+          } else if (isObject2(object)) {
             accumulator = isFunction2(Ctor) ? baseCreate(getPrototype(object)) : {};
           } else {
             accumulator = {};
@@ -4686,7 +4686,7 @@ var lodash = { exports: {} };
       }
       function truncate(string, options) {
         var length = DEFAULT_TRUNC_LENGTH, omission = DEFAULT_TRUNC_OMISSION;
-        if (isObject(options)) {
+        if (isObject2(options)) {
           var separator = "separator" in options ? options.separator : separator;
           length = "length" in options ? toInteger(options.length) : length;
           omission = "omission" in options ? baseToString(options.omission) : omission;
@@ -4816,13 +4816,13 @@ var lodash = { exports: {} };
       });
       function mixin(object, source, options) {
         var props = keys(source), methodNames = baseFunctions(source, props);
-        if (options == null && !(isObject(source) && (methodNames.length || !props.length))) {
+        if (options == null && !(isObject2(source) && (methodNames.length || !props.length))) {
           options = source;
           source = object;
           object = this;
           methodNames = baseFunctions(source, keys(source));
         }
-        var chain2 = !(isObject(options) && "chain" in options) || !!options.chain, isFunc = isFunction2(object);
+        var chain2 = !(isObject2(options) && "chain" in options) || !!options.chain, isFunc = isFunction2(object);
         arrayEach(methodNames, function(methodName) {
           var func = source[methodName];
           object[methodName] = func;
@@ -4898,7 +4898,7 @@ var lodash = { exports: {} };
         return result2;
       }
       function toPath(value) {
-        if (isArray(value)) {
+        if (isArray2(value)) {
           return arrayMap(value, toKey);
         }
         return isSymbol(value) ? [value] : copyArray(stringToPath(toString(value)));
@@ -5144,7 +5144,7 @@ var lodash = { exports: {} };
       lodash2.inRange = inRange;
       lodash2.invoke = invoke;
       lodash2.isArguments = isArguments;
-      lodash2.isArray = isArray;
+      lodash2.isArray = isArray2;
       lodash2.isArrayBuffer = isArrayBuffer;
       lodash2.isArrayLike = isArrayLike;
       lodash2.isArrayLikeObject = isArrayLikeObject;
@@ -5153,7 +5153,7 @@ var lodash = { exports: {} };
       lodash2.isDate = isDate;
       lodash2.isElement = isElement;
       lodash2.isEmpty = isEmpty;
-      lodash2.isEqual = isEqual;
+      lodash2.isEqual = isEqual2;
       lodash2.isEqualWith = isEqualWith;
       lodash2.isError = isError;
       lodash2.isFinite = isFinite;
@@ -5168,7 +5168,7 @@ var lodash = { exports: {} };
       lodash2.isNil = isNil;
       lodash2.isNull = isNull;
       lodash2.isNumber = isNumber2;
-      lodash2.isObject = isObject;
+      lodash2.isObject = isObject2;
       lodash2.isObjectLike = isObjectLike;
       lodash2.isPlainObject = isPlainObject;
       lodash2.isRegExp = isRegExp;
@@ -5356,7 +5356,7 @@ var lodash = { exports: {} };
           return;
         }
         lodash2.prototype[methodName] = function() {
-          var value = this.__wrapped__, args = isTaker ? [1] : arguments, isLazy = value instanceof LazyWrapper, iteratee2 = args[0], useLazy = isLazy || isArray(value);
+          var value = this.__wrapped__, args = isTaker ? [1] : arguments, isLazy = value instanceof LazyWrapper, iteratee2 = args[0], useLazy = isLazy || isArray2(value);
           var interceptor = function(value2) {
             var result3 = lodashFunc.apply(lodash2, arrayPush([value2], args));
             return isTaker && chainAll ? result3[0] : result3;
@@ -5384,10 +5384,10 @@ var lodash = { exports: {} };
           var args = arguments;
           if (retUnwrapped && !this.__chain__) {
             var value = this.value();
-            return func.apply(isArray(value) ? value : [], args);
+            return func.apply(isArray2(value) ? value : [], args);
           }
           return this[chainName](function(value2) {
-            return func.apply(isArray(value2) ? value2 : [], args);
+            return func.apply(isArray2(value2) ? value2 : [], args);
           });
         };
       });
@@ -5431,6 +5431,12 @@ var lodash = { exports: {} };
   }).call(commonjsGlobal);
 })(lodash, lodash.exports);
 const opt = Object.prototype.toString;
+function isArray(obj) {
+  return opt.call(obj) === "[object Array]";
+}
+function isObject(obj) {
+  return opt.call(obj) === "[object Object]";
+}
 function isString(obj) {
   return opt.call(obj) === "[object String]";
 }
@@ -5487,6 +5493,21 @@ var PatchFlags;
   PatchFlags2[PatchFlags2["HOISTED"] = -1] = "HOISTED";
   PatchFlags2[PatchFlags2["BAIL"] = -2] = "BAIL";
 })(PatchFlags || (PatchFlags = {}));
+const isComponent = (vn, type) => {
+  return Boolean(vn && vn.shapeFlag & 6);
+};
+const isArrayChildren = (vn, children) => {
+  return Boolean(vn && vn.shapeFlag & 16);
+};
+const getChildrenArray = (vn) => {
+  if (isArrayChildren(vn, vn.children)) {
+    return vn.children;
+  }
+  if (isArray(vn)) {
+    return vn;
+  }
+  return void 0;
+};
 const getSlotFunction = (param) => {
   if (param) {
     if (isFunction(param))
@@ -5494,6 +5515,34 @@ const getSlotFunction = (param) => {
     return () => param;
   }
   return void 0;
+};
+const getComponentsFromVNode = (vn, name) => {
+  var _a;
+  const components = [];
+  if (isComponent(vn, vn.type)) {
+    if (vn.type.name === name) {
+      if (vn.component) {
+        components.push(vn.component.uid);
+      }
+    } else if ((_a = vn.component) == null ? void 0 : _a.subTree) {
+      components.push(...getComponentsFromVNode(vn.component.subTree, name));
+    }
+  } else {
+    const children = getChildrenArray(vn);
+    if (children) {
+      components.push(...getComponentsFromChildren(children, name));
+    }
+  }
+  return components;
+};
+const getComponentsFromChildren = (children, name) => {
+  const components = [];
+  if (children && children.length > 0) {
+    for (const child of children) {
+      components.push(...getComponentsFromVNode(child, name));
+    }
+  }
+  return components;
 };
 (() => {
   try {
@@ -6072,6 +6121,72 @@ function usePopupManager(type, {
     isLastDialog
   };
 }
+const isEqual = (obj, other) => {
+  if (!obj || !other) {
+    return false;
+  }
+  if (obj.length !== other.length) {
+    return false;
+  }
+  for (const key in obj) {
+    const result = isEqualVariable(obj[key], other[key]);
+    if (!result)
+      return false;
+  }
+  return true;
+};
+const isEqualArray = (arr, other) => {
+  if (!arr || !other) {
+    return false;
+  }
+  const { length } = arr;
+  if (length !== other.length) {
+    return false;
+  }
+  for (let i = 0; i < length; i++) {
+    const result = isEqualVariable(arr[i], other[i]);
+    if (!result)
+      return false;
+  }
+  return true;
+};
+const isEqualVariable = (a, b) => {
+  const type = Object.prototype.toString.call(a);
+  if (type !== Object.prototype.toString.call(b)) {
+    return false;
+  }
+  if (type === "[object Object]") {
+    return isEqual(a, b);
+  }
+  if (type === "[object Array]") {
+    return isEqualArray(a, b);
+  }
+  if (type === "[object Function]") {
+    if (a === b) {
+      return true;
+    }
+    return a.toString() === b.toString();
+  }
+  return a === b;
+};
+const useChildrenComponents = (name) => {
+  const children = {};
+  const components = ref([]);
+  const getComponents = () => {
+    if (children.value) {
+      const _components = getComponentsFromChildren(children.value, name);
+      if (_components.length !== components.value.length || _components.toString() !== components.value.toString()) {
+        components.value = _components;
+      }
+    }
+  };
+  onMounted(() => getComponents());
+  onUpdated(() => getComponents());
+  return {
+    children,
+    components
+  };
+};
 const _sfc_main$6 = defineComponent({
   name: "Message",
   components: {
@@ -6345,7 +6460,7 @@ message.clear = (position) => {
   if (position) {
     (_a = messageInstance[position]) == null ? void 0 : _a.clear();
   } else {
-    Object.values(messageInstance).forEach((item) => item.clear());
+    Object.values(messageInstance).forEach((item) => item == null ? void 0 : item.clear());
   }
 };
 const Message = __spreadProps2(__spreadValues2({}, message), {
@@ -6359,6 +6474,159 @@ const Message = __spreadProps2(__spreadValues2({}, message), {
     app.config.globalProperties.$message = _message;
   },
   _context: null
+});
+const tableInjectionKey = Symbol("ArcoTable");
+const tableColumnInjectionKey = Symbol("ArcoTableColumn");
+var TableColumn = defineComponent({
+  name: "TableColumn",
+  props: {
+    dataIndex: String,
+    title: String,
+    width: Number,
+    align: {
+      type: String
+    },
+    fixed: {
+      type: String
+    },
+    ellipsis: {
+      type: Boolean,
+      default: false
+    },
+    sortable: {
+      type: Object,
+      default: void 0
+    },
+    filterable: {
+      type: Object,
+      default: void 0
+    },
+    cellStyle: {
+      type: Object
+    },
+    index: {
+      type: Number
+    },
+    tooltip: {
+      type: [Boolean, Object],
+      default: false
+    }
+  },
+  setup(props, {
+    slots
+  }) {
+    var _a;
+    const {
+      dataIndex,
+      title,
+      width,
+      align,
+      fixed,
+      ellipsis,
+      sortable: _sortable,
+      filterable: _filterable,
+      cellStyle: _cellStyle,
+      tooltip: _tooltip,
+      index
+    } = toRefs(props);
+    const sortable = ref(_sortable.value);
+    watch(_sortable, (cur, pre) => {
+      if (!isEqual(cur, pre)) {
+        sortable.value = cur;
+      }
+    });
+    const filterable = ref(_filterable.value);
+    watch(_filterable, (cur, pre) => {
+      if (!isEqual(cur, pre)) {
+        filterable.value = cur;
+      }
+    });
+    const cellStyle = ref(_cellStyle.value);
+    watch(_cellStyle, (cur, pre) => {
+      if (!isEqual(cur, pre)) {
+        cellStyle.value = cur;
+      }
+    });
+    const tooltip = ref(_tooltip.value);
+    watch(_tooltip, (cur, pre) => {
+      if (isObject(cur) && isObject(pre)) {
+        if (!isEqual(cur, pre)) {
+          tooltip.value = cur;
+        }
+      } else {
+        tooltip.value = cur;
+      }
+    });
+    const instance = getCurrentInstance();
+    const tableCtx = inject(tableInjectionKey, {});
+    const tableColumnCtx = inject(tableColumnInjectionKey, void 0);
+    const {
+      children,
+      components
+    } = useChildrenComponents("TableColumn");
+    const childrenColumnMap = reactive(/* @__PURE__ */ new Map());
+    const addChild = (id, data) => {
+      childrenColumnMap.set(id, data);
+    };
+    const removeChild = (id) => {
+      childrenColumnMap.delete(id);
+    };
+    provide(tableColumnInjectionKey, {
+      addChild,
+      removeChild
+    });
+    const childrenColumns = ref();
+    watch([components, childrenColumnMap], ([components2, childrenColumnMap2]) => {
+      if (components2.length > 0) {
+        const columns = [];
+        components2.forEach((id) => {
+          const column2 = childrenColumnMap2.get(id);
+          if (column2)
+            columns.push(column2);
+        });
+        childrenColumns.value = columns;
+      } else {
+        childrenColumns.value = void 0;
+      }
+    });
+    const column = reactive({
+      dataIndex,
+      title,
+      width,
+      align,
+      fixed,
+      ellipsis,
+      sortable,
+      filterable,
+      cellStyle,
+      index,
+      tooltip,
+      children: childrenColumns,
+      slots
+    });
+    if (instance) {
+      if (tableColumnCtx) {
+        tableColumnCtx.addChild(instance.uid, column);
+      } else {
+        (_a = tableCtx.addColumn) == null ? void 0 : _a.call(tableCtx, instance.uid, column);
+      }
+    }
+    onBeforeUnmount(() => {
+      var _a2;
+      if (instance) {
+        if (tableColumnCtx) {
+          tableColumnCtx.removeChild(instance.uid);
+        } else {
+          (_a2 = tableCtx.removeColumn) == null ? void 0 : _a2.call(tableCtx, instance.uid);
+        }
+      }
+    });
+    return () => {
+      var _a2;
+      children.value = (_a2 = slots.default) == null ? void 0 : _a2.call(slots);
+      return children.value;
+    };
+  }
 });
 const clearAndUpper = (text) => text.replace(/-/, "").toUpperCase();
 const toPascalCase = (text) => text.replace(/(^\w|-\w)/g, clearAndUpper);
@@ -6820,6 +7088,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       visible.value = true;
     };
     return (_ctx, _cache) => {
+      var _a2;
       const _component_icon_plus = resolveComponent("icon-plus");
       const _component_a_button = resolveComponent("a-button");
       const _component_icon_minus = resolveComponent("icon-minus");
@@ -6828,7 +7097,10 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       const _component_a_col = resolveComponent("a-col");
       const _component_a_row = resolveComponent("a-row");
       return openBlock(), createElementBlock("div", _hoisted_1$1, [
-        createVNode(_component_a_row, { style: { "padding-bottom": "16px" } }, {
+        ((_a2 = __props.config) == null ? void 0 : _a2.batchDelete) || unref(form).length > 0 || unref(onBeforeAddModalOpen) ? (openBlock(), createBlock(_component_a_row, {
+          key: 0,
+          style: { "padding-bottom": "16px" }
+        }, {
           default: withCtx(() => [
             createVNode(_component_a_col, {
               span: 16,
@@ -6838,7 +7110,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
                 createVNode(_component_a_space, null, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "toolbar-left", {}, () => {
-                      var _a2, _b, _c;
+                      var _a3, _b, _c;
                       return [
                         unref(form).length > 0 || unref(onBeforeAddModalOpen) ? (openBlock(), createBlock(_component_a_button, {
                           key: 0,
@@ -6853,7 +7125,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
                           ]),
                           _: 1
                         })) : createCommentVNode("", true),
-                        ((_a2 = __props.config) == null ? void 0 : _a2.batchDelete) ? (openBlock(), createBlock(_component_a_popconfirm, {
+                        ((_a3 = __props.config) == null ? void 0 : _a3.batchDelete) ? (openBlock(), createBlock(_component_a_popconfirm, {
                           key: 1,
                           content: `\u662F\u5426\u5220\u9664\u9009\u4E2D\u7684${(_b = unref(selectedRowKeys)) == null ? void 0 : _b.length}\u9879\u5185\u5BB9`,
                           disabled: ((_c = unref(selectedRowKeys)) == null ? void 0 : _c.length) === 0,
@@ -6865,12 +7137,12 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
                           onOk: _cache[0] || (_cache[0] = ($event) => emit("batchDelete"))
                         }, {
                           default: withCtx(() => {
-                            var _a3;
+                            var _a4;
                             return [
                               createVNode(_component_a_button, {
                                 type: "primary",
                                 status: "danger",
-                                disabled: ((_a3 = unref(selectedRowKeys)) == null ? void 0 : _a3.length) === 0
+                                disabled: ((_a4 = unref(selectedRowKeys)) == null ? void 0 : _a4.length) === 0
                               }, {
                                 icon: withCtx(() => [
                                   createVNode(_component_icon_minus)
@@ -6904,9 +7176,9 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
             })
           ]),
           _: 3
-        }),
+        })) : createCommentVNode("", true),
         unref(form).length > 0 ? (openBlock(), createBlock(_sfc_main$4, {
-          key: 0,
+          key: 1,
           visible: visible.value,
           "onUpdate:visible": _cache[1] || (_cache[1] = ($event) => visible.value = $event),
           title: "\u65B0\u589E",
@@ -6917,7 +7189,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var VToolbar = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-7b419f8a"]]);
+var VToolbar = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-f673a696"]]);
 var operations_vue_vue_type_style_index_0_lang = "";
 const _hoisted_1 = { class: "column-operations" };
 const _hoisted_2 = /* @__PURE__ */ createTextVNode("\u7F16\u8F91");
@@ -7032,19 +7304,24 @@ const setSelectedRowKeys = (config, value) => {
     }
   }
 };
-var index_vue_vue_type_style_index_0_lang$1 = "";
-var index_vue_vue_type_style_index_1_scoped_true_lang = "";
-const _sfc_main$1 = /* @__PURE__ */ defineComponent({
+var _sfc_main$1 = /* @__PURE__ */ defineComponent({
   props: {
     config: Object
   },
   emits: ["update", "deleteData", "get"],
-  setup(__props, { expose, emit }) {
+  setup(__props, {
+    expose,
+    emit
+  }) {
     var _a, _b, _c;
     const props = __props;
-    const components = { operations: _sfc_main$2 };
+    const components = {
+      operations: _sfc_main$2
+    };
     const table = ref();
-    const { config } = toRefs(props);
+    const {
+      config
+    } = toRefs(props);
     const TABLE_BASE_CONFIG = {
       pagination: {
         current: 1,
@@ -7071,12 +7348,18 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       }
     };
     const pageChange = (current) => {
-      setPagination({ current });
+      setPagination({
+        current
+      });
       emit("get");
     };
     const pageSizeChange = (pageSize) => {
-      setPagination({ pageSize });
-      setPagination({ current: 1 });
+      setPagination({
+        pageSize
+      });
+      setPagination({
+        current: 1
+      });
       emit("get");
     };
     const selectionChange = (ids) => {
@@ -7095,7 +7378,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const getProps = (props2, params) => {
       if (typeof props2 === "function")
         return props2(params);
-      return props2;
+      return __spreadValues({}, props2);
     };
     const visible = ref(false);
     const renderParams = ref({});
@@ -7117,7 +7400,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
     const tableId = inject("tableId");
     const getTableHeight = () => {
-      var _a2, _b2, _c2, _d, _e, _f;
+      var _a2, _b2, _c2, _d, _e, _f, _g;
       const container = document.getElementById(`${tableId}`);
       if (!container)
         return 0;
@@ -7126,8 +7409,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       const searchFormHeight = ((_b2 = document.querySelector(`#${tableId} .search-form-wrapper`)) == null ? void 0 : _b2.clientHeight) || 0;
       const toolbarHeight = ((_c2 = document.querySelector(`#${tableId} .table-toolbar`)) == null ? void 0 : _c2.clientHeight) || 0;
       const tableHeaderHeight = ((_d = document.querySelector(`#${tableId} thead`)) == null ? void 0 : _d.clientHeight) || 0;
-      const isCard = ((_e = config == null ? void 0 : config.value) == null ? void 0 : _e.card) ? 16 : 0;
-      const tablePaginationHeight = ((_f = config == null ? void 0 : config.value) == null ? void 0 : _f.table.pagination) ? 50 : 24;
+      const isCard = typeof ((_e = config == null ? void 0 : config.value) == null ? void 0 : _e.card) === "boolean" ? ((_f = config == null ? void 0 : config.value) == null ? void 0 : _f.card) ? 32 : 0 : 32;
+      const tablePaginationHeight = ((_g = config == null ? void 0 : config.value) == null ? void 0 : _g.table.pagination) ? 48 : 0;
       const height = containerHeight - titleHeight - searchFormHeight - toolbarHeight - tableHeaderHeight - tablePaginationHeight - isCard;
       container.style.setProperty(`--v-table-height`, `${height}px`);
       return height;
@@ -7136,7 +7419,41 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const resize = () => {
       tableHeight.value = getTableHeight();
     };
-    expose({ getTableHeight });
+    const renderColumns = (columns2) => {
+      return columns2.map((column) => {
+        const slot = {};
+        if (column.titleRender)
+          slot.title = column.titleRender;
+        if (!column.children && column.cellRender) {
+          if (typeof column.cellRender === "function") {
+            slot.cell = column.cellRender;
+          } else {
+            const component = column.cellRender;
+            slot.cell = (record, column2, rowIndex) => h(components[component.type], __spreadProps(__spreadValues({
+              config: config == null ? void 0 : config.value,
+              columnData: {
+                record,
+                column: column2,
+                rowIndex
+              }
+            }, getProps(component == null ? void 0 : component.props, record)), {
+              onUpdateData: updateData,
+              onDeleteData: deleteData
+            }));
+          }
+        }
+        return createVNode(TableColumn, mergeProps({
+          "ellipsis": true
+        }, column, {
+          "key": column.dataIndex
+        }), __spreadValues({
+          default: () => [column.children && renderColumns(column.children)]
+        }, slot));
+      });
+    };
+    expose({
+      getTableHeight
+    });
     onMounted(() => {
       if (config == null ? void 0 : config.value) {
         if (!config.value.batchDelete)
@@ -7152,75 +7469,42 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     });
     return (_ctx, _cache) => {
       var _a2;
-      const _component_a_table_column = resolveComponent("a-table-column");
       const _component_a_table = resolveComponent("a-table");
-      return openBlock(), createElementBlock("div", null, [
-        createVNode(_component_a_table, mergeProps((_a2 = unref(config)) == null ? void 0 : _a2.table, {
-          ref_key: "table",
-          ref: table,
-          class: "v-table-content",
-          scroll: {
-            y: tableHeight.value
-          },
-          onPageChange: pageChange,
-          onPageSizeChange: pageSizeChange,
-          onSelectionChange: selectionChange
-        }), {
-          columns: withCtx(() => {
-            var _a3;
-            return [
-              (openBlock(true), createElementBlock(Fragment, null, renderList(((_a3 = unref(columns)) == null ? void 0 : _a3.filter((item) => !item.hidden)) || [], (column) => {
-                return openBlock(), createBlock(_component_a_table_column, mergeProps({
-                  key: column.dataIndex,
-                  ellipsis: ""
-                }, column), createSlots({ _: 2 }, [
-                  column.titleRender ? {
-                    name: "title",
-                    fn: withCtx(() => [
-                      (openBlock(), createBlock(resolveDynamicComponent(column.titleRender && column.titleRender())))
-                    ])
-                  } : void 0,
-                  column.cellRender ? {
-                    name: "cell",
-                    fn: withCtx(({ record, column: columnConfig, rowIndex }) => {
-                      var _a4, _b2;
-                      return [
-                        typeof column.cellRender === "function" ? (openBlock(), createBlock(resolveDynamicComponent(column.cellRender(record, columnConfig, rowIndex)), { key: 0 })) : ((_a4 = column == null ? void 0 : column.cellRender) == null ? void 0 : _a4.type) === "operations" ? (openBlock(), createBlock(resolveDynamicComponent(components["operations"]), mergeProps({ key: 1 }, __spreadValues({
-                          columnData: {
-                            record,
-                            column: columnConfig,
-                            rowIndex
-                          },
-                          config: unref(config)
-                        }, getProps((_b2 = column.cellRender) == null ? void 0 : _b2.props, record)), {
-                          onUpdateData: updateData,
-                          onDeleteData: deleteData
-                        }), null, 16)) : createCommentVNode("", true)
-                      ];
-                    })
-                  } : void 0
-                ]), 1040);
-              }), 128))
-            ];
-          }),
-          _: 1
-        }, 16, ["scroll"]),
-        unref(operationsRender) ? (openBlock(), createBlock(_sfc_main$4, {
-          key: 0,
-          ref_key: "modalForm",
-          ref: modalForm,
-          visible: visible.value,
-          "onUpdate:visible": _cache[0] || (_cache[0] = ($event) => visible.value = $event),
-          title: "\u7F16\u8F91",
-          type: "Update",
-          "render-params": renderParams.value,
-          onOkEvent: _cache[1] || (_cache[1] = (data) => emit("update", data))
-        }, null, 8, ["visible", "render-params"])) : createCommentVNode("", true)
-      ]);
+      return openBlock(), createElementBlock("div", null, [createVNode(_component_a_table, mergeProps((_a2 = unref(config)) == null ? void 0 : _a2.table, {
+        ref_key: "table",
+        ref: table,
+        class: "v-table-content",
+        scroll: {
+          y: tableHeight.value
+        },
+        onPageChange: pageChange,
+        onPageSizeChange: pageSizeChange,
+        onSelectionChange: selectionChange
+      }), {
+        columns: withCtx(() => {
+          var _a3;
+          return [(openBlock(true), createElementBlock(Fragment, null, renderList(renderColumns(((_a3 = unref(columns)) == null ? void 0 : _a3.filter((item) => !item.hidden)) || []), (item) => {
+            return openBlock(), createBlock(resolveDynamicComponent(item));
+          }), 256))];
+        }),
+        _: 1
+      }, 16, ["scroll"]), unref(operationsRender) ? (openBlock(), createBlock(_sfc_main$4, {
+        key: 0,
+        ref_key: "modalForm",
+        ref: modalForm,
+        visible: visible.value,
+        "onUpdate:visible": _cache[0] || (_cache[0] = ($event) => visible.value = $event),
+        title: "\u7F16\u8F91",
+        type: "Update",
+        "render-params": renderParams.value,
+        onOkEvent: _cache[1] || (_cache[1] = (data) => emit("update", data))
+      }, null, 8, ["visible", "render-params"])) : createCommentVNode("", true)]);
     };
   }
 });
-var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-68786f4e"]]);
+var index_vue_vue_type_style_index_0_lang$1 = "";
+var index_vue_vue_type_style_index_1_scoped_true_lang = "";
+var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-77740ef4"]]);
 var index_vue_vue_type_style_index_0_lang = "";
 const __default__ = defineComponent({
   name: "VTable"

@@ -105,7 +105,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         $data: {};
         $props: Partial<{
             disabled: boolean;
-            layout: "horizontal" | "vertical" | "inline";
+            layout: "inline" | "horizontal" | "vertical";
             labelColProps: Record<string, any>;
             wrapperColProps: Record<string, any>;
             labelAlign: "right" | "left";
@@ -126,15 +126,15 @@ declare const _sfc_main: import("vue").DefineComponent<{
             onSubmitSuccess?: unknown;
             onSubmitFailed?: unknown;
         } & {
-            layout: "horizontal" | "vertical" | "inline";
+            layout: "inline" | "horizontal" | "vertical";
             model: Record<string, any>;
             labelColProps: Record<string, any>;
             wrapperColProps: Record<string, any>;
             labelAlign: "right" | "left";
             autoLabelWidth: boolean;
         } & {
-            size?: "small" | "mini" | "medium" | "large" | undefined;
             disabled?: boolean | undefined;
+            size?: "small" | "mini" | "medium" | "large" | undefined;
             onSubmit?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;
             onSubmitSuccess?: import("@arco-design/web-vue/es/_utils/types").EmitType<(values: any) => void> | undefined;
             onSubmitFailed?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;
@@ -175,15 +175,15 @@ declare const _sfc_main: import("vue").DefineComponent<{
             onSubmitSuccess?: unknown;
             onSubmitFailed?: unknown;
         } & {
-            layout: "horizontal" | "vertical" | "inline";
+            layout: "inline" | "horizontal" | "vertical";
             model: Record<string, any>;
             labelColProps: Record<string, any>;
             wrapperColProps: Record<string, any>;
             labelAlign: "right" | "left";
             autoLabelWidth: boolean;
         } & {
-            size?: "small" | "mini" | "medium" | "large" | undefined;
             disabled?: boolean | undefined;
+            size?: "small" | "mini" | "medium" | "large" | undefined;
             onSubmit?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;
             onSubmitSuccess?: import("@arco-design/web-vue/es/_utils/types").EmitType<(values: any) => void> | undefined;
             onSubmitFailed?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;
@@ -212,7 +212,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
             setFields(data: Record<string, import("@arco-design/web-vue/es/form/interface").FieldData>): void;
         }, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("submit" | "submitSuccess" | "submitFailed")[], string, {
             disabled: boolean;
-            layout: "horizontal" | "vertical" | "inline";
+            layout: "inline" | "horizontal" | "vertical";
             labelColProps: Record<string, any>;
             wrapperColProps: Record<string, any>;
             labelAlign: "right" | "left";
@@ -253,15 +253,15 @@ declare const _sfc_main: import("vue").DefineComponent<{
         onSubmitSuccess?: unknown;
         onSubmitFailed?: unknown;
     } & {
-        layout: "horizontal" | "vertical" | "inline";
+        layout: "inline" | "horizontal" | "vertical";
         model: Record<string, any>;
         labelColProps: Record<string, any>;
         wrapperColProps: Record<string, any>;
         labelAlign: "right" | "left";
         autoLabelWidth: boolean;
     } & {
-        size?: "small" | "mini" | "medium" | "large" | undefined;
         disabled?: boolean | undefined;
+        size?: "small" | "mini" | "medium" | "large" | undefined;
         onSubmit?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;
         onSubmitSuccess?: import("@arco-design/web-vue/es/_utils/types").EmitType<(values: any) => void> | undefined;
         onSubmitFailed?: import("@arco-design/web-vue/es/_utils/types").EmitType<(data: any) => void> | undefined;

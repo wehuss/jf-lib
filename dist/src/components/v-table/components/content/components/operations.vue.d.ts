@@ -1,8 +1,9 @@
-import { CellRenderFN, OperationsButtonConfig, TableColumnProps, TableConfig } from '../../../../../components/v-table/typings';
+import { CellRenderFN, OperationsButtonConfig, TableConfig } from '../../../../../components/v-table/typings';
 import { BaseObj } from '../../../../../types/global';
+import { TableColumnData } from '@arco-design/web-vue';
 interface ColumnData {
     record: BaseObj;
-    column: TableColumnProps;
+    column: TableColumnData;
     rowIndex: number;
 }
 declare const _sfc_main: import("vue").DefineComponent<{
