@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FormRender } from '@/components/v-table/typings'
+import { FormRender } from '../components/v-table/typings'
 
 const clearAndUpper = (text: string) => text.replace(/-/, '').toUpperCase()
 

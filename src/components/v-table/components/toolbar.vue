@@ -1,6 +1,9 @@
 <template>
   <div class="table-toolbar">
-    <a-row style="padding-bottom: 16px">
+    <a-row
+      style="padding-bottom: 16px"
+      v-if="config?.batchDelete || form.length > 0 || onBeforeAddModalOpen"
+    >
       <a-col :span="16" class="toolbar-left">
         <a-space>
           <slot name="toolbar-left">
@@ -56,31 +59,31 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, Ref, inject, ref, computed } from 'vue'
-import { useTableForm } from '../hooks'
-import { TableConfig } from '../typings'
+import { PropType, Ref, inject, ref, computed } from "vue";
+import { useTableForm } from "../hooks";
+import { TableConfig } from "../typings";
 
-import ModalForm from './modal-form.vue'
+import ModalForm from "./modal-form.vue";
 
 const props = defineProps({
   config: Object as PropType<TableConfig>,
-})
-const emit = defineEmits(['add', 'batchDelete'])
+});
+const emit = defineEmits(["add", "batchDelete"]);
 
-const selectedRowKeys = inject<Ref<number[] | string[]>>('selectedRowKeys')
+const selectedRowKeys = inject<Ref<number[] | string[]>>("selectedRowKeys");
 
-const visible = ref(false)
-const { form } = useTableForm(props.config?.columns, 'Add')
+const visible = ref(false);
+const { form } = useTableForm(props.config?.columns, "Add");
 const onBeforeAddModalOpen = computed(() => {
-  return props.config?.toolbar?.onBeforeAddModalOpen
-})
+  return props.config?.toolbar?.onBeforeAddModalOpen;
+});
 const handleClickAdd = async () => {
-  if (typeof onBeforeAddModalOpen.value === 'function') {
-    const result = await onBeforeAddModalOpen.value()
-    if (result === false) return
+  if (typeof onBeforeAddModalOpen.value === "function") {
+    const result = await onBeforeAddModalOpen.value();
+    if (result === false) return;
   }
-  visible.value = true
-}
+  visible.value = true;
+};
 </script>
 
 <style scoped lang="less">

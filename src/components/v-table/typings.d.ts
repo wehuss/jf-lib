@@ -3,11 +3,12 @@ import { CSSProperties, VNode } from 'vue'
 import type _Table from '@arco-design/web-vue/es/table'
 import type _TableColumn from '@arco-design/web-vue/es/table/table-column'
 import { FieldRule } from '@arco-design/web-vue/es/form/interface'
-import { BaseGetData, BaseObj } from '@/types/global'
+import { BaseGetData, BaseObj } from '../../types/global'
+import { TableColumnData } from '@arco-design/web-vue/es/table'
 
-export type TableColumn = InstanceType<typeof _TableColumn>
+// export type TableColumn = InstanceType<typeof _TableColumn>
 
-export type TableColumnProps = TableColumn['$props']
+// export type TableColumnProps = TableColumn['$props']
 type Table = InstanceType<typeof _Table>['$props']
 
 type FormRenderType =
@@ -30,7 +31,7 @@ export type FormRender<T = BaseObj> =
 
 export type CellRenderFN<T = BaseObj> = (
   record: T,
-  column: TableColumnProps,
+  column: TableColumnData,
   rowIndex: number
 ) => VNode
 
@@ -73,11 +74,12 @@ export type SearchColSpan =
       }
     }
 
-export type Columns<T = BaseObj> = TableColumnProps & {
-  dataIndex: keyof T | string
+export type Columns<T = BaseObj> = TableColumnData & {
+  dataIndex: string | keyof T 
   hidden?: boolean
   titleRender?: () => VNode
   cellRender?: CellRenderFN<T> | CellComponents<T>
+  children?:Columns<T>[]
   form?:
     | ({
         hiddenSearch?: boolean

@@ -60,7 +60,7 @@
 import { Form } from '@arco-design/web-vue'
 import { cloneDeep } from 'lodash'
 import { computed, inject, ref } from 'vue'
-import { BaseObj } from '@/types/global'
+import { BaseObj } from '../../../types/global'
 import getRenderFunction from '../get-render-function'
 import { useTableForm } from '../hooks'
 import { TableConfig } from '../typings'

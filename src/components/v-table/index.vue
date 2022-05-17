@@ -58,7 +58,7 @@ import { TableConfig } from './typings'
 import VSearch from './components/search.vue'
 import VToolbar from './components/toolbar.vue'
 import VContent from './components/content/index.vue'
-import { BaseGetData, BaseObj } from '@/types/global'
+import { BaseGetData, BaseObj } from '../../types/global'
 import { setSelectedRowKeys } from './util'
 
 const tableId = uniqueId('v-table-')
@@ -260,11 +260,12 @@ defineExpose({
 
 <style lang="less">
 .v-table {
-  height: var(--container-height);
+  height: 100%;
+  // height: var(--container-height);
   overflow-y: hidden;
-  .arco-card-body {
-    padding-bottom: 0 !important;
-  }
+  // .arco-card-body {
+  //   padding-bottom: 0 !important;
+  // }
 }
 .table-modal {
   .arco-modal-title {

@@ -33,14 +33,14 @@ import { computed, h, onMounted, toRefs } from 'vue'
 import {
   CellRenderFN,
   OperationsButtonConfig,
-  TableColumnProps,
   TableConfig,
 } from '@/components/v-table/typings'
-import { BaseObj } from '@/types/global'
+import { BaseObj } from '../../../../../types/global'
+import { TableColumnData } from '@arco-design/web-vue';
 
 interface ColumnData {
   record: BaseObj
-  column: TableColumnProps
+  column: TableColumnData
   rowIndex: number
 }
 

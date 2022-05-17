@@ -1,7 +1,7 @@
 import { FieldRule } from '@arco-design/web-vue/es/form/interface'
 import { cloneDeep } from 'lodash'
 import { ref, toRefs, watchEffect } from 'vue'
-import { BaseObj } from '@/types/global'
+import { BaseObj } from '../../types/global'
 import { Columns, FormRender, SearchColSpan } from './typings'
 
 const defineRender = (title: string) => ({
