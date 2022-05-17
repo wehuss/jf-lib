@@ -248,6 +248,10 @@ const searchRef = ref<{
   reset: () => void;
 }>();
 
+// setTimeout(()=>{
+//   console.log('contentRef',contentRef);
+
+// },1000)
 // provide('setGetTableHeight', (fn: () => number) => {
 //   getTableHeight.value = fn
 //   console.log('getTableHeight', getTableHeight.value)

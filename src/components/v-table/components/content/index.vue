@@ -37,7 +37,7 @@ export default defineComponent({
       type: Object as PropType<TableConfig>,
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, expose }) {
     const components = { operations };
 
     // type Table = InstanceType<typeof _Table>;
@@ -250,7 +250,7 @@ export default defineComponent({
       });
     };
 
-    // defineExpose({ getTableHeight });
+    expose({ getTableHeight, resize });
 
     onMounted(() => {
       if (config?.value) {
@@ -288,9 +288,10 @@ export default defineComponent({
             // }}
           >
             {{
-              columns: RenderColumns(
-                columns.value?.filter((item) => !item.hidden) || []
-              ),
+              columns: () =>
+                RenderColumns(
+                  columns.value?.filter((item) => !item.hidden) || []
+                ),
             }}
           </Table>
           {operationsRender.value && (

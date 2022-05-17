@@ -19306,7 +19306,8 @@ var _sfc_main$1 = defineComponent({
     }
   },
   setup(props, {
-    emit
+    emit,
+    expose
   }) {
     var _a, _b, _c;
     const components = {
@@ -19445,6 +19446,10 @@ var _sfc_main$1 = defineComponent({
         }, slot));
       });
     };
+    expose({
+      getTableHeight,
+      resize
+    });
     onMounted(() => {
       if (config == null ? void 0 : config.value) {
         if (!config.value.batchDelete)
@@ -19459,7 +19464,7 @@ var _sfc_main$1 = defineComponent({
       window.removeEventListener("resize", resize);
     });
     return () => {
-      var _a2, _b2, _c2;
+      var _a2, _b2;
       return createVNode("div", null, [createVNode(Table, mergeProps((_a2 = config.value) == null ? void 0 : _a2.table, {
         "class": "v-table-content",
         "onPageChange": pageChange,
@@ -19470,8 +19475,11 @@ var _sfc_main$1 = defineComponent({
           y: tableHeight.value
         }
       }), {
-        columns: RenderColumns(((_b2 = columns.value) == null ? void 0 : _b2.filter((item) => !item.hidden)) || [])
-      }), operationsRender.value && createVNode(_sfc_main$4, mergeProps((_c2 = config.value) == null ? void 0 : _c2.table, {
+        columns: () => {
+          var _a3;
+          return RenderColumns(((_a3 = columns.value) == null ? void 0 : _a3.filter((item) => !item.hidden)) || []);
+        }
+      }), operationsRender.value && createVNode(_sfc_main$4, mergeProps((_b2 = config.value) == null ? void 0 : _b2.table, {
         "ref": modalForm,
         "title": "\u7F16\u8F91",
         "onUpdate:visible": (v) => visible.value = v,
@@ -19485,7 +19493,7 @@ var _sfc_main$1 = defineComponent({
 });
 var index_vue_vue_type_style_index_0_lang$1 = "";
 var index_vue_vue_type_style_index_1_scoped_true_lang = "";
-var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-00e31054"]]);
+var VContent = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-571b3c88"]]);
 var index_vue_vue_type_style_index_0_lang = "";
 const __default__ = defineComponent({
   name: "VTable"

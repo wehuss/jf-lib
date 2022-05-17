@@ -10,7 +10,7 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     config: TableConfig;
     columnData: ColumnData;
     extend?: CellRenderFN<BaseObj> | undefined;
-    extendPostion?: "right" | "left" | "center" | undefined;
+    extendPostion?: "center" | "left" | "right" | undefined;
     updateButton?: OperationsButtonConfig | undefined;
     deleteButton?: OperationsButtonConfig | undefined;
 }>, {
@@ -19,7 +19,7 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     config: TableConfig;
     columnData: ColumnData;
     extend?: CellRenderFN<BaseObj> | undefined;
-    extendPostion?: "right" | "left" | "center" | undefined;
+    extendPostion?: "center" | "left" | "right" | undefined;
     updateButton?: OperationsButtonConfig | undefined;
     deleteButton?: OperationsButtonConfig | undefined;
 }>, {
@@ -28,7 +28,7 @@ declare const _default: import("vue").DefineComponent<__VLS_WithDefaults<__VLS_T
     onUpdateData?: ((...args: any[]) => any) | undefined;
     onDeleteData?: ((...args: any[]) => any) | undefined;
 }, {
-    extendPostion: "right" | "left" | "center";
+    extendPostion: "center" | "left" | "right";
 }>;
 export default _default;
 declare type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
