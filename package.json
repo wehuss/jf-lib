@@ -4,6 +4,7 @@
   "version": "0.0.9",
   "main": "./dist/jf-lib.es.js",
   "typings": "./dist/components/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
