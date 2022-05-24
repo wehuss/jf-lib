@@ -5,6 +5,7 @@ import {
   defineComponent,
   h,
   inject,
+  nextTick,
   onMounted,
   onUnmounted,
   PropType,
@@ -179,14 +180,8 @@ export default defineComponent({
           : 32;
       // console.log('isCard',isCard);
       const tablePaginationHeight = config?.value?.table.pagination ? 48 : 0;
-      // console.log(
-      //   containerHeight,
-      //   titleHeight,
-      //   searchFormHeight,
-      //   toolbarHeight,
-      //   tableHeaderHeight,
-      //   tablePaginationHeight
-      // )
+      // 总结行高度
+      const tableFootHeight=document.querySelector(`#${tableId} .arco-table-tr-summary`)?.clientHeight || 0
       const height =
         containerHeight -
         titleHeight -
@@ -194,6 +189,7 @@ export default defineComponent({
         toolbarHeight -
         tableHeaderHeight -
         tablePaginationHeight -
+        tableFootHeight -
         isCard;
       // 最低高度！
       // if (height < 315) height = 315
@@ -203,7 +199,9 @@ export default defineComponent({
     };
     const tableHeight = ref();
     const resize = () => {
-      tableHeight.value = getTableHeight();
+      nextTick(()=>{
+        tableHeight.value = getTableHeight();
+      })
     };
 
     const RenderColumns = (columns: Columns<BaseObj>[]) => {
@@ -242,7 +240,7 @@ export default defineComponent({
             v-slots={slot}
             ellipsis={true}
             {...(column as any)}
-            key={column.dataIndex}
+            key={column.dataIndex??Date.now()}
           >
             {column.children && RenderColumns(column.children)}
           </TableColumn>
@@ -312,41 +310,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<!-- <template>
-  <div>
-    <a-table
-      v-bind="config?.table"
-      ref="table"
-      class="v-table-content"
-      :scroll="{
-        y: tableHeight,
-      }"
-      @page-change="pageChange"
-      @page-size-change="pageSizeChange"
-      @selection-change="selectionChange"
-    >
-      <template #columns>
-        <component
-          v-for="item in renderColumns(
-            columns?.filter((item) => !item.hidden) || []
-          )"
-          :is="item"
-        />
-      </template>
-    </a-table>
-    <template v-if="operationsRender">
-      <modal-form
-        ref="modalForm"
-        v-model:visible="visible"
-        title="编辑"
-        type="Update"
-        :render-params="renderParams"
-        @ok-event="(data) => emit('update', data)"
-      />
-    </template>
-  </div>
-</template> -->
 
 <style lang="less">
 .v-table-content {
