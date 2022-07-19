@@ -218,15 +218,13 @@ export default defineComponent({
             const component = column.cellRender as CellComponents<any>;
             slot.cell = (
               record: any,
-              column: TableColumnData,
-              rowIndex: number
             ) =>
               h(components[component.type] as any, {
                 config: config?.value,
                 columnData: {
-                  record,
-                  column,
-                  rowIndex,
+                  ...record,
+                  // column,
+                  // rowIndex,
                 },
                 ...getProps(component?.props, record),
                 onUpdateData: updateData,
