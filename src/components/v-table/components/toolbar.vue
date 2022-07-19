@@ -86,9 +86,12 @@ const handleClickAdd = async () => {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .table-toolbar {
   // padding-bottom: 16px;
+  .arco-space{
+    width: 100%;
+  }
 
   .toolbar-right {
     text-align: right;
