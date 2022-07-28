@@ -232,7 +232,7 @@ const search = (params: BaseObj) => {
   // console.log('params', params)
   searchParams.value = {};
   Object.keys(params).forEach((key) => {
-    if ((params[key] ?? false) !== false && params[key] !== "") {
+    if ((params[key] ?? "")!=="") {
       searchParams.value[key] = params[key];
     }
   });
