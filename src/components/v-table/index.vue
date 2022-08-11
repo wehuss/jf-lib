@@ -7,7 +7,7 @@
     class="v-table"
     :class="[!config?.card && 'general-card']"
   >
-  <!-- 777 -->
+    <!-- 777 -->
     <v-search
       v-if="!config?.hiddenSearch"
       ref="searchRef"
@@ -232,7 +232,7 @@ const search = (params: BaseObj) => {
   // console.log('params', params)
   searchParams.value = {};
   Object.keys(params).forEach((key) => {
-    if ((params[key] ?? "")!=="") {
+    if ((params[key] ?? "") !== "") {
       searchParams.value[key] = params[key];
     }
   });
@@ -272,6 +272,16 @@ defineExpose({
   height: 100%;
   // height: var(--container-height);
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .arco-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-top: 0 !important;
+  }
   // .arco-card-body {
   //   padding-bottom: 0 !important;
   // }

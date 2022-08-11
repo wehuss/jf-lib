@@ -1,5 +1,15 @@
 <template>
   <div class="table-toolbar">
+    <a-divider
+      style="margin-top: 0; margin-bottom: 16px"
+      divider-style
+      :style="{
+        ...dividerStyle,
+        borderBottom: `${
+          searchForm.length > 0 ? 1 : 0
+        }px solid var(--color-neutral-3)`,
+      }"
+    />
     <a-row
       style="padding-bottom: 16px"
       v-if="config?.batchDelete || form.length > 0 || onBeforeAddModalOpen"
@@ -84,12 +94,23 @@ const handleClickAdd = async () => {
   }
   visible.value = true;
 };
+
+const { form: searchForm } = useTableForm(props.config?.columns, "Search");
+const dividerStyle = computed(() => {
+  return props.config?.card
+    ? {
+        left: "-16px",
+        width: "calc(100% + 32px)",
+        minWidth: "calc(100% + 32px)",
+      }
+    : {};
+});
 </script>
 
 <style lang="less">
 .table-toolbar {
   // padding-bottom: 16px;
-  .arco-space{
+  .arco-space {
     width: 100%;
   }
 

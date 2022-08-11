@@ -148,61 +148,7 @@ export default defineComponent({
     };
 
     const tableId = inject<string>("tableId");
-    const getTableHeight = () => {
-      const container = document.getElementById(`${tableId}`);
-      // console.log(container, tableId)
-      if (!container) return 0;
-      const containerHeight = container.clientHeight;
-      // console.dir(document.querySelector(`#${tableId}`))
-      // console.log('containerHeight',containerHeight);
-      const titleHeight =
-        document.querySelector(`#${tableId} .arco-card-header`)?.clientHeight ||
-        0;
-      const searchFormHeight =
-        document.querySelector(`#${tableId} .search-form-wrapper`)
-          ?.clientHeight || 0;
-      // if (config?.value?.hiddenSearch) searchFormHeight -= 21
-      const toolbarHeight =
-        document.querySelector(`#${tableId} .table-toolbar`)?.clientHeight || 0;
-      // console.log('toolbarHeight', toolbarHeight)
-      const tableHeaderHeight =
-        document.querySelector(`#${tableId} thead`)?.clientHeight || 0;
-      // console.log('tableHeaderHeight',tableHeaderHeight);
-      // const tablePaginationHeight =
-      //   document.querySelector(`#${tableId} .arco-table-pagination`)
-      //     ?.clientHeight || 0
-      // card 模式下有32px的padding-top
-      const isCard =
-        typeof config?.value?.card === "boolean"
-          ? config?.value?.card
-            ? 32
-            : 0
-          : 32;
-      // console.log('isCard',isCard);
-      const tablePaginationHeight = config?.value?.table.pagination ? 48 : 0;
-      // 总结行高度
-      const tableFootHeight=document.querySelector(`#${tableId} .arco-table-tr-summary`)?.clientHeight || 0
-      const height =
-        containerHeight -
-        titleHeight -
-        searchFormHeight -
-        toolbarHeight -
-        tableHeaderHeight -
-        tablePaginationHeight -
-        tableFootHeight -
-        isCard;
-      // 最低高度！
-      // if (height < 315) height = 315
-      // if (tablePaginationHeight) height -= 12
-      container.style.setProperty(`--v-table-height`, `${height}px`);
-      return height;
-    };
-    const tableHeight = ref();
-    const resize = () => {
-      nextTick(()=>{
-        tableHeight.value = getTableHeight();
-      })
-    };
+
 
     const RenderColumns = (columns: Columns<BaseObj>[]) => {
       return columns.map((column) => {
@@ -232,7 +178,6 @@ export default defineComponent({
               });
           }
         }
-        // console.log("columns", columns);
         return (
           <TableColumn
             v-slots={slot}
@@ -246,8 +191,6 @@ export default defineComponent({
       });
     };
 
-    expose({ getTableHeight, resize });
-
     onMounted(() => {
       if (config?.value) {
         if (!config.value.batchDelete)
@@ -258,17 +201,20 @@ export default defineComponent({
         };
       }
       emit("get");
-      setTimeout(() => resize());
-      window.addEventListener("resize", resize);
+      // setTimeout(() => resize());
+      // window.addEventListener("resize", resize);
     });
     onUnmounted(() => {
-      window.removeEventListener("resize", resize);
+      // window.removeEventListener("resize", resize);
     });
 
     return () => {
       // console.log("render");
       return (
-        <div>
+        <div style={{
+          flex:1,
+          overflow:'hidden'
+        }}>
           <Table
             {...config.value?.table}
             class="v-table-content"
@@ -276,8 +222,9 @@ export default defineComponent({
             onPageSizeChange={pageSizeChange}
             onSelectionChange={selectionChange}
             ref={table}
+            // 无实际意义，仅为激活表格的flex布局，请勿更改！！！
             scroll={{
-              y: tableHeight.value,
+              y: 100,
             }}
             // v-slots={{
             //   columns: () => renderColumns(columns.value || []),
@@ -311,9 +258,26 @@ export default defineComponent({
 
 <style lang="less">
 .v-table-content {
-  .arco-table-body {
-    height: var(--v-table-height);
+  height: 100%;
+  .arco-spin{
+    overflow: hidden;
+    .arco-table-container{
+      flex:1;
+      min-height: 0;
+      .arco-table-content{
+        overflow: hidden;
+        .arco-table-body{
+          flex: 1;
+          min-height: 0;
+          max-height: 100% !important;
+          height: 0;
+        }
+      }
+    }
   }
+  // .arco-table-body {
+  //   // height: var(--v-table-height);
+  // }
 }
 </style>
 

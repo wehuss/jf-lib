@@ -1,5 +1,5 @@
 <template>
-  <div style="height:80vh">
+  <div style="height:100vh">
     <v-table :config="config" />
   </div>
 </template>
@@ -8,11 +8,14 @@
 import { ref } from "vue";
 import VTable from "./components/v-table/index.vue";
 import { TableConfig } from "./components/v-table/typings";
-
+// console.log('zzzz',VTable);
 const createData = () => {
   const data: TableConfig = {
+    title:'test',
+    card:false,
     table: {
       data: [],
+      summary:true
     },
     columns: [],
   };
@@ -26,12 +29,14 @@ const createData = () => {
           {
             title: `test${index}-1`,
             dataIndex: `test${index}-1`,
-            width:120
+            width:120,
+            form:true
           },
           {
             title: `test${index}-2`,
             dataIndex: `test${index}-2`,
-            width:120
+            width:120,
+            form:true
           },
         ],
       },)
@@ -49,6 +54,16 @@ const createData = () => {
 };
 
 const config = ref<TableConfig>(createData());
+setTimeout(()=>{
+  // config.value.table.summary=true
+  config.value.columns.push({
+    dataIndex:'title',
+    title:'zzz',
+    form:{
+      hiddenSearch:true
+    }
+  })
+},100)
 // setTimeout(() => {
 //   config.value=createData()
 //   // config.value = {

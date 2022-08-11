@@ -62,7 +62,6 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-divider style="margin-top: 0" divider-style :style="dividerStyle" />
       </a-row>
     </div>
     <!-- <div class="search-btn-wrapper"></div> -->
@@ -115,17 +114,6 @@ const getFormItemSpan = (
   return config?.formItem[`${type}ColSpan`] || size
 }
 
-const dividerStyle = computed(() => {
-  return props.config?.card
-    ? {
-        marginBottm: '16px',
-        left: '-16px',
-        width: 'calc(100% + 32px)',
-        minWidth: 'calc(100% + 32px)',
-      }
-    : {}
-})
-
 const isVertical = computed(() => {
   let colSpans = 0
   form.value.forEach(({ searchColSpan }) => {
@@ -139,4 +127,11 @@ defineExpose({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less">
+.search-form-wrapper{
+  margin-top: 16px;
+  .arco-form-item{
+    margin-bottom: 16px;
+  }
+}
+</style>
