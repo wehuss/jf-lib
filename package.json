@@ -1,7 +1,7 @@
 {
   "name": "@wehuss/jf-lib",
   "private": false,
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "./dist/jf-lib.es.js",
   "typings": "./dist/components/index.d.ts",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.27.0",
+    "@arco-design/web-vue": "latest",
     "@types/lodash": "^4.14.182",
     "@types/node": "^17.0.26",
     "@vitejs/plugin-vue": "^2.3.1",
