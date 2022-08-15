@@ -111,11 +111,13 @@ export interface TableConfig<T = BaseObj> {
   hiddenSearch?: boolean
   hiddenToolbar?: boolean
   style?: CSSProperties
+  
   toolbar?: {
     onBeforeAddModalOpen?: () => void | boolean
   }
   search?: {
     hiddenReset?: boolean
+    searchOnchange?:boolean
   }
   table: Omit<Table, 'columns'> & {
     data: Array<BaseObj>

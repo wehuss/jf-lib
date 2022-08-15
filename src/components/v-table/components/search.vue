@@ -31,6 +31,7 @@
                 >
                   <component
                     :is="getRenderFunction(render)"
+                    @change="handleSearchParamsChange"
                     v-model="formData[dataIndex]"
                     style="width: 100%"
                   />
@@ -88,6 +89,11 @@ const formRef = ref<InstanceType<typeof Form>>()
 const search = () => {
   emit('search', formData.value)
 }
+
+const handleSearchParamsChange=()=>{
+  if(props.config?.search?.searchOnchange!==false) search()
+}
+
 const reset = () => {
   resetFormData()
   search()
