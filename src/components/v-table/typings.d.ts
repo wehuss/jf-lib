@@ -111,6 +111,7 @@ export interface TableConfig<T = BaseObj> {
   hiddenSearch?: boolean
   hiddenToolbar?: boolean
   style?: CSSProperties
+  loadingOnGet?:boolean
   
   toolbar?: {
     onBeforeAddModalOpen?: () => void | boolean
