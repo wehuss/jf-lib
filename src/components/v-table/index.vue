@@ -1,25 +1,9 @@
 <template>
-  <a-card
-    :id="tableId"
-    :style="{ width: '100%', ...(config?.style || {}) }"
-    :title="config?.title"
-    :bordered="Boolean(config?.card)"
-    class="v-table"
-    :class="[!config?.card && 'general-card']"
-  >
+  <a-card :id="tableId" :style="{ width: '100%', ...(config?.style || {}) }" :title="config?.title"
+    :bordered="Boolean(config?.card)" class="v-table" :class="[!config?.card && 'general-card']">
     <!-- 777 -->
-    <v-search
-      v-if="!config?.hiddenSearch"
-      ref="searchRef"
-      :config="config"
-      @search="search"
-    />
-    <v-toolbar
-      v-if="!config?.hiddenToolbar"
-      :config="config"
-      @add="add"
-      @batch-delete="batchDelete"
-    >
+    <v-search v-if="!config?.hiddenSearch" ref="searchRef" :config="config" @search="search" />
+    <v-toolbar v-if="!config?.hiddenToolbar" :config="config" @add="add" @batch-delete="batchDelete">
       <template #toolbar-left>
         <slot name="toolbar-left"></slot>
       </template>
@@ -30,13 +14,7 @@
         <slot name="toolbar-right"></slot>
       </template>
     </v-toolbar>
-    <v-content
-      ref="contentRef"
-      :config="config"
-      @update="update"
-      @delete-data="deleteData"
-      @get="get"
-    />
+    <v-content ref="contentRef" :config="config" @update="update" @delete-data="deleteData" @get="get" />
   </a-card>
 </template>
 
@@ -275,6 +253,7 @@ defineExpose({
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
   .arco-card-body {
     flex: 1;
     display: flex;
@@ -282,18 +261,27 @@ defineExpose({
     overflow: hidden;
     padding-top: 0 !important;
   }
+
   .arco-table-border {
     .arco-table-container {
       border-right: 1px solid var(--color-neutral-3);
     }
+
+    .arco-table-scroll-y .arco-table-body .arco-table-tr:not(.arco-table-tr-empty):last-of-type .arco-table-td,
+    .arco-table-border .arco-table-scroll-y tfoot .arco-table-tr:last-of-type .arco-table-td {
+      border-bottom: 1px solid var(--color-border-2);
+    }
   }
+
   .arco-table-border-cell .arco-table-tr .arco-table-td:last-child:not(.arco-table-tr-expand) {
     border-right: none;
   }
+
   // .arco-card-body {
   //   padding-bottom: 0 !important;
   // }
 }
+
 .table-modal {
   .arco-modal-title {
     display: block;
