@@ -31,6 +31,7 @@ import { setSelectedRowKeys } from "../../util";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ModalForm from "../modal-form.vue";
 import { Table, TableColumn, TableColumnData } from "@arco-design/web-vue";
+import { omit } from "lodash";
 
 export default defineComponent({
   props: {
@@ -182,7 +183,7 @@ export default defineComponent({
           <TableColumn
             v-slots={slot}
             ellipsis={true}
-            {...(column as any)}
+            {...(omit(column,['cellRender','form','hidden','children']) as any)}
             key={column.dataIndex??Date.now()}
           >
             {column.children && RenderColumns(column.children)}
