@@ -282,6 +282,14 @@ defineExpose({
     overflow: hidden;
     padding-top: 0 !important;
   }
+  .arco-table-border {
+    .arco-table-container {
+      border-right: 1px solid var(--color-neutral-3);
+    }
+  }
+  .arco-table-border-cell .arco-table-tr .arco-table-td:last-child:not(.arco-table-tr-expand) {
+    border-right: none;
+  }
   // .arco-card-body {
   //   padding-bottom: 0 !important;
   // }
