@@ -246,6 +246,7 @@ const contentRef = ref<{
 }>();
 const searchRef = ref<{
   reset: () => void;
+  search:()=>void
 }>();
 
 // setTimeout(()=>{
@@ -260,7 +261,7 @@ const _setSelectedRowKeys = (keys: string[]) =>
   setSelectedRowKeys((config as Ref<TableConfig>).value, keys);
 defineExpose({
   contentRef,
-  get,
+  get:searchRef.value?.search,
   resetSearchParams: searchRef.value?.reset,
   setSelectedRowKeys: _setSelectedRowKeys,
   getSelectedRowKeys: () => selectedRowKeys.value,

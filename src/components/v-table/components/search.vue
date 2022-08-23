@@ -130,6 +130,7 @@ const isVertical = computed(() => {
 
 defineExpose({
   reset,
+  search,
 })
 </script>
 
