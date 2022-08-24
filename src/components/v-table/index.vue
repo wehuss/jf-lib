@@ -229,7 +229,6 @@ const batchDelete = async () => {
 };
 
 const search = (params: BaseObj) => {
-  // console.log('params', params)
   searchParams.value = {};
   Object.keys(params).forEach((key) => {
     if ((params[key] ?? "") !== "") {
@@ -261,7 +260,8 @@ const _setSelectedRowKeys = (keys: string[]) =>
   setSelectedRowKeys((config as Ref<TableConfig>).value, keys);
 defineExpose({
   contentRef,
-  get:searchRef.value?.search,
+  searchRef,
+  get,
   resetSearchParams: searchRef.value?.reset,
   setSelectedRowKeys: _setSelectedRowKeys,
   getSelectedRowKeys: () => selectedRowKeys.value,

@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref } from 'vue'
+import { computed, nextTick, onMounted, PropType, ref } from 'vue'
 import Form from '@arco-design/web-vue/es/form'
 import { SearchColSpan, TableConfig } from '../typings'
 import getRenderFunction from '../get-render-function'
@@ -126,6 +126,12 @@ const isVertical = computed(() => {
     colSpans += getSpan(searchColSpan)
   })
   return colSpans > 24
+})
+
+onMounted(()=>{
+  nextTick(()=>{
+    search()
+  })
 })
 
 defineExpose({

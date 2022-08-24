@@ -183,7 +183,7 @@ export default defineComponent({
           <TableColumn
             v-slots={slot}
             ellipsis={true}
-            {...(omit(column,['cellRender','form','hidden','children']) as any)}
+            {...(omit(column,['cellRender','form','hidden','children','titleRender']) as any)}
             key={column.dataIndex??Date.now()}
           >
             {column.children && RenderColumns(column.children)}
@@ -201,13 +201,13 @@ export default defineComponent({
           ...config.value.table,
         };
       }
-      emit("get");
+      // emit("get");
       // setTimeout(() => resize());
       // window.addEventListener("resize", resize);
     });
-    onUnmounted(() => {
-      // window.removeEventListener("resize", resize);
-    });
+    // onUnmounted(() => {
+    //   // window.removeEventListener("resize", resize);
+    // });
 
     return () => {
       // console.log("render");
