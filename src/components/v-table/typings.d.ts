@@ -122,6 +122,9 @@ export interface TableConfig<T = BaseObj> {
   }
   table: Omit<Table, 'columns'> & {
     data: Array<BaseObj>
+    'v-slots'?:{
+      [key:string]:()=>VNode
+    }
   }
   columns: Array<Columns<T>>
   apis?: {
