@@ -78,7 +78,7 @@ const { config } = toRefs(props);
 provide("config", config && config.value);
 
 const pagination = computed(() => {
-  return config?.value?.table.pagination as {
+  return config?.value?.table?.pagination as {
     size: "mini" | "small" | "medium" | "large";
     disabled: boolean;
     defaultCurrent: number;
@@ -121,12 +121,18 @@ const get = async () => {
   try {
     if (apis.value?.get) {
       // const pagination = config.value?.table.pagination as PaginationProps
-      const { current, pageSize } = pagination.value;
-      const result = (await apis.value?.get({
-        current: current as number,
-        pageSize: pageSize as number,
-        ...searchParams.value,
-      })) as any;
+      let params={
+        ...searchParams.value
+      }
+      if(pagination.value){
+        const { current, pageSize } = pagination.value;
+        params={
+          current,
+          pageSize,
+          ...params,
+        }
+      }
+      const result = (await apis.value?.get(params as any)) as any;
       const isBaseGetData = !((result?.total ?? true) === true);
       if (isBaseGetData && pagination.value) {
         const { data, total } = result as BaseGetData<BaseObj>;
@@ -156,10 +162,10 @@ const crud = async (
   const paramsIsArray = params instanceof Array;
   const filterParams: BaseObj = {};
   if (!paramsIsArray) {
+    const filterThisValue=['filter this value']
     Object.keys(params).forEach((key) => {
-      if ((params[key] ?? false) !== false && params[key] !== "") {
-        filterParams[key] = params[key];
-      }
+      // ''??true ->'' false??true -> false
+      if((params[key]??filterThisValue)!==filterThisValue&&params[key] !== "")filterParams[key] = params[key];
     });
   }
   if (apis.value && apis.value[apiName]) {
