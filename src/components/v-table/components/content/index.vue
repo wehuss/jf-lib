@@ -222,16 +222,16 @@
             }}
           >
             <Table
+              // 无实际意义，仅为激活表格的flex布局，请勿更改！！！
+              scroll={{
+                y: 100,
+              }}
               {...omit(config.value?.table, 'v-slots')}
               class='v-table-content'
               onPageChange={pageChange}
               onPageSizeChange={pageSizeChange}
               onSelectionChange={selectionChange}
               ref={table}
-              // 无实际意义，仅为激活表格的flex布局，请勿更改！！！
-              scroll={{
-                y: 100,
-              }}
               v-slots={{
                 ...(config.value?.table?.['v-slots'] || {}),
                 columns: () =>
@@ -245,11 +245,11 @@
                 {...config.value?.table}
                 ref={modalForm}
                 title='编辑'
-                onUpdate:visible={(v) => (visible.value = v)}
+                onUpdate:visible={(v:any) => (visible.value = v)}
                 visible={visible.value}
                 type='Update'
                 renderParams={renderParams.value}
-                onOkEvent={(data) => emit('update', data)}
+                onOkEvent={(data:any) => emit('update', data)}
               />
             )}
           </div>
