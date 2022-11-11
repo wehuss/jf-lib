@@ -50,7 +50,8 @@
 
       // const emit = defineEmits(["update", "deleteData", "get"]);
 
-      const table = ref()
+      const tableRef = ref<InstanceType<typeof Table>>()
+        expose({tableRef})
       const { config } = toRefs(props)
 
       const TABLE_BASE_CONFIG: typeof Table['$props'] = {
@@ -231,7 +232,7 @@
               onPageChange={pageChange}
               onPageSizeChange={pageSizeChange}
               onSelectionChange={selectionChange}
-              ref={table}
+              ref={tableRef}
               v-slots={{
                 ...(config.value?.table?.['v-slots'] || {}),
                 columns: () =>
