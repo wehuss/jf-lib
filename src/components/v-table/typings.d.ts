@@ -112,6 +112,10 @@ export interface TableConfig<T = BaseObj> {
   hiddenToolbar?: boolean
   style?: CSSProperties
   loadingOnGet?:boolean
+
+  cardSlots?:{
+    [key in 'title'|'extra']:()=>VNode
+  }
   
   toolbar?: {
     onBeforeAddModalOpen?: () => void | boolean
