@@ -1,7 +1,7 @@
 {
   "name": "@wehuss/jf-lib",
   "private": false,
-  "version": "0.0.29",
+  "version": "0.0.31",
   "main": "./dist/jf-lib.es.js",
   "typings": "./dist/components/index.d.ts",
   "license": "MIT",

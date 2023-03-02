@@ -114,7 +114,7 @@ export interface TableConfig<T = BaseObj> {
   loadingOnGet?:boolean
 
   cardSlots?:{
-    [key in 'title'|'extra']:()=>VNode
+    [key in 'title'|'extra']?:()=>VNode
   }
   
   toolbar?: {

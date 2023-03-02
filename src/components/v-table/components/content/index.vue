@@ -231,6 +231,7 @@
               class='v-table-content'
               onPageChange={pageChange}
               onPageSizeChange={pageSizeChange}
+              //@ts-ignore
               onSelectionChange={selectionChange}
               ref={tableRef}
               v-slots={{
